@@ -1,4 +1,4 @@
-# 📘 Cẩm Nang Toàn Tập: JPA Relationships & Migration (2026 Edition)
+# Chủ đề 8: 📘 Cẩm Nang Toàn Tập: JPA Relationships & Migration
 
 Tài liệu này tổng hợp toàn bộ kiến thức từ thiết kế Database, code Java (Entity & Repository), SQL Migration và các ví dụ thực tế.
 

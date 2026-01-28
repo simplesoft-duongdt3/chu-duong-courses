@@ -67,6 +67,14 @@ Tổng hợp toàn bộ kiến thức từ thiết kế Database, code Java (Ent
 * **JPA Relationships:**
 * **Migration:**
 
+
+### 9.Concurrency & Multi-threading
+
+Spring Boot bước vào thế giới **Multi-threading** (đa luồng). Một biến số có thể bị hàng nghìn "người" (thread) cùng lúc nhào vào thay đổi.
+
+* **Concurrency & Multi-threading:**
+* **Virtual Threads:** (Project Loom)
+
 ---
 
 ### Bảng so sánh nhanh để bạn dễ hình dung:
