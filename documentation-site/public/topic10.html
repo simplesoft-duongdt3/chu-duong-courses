@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chủ đề 10: Audit Log - Camera giám sát Database</title>
+    <!-- Tailwind CSS via CDN for simplicity and reliability -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for Sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <button
+            onclick="toggleSidebar()"
+            class="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <a
+            href="index.html"
+            class="ml-3 lg:ml-0 text-xl font-bold text-gray-900 tracking-tight"
+          >
+            <span class="text-indigo-600">Spring Boot</span> for Frontend Devs
+          </a>
+        </div>
+        <!-- Optional Top Links -->
+        <div class="hidden md:flex space-x-4">
+          <a
+            href="https://github.com/simplesoft-duongdt3/chu-duong-courses"
+            target="_blank"
+            class="text-gray-500 hover:text-gray-900 transition font-medium"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto flex items-start">
+      <!-- Sidebar Navigation -->
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="fixed inset-0 z-50 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 lg:w-64 lg:h-[calc(100vh-4rem)] lg:bg-transparent lg:border-r lg:border-gray-200 lg:sticky lg:top-16 overflow-y-auto"
+      >
+        <div class="p-4 flex justify-between items-center lg:hidden border-b border-gray-100 mb-2">
+            <span class="font-bold text-gray-900">Menu</span>
+            <button onclick="toggleSidebar()" class="p-2 -mr-2 text-gray-500 hover:text-gray-700">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="p-4 space-y-1">
+          <div class="mb-4">
+            <p
+              class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+            >
+              Chương trình học
+            </p>
+            <a href="index.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Spring Boot for Frontend Devs
+        </a>
+<a href="topic01.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 1: Request-Response Cycle & The Middleware Chain
+        </a>
+<a href="topic02.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 2: IoC Container & Dependency Injection (DI)
+        </a>
+<a href="topic03.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 3: Persistence với Spring Data JPA & Hibernate
+        </a>
+<a href="topic04.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 4: Transaction Management - Quản lý giao dịch
+        </a>
+<a href="topic05.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 5: Validation & Global Exception Handling
+        </a>
+<a href="topic06.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 6: Spring Security & JWT (Stateless Authentication)
+        </a>
+<a href="topic07.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 7: Logging & Monitoring (Actuator)
+        </a>
+<a href="topic08.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 8: 📘 Cẩm Nang Toàn Tập: JPA Relationships & Migration
+        </a>
+<a href="topic09.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 9: Concurrency & Multi-threading
+        </a>
+<a href="topic10.html" class="block px-2 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 10: Audit Log - Camera giám sát Database
+        </a>
+<a href="topic_black_holes.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging
+        </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0 p-4 sm:p-6 lg:padding-8">
+        <div class="max-w-4xl mx-auto">
+          <article
+            class="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-xl shadow-none"
+          >
+            <h1>Chủ đề 10: Audit Log - Camera giám sát Database</h1>
+<hr>
+<p>Chào bạn! Đây là một chủ đề cực kỳ quan trọng trong các dự án thực tế. Nếu ở Frontend, bạn có &quot;Undo/Redo&quot; hoặc &quot;History&quot; trong bộ nhớ tạm, thì ở Backend, <strong>Audit Log</strong> giống như một chiếc camera an ninh 24/7. Nó ghi lại mọi biến động của dữ liệu: &quot;Ai đã tạo?&quot;, &quot;Khi nào sửa?&quot;, và &quot;Trước khi sửa nó trông thế nào?&quot;.</p>
+<p>Trong Spring Boot 3, chúng ta chia Audit Log làm 2 cấp độ:</p>
+<ol>
+<li><strong>Basic Auditing:</strong> Chỉ ghi lại dấu mốc (Ngày tạo, ngày sửa, người tạo, người sửa).</li>
+<li><strong>Full Auditing (Versioning):</strong> Ghi lại toàn bộ lịch sử thay đổi của từng trường dữ liệu (Dùng Hibernate Envers).</li>
+</ol>
+<h3>1. Lý thuyết: Cơ chế &quot;Lắng nghe&quot; (Entity Listeners)</h3>
+<p>Thay vì bạn phải viết tay <code>product.setCreatedAt(new Date())</code> trong mọi hàm Service, Spring Data JPA sử dụng các <strong>Listeners</strong>. Khi một Entity chuẩn bị được lưu xuống DB, Spring sẽ tự động &quot;nhảy vào&quot; để điền các thông tin này.</p>
+<ul>
+<li><strong>@CreatedDate / @LastModifiedDate:</strong> Tự động lấy thời gian hệ thống.</li>
+<li><strong>@CreatedBy / @LastModifiedBy:</strong> Lấy thông tin User hiện tại từ <code>SecurityContext</code> (Spring Security).</li>
+<li><strong>Hibernate Envers:</strong> Tạo ra các bảng phụ (có đuôi <code>_AUD</code>) để lưu lại từng phiên bản của dữ liệu mỗi khi có lệnh <code>UPDATE</code> hoặc <code>DELETE</code>.</li>
+</ul>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4>A. Cấu hình cơ bản</h4>
+<p>Đầu tiên, bạn cần bật tính năng Auditing trong App.</p>
+<pre><code class="language-java">@Configuration
+@EnableJpaAuditing(auditorAwareRef = &quot;auditorProvider&quot;)
+public class AuditConfig {
+    @Bean
+    public AuditorAware&lt;String&gt; auditorProvider() {
+        // Trả về username từ Spring Security
+        return () -&gt; Optional.ofNullable(SecurityContextHolder.getContext().getAuthentication())
+                .map(Authentication::getName);
+    }
+}
+</code></pre>
+<h4>B. Tạo Base Entity (Dùng chung cho mọi bảng)</h4>
+<p>Bạn không muốn copy-paste 4 trường này vào tất cả các Class. Hãy dùng <code>@MappedSuperclass</code>.</p>
+<pre><code class="language-java">@MappedSuperclass
+@EntityListeners(AuditingEntityListener.class)
+@Getter @Setter
+public abstract class BaseEntity {
+    @CreatedDate
+    @Column(updatable = false)
+    private LocalDateTime createdAt;
+
+    @LastModifiedDate
+    private LocalDateTime updatedAt;
+
+    @CreatedBy
+    @Column(updatable = false)
+    private String createdBy;
+
+    @LastModifiedBy
+    private String updatedBy;
+}
+</code></pre>
+<h4>C. Full Audit với Hibernate Envers</h4>
+<p>Để ghi lại lịch sử &quot;trước và sau&quot;, bạn chỉ cần thêm thư viện <code>hibernate-envers</code> và dùng Annotation <code>@Audited</code>.</p>
+<pre><code class="language-java">@Entity
+@Audited // &lt;--- Phép màu ở đây: Mọi thay đổi sẽ được lưu vào bảng product_aud
+public class Product extends BaseEntity {
+    @Id @GeneratedValue
+    private Long id;
+    private String name;
+    private Double price;
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Giải quyết tranh chấp &quot;Ai đã đổi giá?&quot;</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Giá sản phẩm bỗng dưng giảm từ 10tr xuống 1tr khiến công ty lỗ nặng. Nhân viên A đổ lỗi cho nhân viên B.</li>
+<li><strong>Giải pháp:</strong> Nhờ <strong>Full Audit</strong>, bạn truy vấn bảng <code>product_aud</code>. Bạn thấy rõ ràng vào lúc 2:00 sáng, Account của nhân viên A đã thực hiện lệnh Update. Bạn thậm chí thấy được giá cũ là 10tr và giá mới là 1tr.</li>
+</ul>
+<p><strong>Tình huống 2: Chức năng &quot;Khôi phục dữ liệu đã xóa&quot; (Restore)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> User lỡ tay xóa một bài viết quan trọng.</li>
+<li><strong>Giải pháp:</strong> Hibernate Envers không chỉ lưu thay đổi mà lưu cả bản ghi trước khi bị xóa. Bạn có thể dễ dàng lấy lại dữ liệu từ &quot;quá khứ&quot; và lưu ngược lại vào bảng chính mà không cần lục tìm bản backup DB.</li>
+</ul>
+<p><strong>Tình huống 3: Hiển thị &quot;Lịch sử cập nhật&quot; cho người dùng</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Trong các ứng dụng như Google Docs hay Jira, user muốn xem danh sách các lần chỉnh sửa.</li>
+<li><strong>Giải pháp:</strong> Thay vì tự thiết kế bảng lịch sử phức tạp, bạn dùng <code>AuditReader</code> của Envers để lấy ra danh sách các <code>Revision</code>. Mỗi Revision sẽ cho biết ai đã sửa trường nào vào lúc nào để hiển thị lên UI cho Frontend.</li>
+</ul>
+<hr>
+<h3>Bảng so sánh cho &quot;Dân App/Frontend&quot;</h3>
+<table>
+<thead>
+<tr>
+<th>Tiêu chí</th>
+<th>Manual Coding (Tự code)</th>
+<th>JPA Auditing &amp; Envers</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Công sức</strong></td>
+<td>Phải nhớ set Date/User ở mọi nơi</td>
+<td>Cấu hình 1 lần, chạy mãi mãi</td>
+</tr>
+<tr>
+<td><strong>Độ chính xác</strong></td>
+<td>Dễ quên, dễ sai lệch múi giờ</td>
+<td>Đồng bộ hoàn toàn ở tầng Persistence</td>
+</tr>
+<tr>
+<td><strong>Dữ liệu lịch sử</strong></td>
+<td>Thường chỉ lưu bản cuối cùng</td>
+<td>Lưu tất cả các version (Time Travel)</td>
+</tr>
+<tr>
+<td><strong>Hiệu năng</strong></td>
+<td>Không ảnh hưởng đáng kể</td>
+<td>Tốn thêm dung lượng DB (do bảng Audit)</td>
+</tr>
+</tbody></table>
+<hr>
+<h3>⚠️ Lưu ý cho bạn:</h3>
+<p>Việc dùng <strong>Full Audit</strong> (Envers) sẽ khiến Database của bạn phình to rất nhanh vì mỗi lần sửa 1 dấu phẩy nó cũng tạo ra 1 dòng mới trong bảng <code>_AUD</code>.</p>
+<ul>
+<li><strong>Mẹo:</strong> Chỉ dùng <code>@Audited</code> cho những bảng thực sự quan trọng (Giao dịch, User, Cấu hình hệ thống). Đừng dùng cho những bảng chứa log rác hoặc dữ liệu thay đổi theo từng giây.</li>
+</ul>
+<hr>
+<p>Nếu ở Frontend bạn dùng <code>git</code> để quản lý phiên bản code, thì ở Backend, chúng ta dùng <strong>Database Migration</strong> (Flyway hoặc Liquibase) để quản lý phiên bản của cấu trúc bảng (Schema).</p>
+<p>Tuyệt đối không nên để Hibernate tự tạo bảng bằng <code>ddl-auto: update</code> ở môi trường thực tế. Dưới đây là cách bạn thiết kế các file Migration (SQL) để hỗ trợ tính năng <strong>Audit Log</strong> đã thảo luận.</p>
+<hr>
+<h1>Database Migration cho Audit Log (Flyway/SQL style)</h1>
+<h3>1. Migration cho Basic Auditing (Created/Updated)</h3>
+<p>Khi bạn dùng <code>@CreatedDate</code>, <code>@LastModifiedBy</code>, các cột này phải <strong>nằm trực tiếp</strong> trong bảng chính của bạn.</p>
+<p>**File: <code>V1__create_product_table.sql**</code></p>
+<pre><code class="language-sql">CREATE TABLE products (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    price DOUBLE NOT NULL,
+    
+    -- Các cột phục vụ Basic Audit
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    created_by VARCHAR(50),
+    updated_by VARCHAR(50)
+);
+</code></pre>
+<hr>
+<h3>2. Migration cho Full Audit (Hibernate Envers)</h3>
+<p>Khi bạn thêm Annotation <code>@Audited</code>, Hibernate Envers yêu cầu 2 loại bảng:</p>
+<h4>A. Bảng thông tin phiên bản chung (<code>REVINFO</code>)</h4>
+<p>Đây là bảng &quot;tổng&quot;, ghi lại mỗi khi có một giao dịch (transaction) bất kỳ làm thay đổi dữ liệu. Một hàng trong bảng này đại diện cho một lần nhấn nút &quot;Save&quot; của user.</p>
+<p>**File: <code>V2__create_envers_revinfo.sql**</code></p>
+<pre><code class="language-sql">CREATE TABLE revinfo (
+    rev INTEGER NOT NULL AUTO_INCREMENT, -- ID của phiên bản (Revision ID)
+    revtstmp BIGINT,                     -- Thời gian xảy ra thay đổi (Unix Timestamp)
+    PRIMARY KEY (rev)
+);
+</code></pre>
+<h4>B. Bảng lịch sử thực thể (<code>{table_name}_AUD</code>)</h4>
+<p>Mỗi bảng cần Audit sẽ có một bảng &quot;bóng ma&quot; đi kèm. Nó lưu lại trạng thái của dữ liệu tại thời điểm đó.</p>
+<p>**File: <code>V3__create_product_audit_table.sql**</code></p>
+<pre><code class="language-sql">CREATE TABLE products_aud (
+    id BIGINT NOT NULL,    -- ID của product
+    rev INTEGER NOT NULL,  -- ID phiên bản (khóa ngoại sang bảng revinfo)
+    revtype TINYINT,       -- Loại thay đổi: 0 (Add), 1 (Update), 2 (Delete)
+    
+    -- Copy lại các cột cần theo dõi lịch sử từ bảng chính
+    name VARCHAR(255),
+    price DOUBLE,
+    
+    PRIMARY KEY (id, rev),
+    CONSTRAINT fk_product_aud_revinfo FOREIGN KEY (rev) REFERENCES revinfo (rev)
+);
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế &amp; Cách Migration vận hành</h3>
+<p><strong>Tình huống 1: Thêm Audit vào một bảng đã có sẵn dữ liệu</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bảng <code>users</code> đã chạy 1 năm, giờ sếp mới yêu cầu thêm cột <code>created_at</code>.</li>
+<li><strong>Giải pháp:</strong> Bạn tạo một file migration mới. Lưu ý phải set giá trị mặc định cho dữ liệu cũ, nếu không DB sẽ báo lỗi <code>NOT NULL</code>.</li>
+</ul>
+<pre><code class="language-sql">ALTER TABLE users ADD COLUMN created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP;
+</code></pre>
+<p><strong>Tình huống 2: Schema thay đổi (Thêm cột mới)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn thêm cột <code>description</code> vào bảng <code>Product</code>.</li>
+<li><strong>Giải pháp:</strong> Bạn phải thêm cột này vào <strong>cả 2 nơi</strong>: bảng <code>products</code> và bảng <code>products_aud</code>. Nếu quên thêm ở bảng <code>_aud</code>, Hibernate Envers sẽ ném lỗi ngay khi bạn cố gắng update dữ liệu.</li>
+</ul>
+<p><strong>Tình huống 3: Quản lý Revision lồng nhau</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Một lần thanh toán (1 Revision) làm thay đổi cả bảng <code>Order</code> và bảng <code>Wallet</code>.</li>
+<li><strong>Cơ chế:</strong> Cả 2 bảng <code>orders_aud</code> và <code>wallets_aud</code> sẽ cùng trỏ chung về một <code>rev</code> duy nhất trong bảng <code>revinfo</code>. Khi truy vấn, bạn chỉ cần tìm theo <code>rev</code> đó là thấy toàn bộ &quot;hiện trường&quot; của vụ thanh toán đó.</li>
+</ul>
+<hr>
+<h3>Bảng tóm tắt Checklist cho Dev</h3>
+<table>
+<thead>
+<tr>
+<th>Loại Audit</th>
+<th>Cần làm gì trong Migration?</th>
+<th>Lưu ý</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Basic</strong></td>
+<td>Thêm 4 cột vào bảng hiện tại.</td>
+<td><code>created_at</code>, <code>updated_at</code>, <code>created_by</code>, <code>updated_by</code>.</td>
+</tr>
+<tr>
+<td><strong>Envers (Global)</strong></td>
+<td>Tạo bảng <code>revinfo</code>.</td>
+<td>Chỉ cần tạo 1 lần duy nhất cho cả dự án.</td>
+</tr>
+<tr>
+<td><strong>Envers (Entity)</strong></td>
+<td>Tạo bảng <code>{table}_aud</code>.</td>
+<td>Phải có cột <code>rev</code> và <code>revtype</code>.</td>
+</tr>
+</tbody></table>
+<hr>
+<h3>Tại sao Dev Frontend nên quan tâm cái này?</h3>
+<p>Vì khi bạn muốn làm chức năng <strong>&quot;Lịch sử chỉnh sửa&quot;</strong> trên giao diện, bạn sẽ phải hỏi Backend: &quot;Ông lấy dữ liệu từ bảng chính hay bảng <code>_aud</code>?&quot;.</p>
+<ul>
+<li>Nếu lấy từ bảng chính: Chỉ hiện được người sửa cuối cùng.</li>
+<li>Nếu lấy từ bảng <code>_aud</code>: Bạn có thể vẽ được một biểu đồ hoặc bảng so sánh <em>Version 1</em> khác gì <em>Version 2</em>.</li>
+</ul>
+<hr>
+<p>Việc từ bỏ <strong>Hibernate Envers</strong> là một quyết định khá phổ biến khi dự án yêu cầu sự linh hoạt cao hơn hoặc bạn không muốn làm &quot;rác&quot; Database với hàng chục bảng <code>_AUD</code>.</p>
+<p>Khi không dùng Envers, chúng ta có 2 hướng đi chính: Một là dùng &quot;hàng hiệu&quot; chuyên dụng (<strong>JaVers</strong>), hai là tự xây dựng một hệ thống <strong>JSON-based Audit</strong> (lưu mọi thay đổi vào 1 bảng duy nhất dưới dạng JSON).</p>
+<hr>
+<h1>Chủ đề 10.1: Full Audit Log - Thay thế Hibernate Envers</h1>
+<h3>Cách 1: Sử dụng JaVers (Open Source &quot;vô đối&quot; cho Auditing)</h3>
+<p><strong>JaVers</strong> giống như Git dành cho dữ liệu. Thay vì lưu theo bảng, nó lưu theo &quot;Snapshot&quot; (ảnh chụp thực thể) và có khả năng so sánh (Diff) cực mạnh.</p>
+<ul>
+<li><strong>Ưu điểm:</strong> Hỗ trợ cực tốt cho Spring Boot, query dữ liệu lịch sử rất dễ, không cần tạo nhiều bảng phụ.</li>
+<li><strong>Cấu hình:</strong> Chỉ cần thêm thư viện <code>javers-spring-boot-starter-sql</code>.</li>
+</ul>
+<h4>Code ví dụ:</h4>
+<p>Bạn chỉ cần đánh dấu Repository, JaVers sẽ lo phần còn lại.</p>
+<pre><code class="language-java">@JaversSpringDataAuditable
+public interface ProductRepository extends JpaRepository&lt;Product, Long&gt; {
+    // Mọi thao tác save/delete qua đây đều được tự động ghi Log
+}
+</code></pre>
+<h4>Migration Tables cho JaVers:</h4>
+<p>JaVers sẽ tự tạo các bảng sau (hoặc bạn có thể tạo thủ công):</p>
+<ul>
+<li><code>jv_snapshots</code>: Lưu trữ trạng thái của object dưới dạng JSON.</li>
+<li><code>jv_commit</code>: Lưu thông tin về người thực hiện, thời gian.</li>
+<li><code>jv_global_id</code>: Lưu định danh của thực thể.</li>
+</ul>
+<hr>
+<h3>Cách 2: Tự Custom (JSON-based Audit Log)</h3>
+<p>Đây là cách &quot;thuần khiết&quot; nhất. Chúng ta sẽ gom tất cả lịch sử của toàn bộ hệ thống vào <strong>một bảng duy nhất</strong> gọi là <code>audit_logs</code>.</p>
+<h4>1. Lý thuyết: Cơ chế Diffing</h4>
+<p>Chúng ta sẽ bắt sự kiện trước khi lưu, so sánh Object cũ và Object mới, sau đó lưu phần khác biệt vào bảng Log dưới dạng JSON.</p>
+<h4>2. Migration Table cho Custom Audit</h4>
+<pre><code class="language-sql">CREATE TABLE audit_logs (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    entity_name VARCHAR(100) NOT NULL, -- Ví dụ: &#39;Product&#39;, &#39;User&#39;
+    entity_id VARCHAR(50) NOT NULL,
+    action VARCHAR(20) NOT NULL,       -- &#39;CREATE&#39;, &#39;UPDATE&#39;, &#39;DELETE&#39;
+    old_value JSON,                    -- Dữ liệu cũ (JSON)
+    new_value JSON,                    -- Dữ liệu mới (JSON)
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_by VARCHAR(100)
+);
+</code></pre>
+<h4>3. Code ví dụ: Entity Listener</h4>
+<p>Chúng ta sử dụng <code>@PostUpdate</code> để ghi log sau khi dữ liệu đã thay đổi thành công.</p>
+<pre><code class="language-java">@Component
+@Slf4j
+public class CustomAuditListener {
+
+    @PostUpdate
+    public void onPostUpdate(Object entity) {
+        // Logic: 
+        // 1. Lấy dữ liệu cũ từ Database (trước khi transaction commit)
+        // 2. So sánh với &#39;entity&#39; (dữ liệu mới)
+        // 3. Nếu có khác biệt, insert vào bảng audit_logs
+        log.info(&quot;Ghi log thay đổi cho thực thể: {}&quot;, entity.getClass().getSimpleName());
+    }
+}
+</code></pre>
+<blockquote>
+<p><strong>Mẹo:</strong> Để thực hiện việc so sánh (Diff) nhanh nhất, bạn nên dùng thư viện <strong>Jackson</strong> hoặc <strong>Google Gson</strong> để convert Object sang Map rồi so sánh các Key.</p>
+</blockquote>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Kiểm tra &quot;Ai đã đổi số điện thoại?&quot;</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Trong bảng <code>audit_logs</code>, bạn search theo <code>entity_name = &#39;User&#39;</code> và <code>entity_id = &#39;123&#39;</code>.</li>
+<li><strong>Kết quả:</strong> Bạn thấy một dòng <code>UPDATE</code>. Cột <code>old_value</code> là <code>{&quot;phone&quot;: &quot;0912...&quot;}</code>, cột <code>new_value</code> là <code>{&quot;phone&quot;: &quot;0988...&quot;}</code>.</li>
+<li><strong>Lợi ích:</strong> Bạn biết chính xác thuộc tính nào bị đổi mà không cần xem toàn bộ object.</li>
+</ul>
+<p><strong>Tình huống 2: Phân tích hiệu năng ghi Log</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Nếu bảng <code>audit_logs</code> lên tới hàng triệu dòng, việc ghi log đồng bộ sẽ làm API bị chậm.</li>
+<li><strong>Giải pháp:</strong> Kết hợp với <strong>Chủ đề 8 (@Async)</strong>. Khi có thay đổi, bạn bắn một Event (Spring Events), sau đó một luồng ngầm sẽ xử lý việc ghi vào bảng <code>audit_logs</code>. API trả kết quả về cho Frontend ngay lập tức.</li>
+</ul>
+<p><strong>Tình huống 3: Hiển thị &quot;Timeline&quot; thay đổi dữ liệu</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Frontend muốn vẽ một Timeline như Facebook Activity Log.</li>
+<li><strong>Giải pháp:</strong> Vì dữ liệu nằm trong 1 bảng duy nhất, bạn chỉ cần 1 API <code>GET /api/audit?entityId=123</code>. Bạn có thể dễ dàng map JSON thành các câu thông báo thân thiện: &quot;Nguyễn Văn A đã cập nhật giá từ 100k thành 120k&quot;.</li>
+</ul>
+<hr>
+<h3>Bảng so sánh 3 cách tiếp cận</h3>
+<table>
+<thead>
+<tr>
+<th>Tiêu chí</th>
+<th>Hibernate Envers</th>
+<th>JaVers (Open Source)</th>
+<th>Custom JSON Audit</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Số lượng bảng</strong></td>
+<td>Rất nhiều (<code>_AUD</code>)</td>
+<td>Cố định (4 bảng jv_*)</td>
+<td><strong>Duy nhất 1 bảng</strong></td>
+</tr>
+<tr>
+<td><strong>Dễ Query</strong></td>
+<td>Khó (phải Join nhiều)</td>
+<td>Rất dễ (có API riêng)</td>
+<td>Trung bình (Dùng JSON query)</td>
+</tr>
+<tr>
+<td><strong>Linh hoạt</strong></td>
+<td>Thấp (gắn chặt JPA)</td>
+<td>Cao (SQL/NoSQL)</td>
+<td><strong>Tối đa (Tự chủ hoàn toàn)</strong></td>
+</tr>
+<tr>
+<td><strong>Phù hợp cho</strong></td>
+<td>Dự án truyền thống</td>
+<td>Dự án cần Time-travel</td>
+<td>Dự án Microservices / High-flex</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>Lời khuyên từ &quot;hậu phương&quot;:</strong> Nếu dự án của bạn có quy mô vừa và lớn, hãy dùng <strong>JaVers</strong>. Đừng tự code lại cái bánh xe vì việc xử lý so sánh các Object lồng nhau (Nested Objects) cực kỳ phức tạp và dễ gây bug.</p>
+<hr>
+<p>Việc lựa chọn <strong>JaVers</strong> là một bước đi rất thông minh. JaVers không chỉ là một thư viện ghi log, nó là một hệ thống &quot;Time Travel&quot; (du hành thời gian) cho dữ liệu. Thay vì tạo ra hàng chục bảng phụ như Envers, JaVers quản lý mọi thứ trong 4 bảng cố định, lưu trữ dưới dạng JSON, cực kỳ linh hoạt và dễ mở rộng.</p>
+<p>Dưới đây là chi tiết về Migration và Code thực tế để triển khai JaVers trong dự án Spring Boot 3 của bạn.</p>
+<hr>
+<h1>Chủ đề 10.2: Triển khai JaVers Audit Log (SQL-based)</h1>
+<h3>1. Lý thuyết: Cơ chế Snapshots &amp; Shadows</h3>
+<p>JaVers không lưu &quot;dòng dữ liệu&quot;, nó lưu <strong>Snapshots</strong> (ảnh chụp).</p>
+<ul>
+<li><strong>Snapshot:</strong> Là một bản ghi JSON chứa trạng thái của đối tượng tại một thời điểm.</li>
+<li><strong>Shadow:</strong> Là một đối tượng Java &quot;hồi sinh&quot; từ Snapshot. Bạn có thể yêu cầu JaVers: &quot;Hãy cho tôi xem đối tượng Product ID = 1 trông như thế nào vào ngày hôm kia&quot;. JaVers sẽ tự động tạo lại Object đó cho bạn.</li>
+</ul>
+<hr>
+<h3>2. Migration Tables (SQL)</h3>
+<p>Mặc dù JaVers có thể tự tạo bảng, nhưng trong môi trường chuyên nghiệp, bạn nên dùng SQL Migration (Flyway/Liquibase). Dưới đây là cấu trúc bảng chuẩn cho MySQL/PostgreSQL.</p>
+<p>**File: <code>V1__create_javers_tables.sql**</code></p>
+<pre><code class="language-sql">-- 1. Lưu danh tính duy nhất của các Object (Global ID)
+CREATE TABLE jv_global_id (
+    global_id_pk BIGINT AUTO_INCREMENT PRIMARY KEY,
+    local_id VARCHAR(255),
+    fragment VARCHAR(255),
+    owner_id_fk BIGINT,
+    type_name VARCHAR(255),
+    CONSTRAINT jv_global_id_owner_id_fk FOREIGN KEY (owner_id_fk) REFERENCES jv_global_id (global_id_pk)
+);
+
+-- 2. Lưu thông tin về lần Commit (Ai sửa, lúc nào sửa)
+CREATE TABLE jv_commit (
+    commit_pk BIGINT AUTO_INCREMENT PRIMARY KEY,
+    author VARCHAR(200),
+    commit_date TIMESTAMP,
+    commit_date_instant VARCHAR(30),
+    commit_id DECIMAL(12, 2)
+);
+
+-- 3. Lưu các thuộc tính tùy chỉnh của Commit (ví dụ: IP, User-Agent)
+CREATE TABLE jv_commit_property (
+    property_key VARCHAR(255) NOT NULL,
+    property_value VARCHAR(600),
+    commit_fk BIGINT NOT NULL,
+    PRIMARY KEY (commit_fk, property_key),
+    CONSTRAINT jv_commit_property_commit_fk FOREIGN KEY (commit_fk) REFERENCES jv_commit (commit_pk)
+);
+
+-- 4. Lưu dữ liệu thực tế (Ảnh chụp trạng thái dưới dạng JSON)
+CREATE TABLE jv_snapshot (
+    snapshot_pk BIGINT AUTO_INCREMENT PRIMARY KEY,
+    type VARCHAR(200),
+    version BIGINT,
+    state JSON, -- Lưu toàn bộ Object dưới dạng JSON
+    changed_properties TEXT,
+    managed_type VARCHAR(200),
+    global_id_fk BIGINT,
+    commit_fk BIGINT,
+    CONSTRAINT jv_snapshot_global_id_fk FOREIGN KEY (global_id_fk) REFERENCES jv_global_id (global_id_pk),
+    CONSTRAINT jv_snapshot_commit_fk FOREIGN KEY (commit_fk) REFERENCES jv_commit (commit_pk)
+);
+</code></pre>
+<hr>
+<h3>3. Ví dụ Code thực tế</h3>
+<h4>A. Khai báo Dependency (pom.xml)</h4>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.javers&lt;/groupId&gt;
+    &lt;artifactId&gt;javers-spring-boot-starter-sql&lt;/artifactId&gt;
+    &lt;version&gt;7.4.1&lt;/version&gt; &lt;/dependency&gt;
+</code></pre>
+<h4>B. Đánh dấu Repository</h4>
+<p>Bạn chỉ cần thêm một Annotation, JaVers sẽ tự động &quot;nghe ngóng&quot; mọi thay đổi.</p>
+<pre><code class="language-java">@Repository
+@JaversSpringDataAuditable // &lt;--- Kích hoạt tự động ghi log cho mọi hàm save()
+public interface ProductRepository extends JpaRepository&lt;Product, Long&gt; {
+}
+</code></pre>
+<h4>C. Truy vấn lịch sử (Shadows)</h4>
+<p>Đây là phần &quot;ăn tiền&quot; nhất. Frontend có thể yêu cầu xem lịch sử thay đổi của một sản phẩm.</p>
+<pre><code class="language-java">@Service
+@RequiredArgsConstructor
+public class AuditService {
+    private final Javers javers;
+
+    public List&lt;Shadow&lt;Product&gt;&gt; getProductHistory(Long productId) {
+        JqlQuery jqlQuery = QueryBuilder.byInstanceId(productId, Product.class)
+                .withChildValueObjects() // Lấy cả các object con lồng bên trong
+                .build();
+
+        // Trả về danh sách các &quot;bóng ma&quot; - các trạng thái trong quá khứ
+        return javers.findShadows(jqlQuery);
+    }
+}
+</code></pre>
+<hr>
+<h3>4. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: So sánh hai phiên bản (Diffing)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> User muốn biết bản sửa lúc 9h sáng và bản sửa lúc 10h sáng khác nhau ở những trường nào.</li>
+<li><strong>Giải pháp:</strong> JaVers cung cấp hàm <code>compare</code>. Bạn lấy 2 Snapshot ra và JaVers sẽ trả về chính xác: <code>Property &#39;price&#39; changed from 100 to 120</code>. Bạn chỉ cần gửi list thay đổi này về cho Frontend.</li>
+</ul>
+<p><strong>Tình huống 2: Phục hồi dữ liệu bị lỗi (Object Recovery)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Nhân viên cập nhật sai thông tin hàng loạt sản phẩm.</li>
+<li><strong>Giải pháp:</strong> Nhờ cơ chế <strong>Shadow</strong>, bạn có thể lấy lại Object của 1 tiếng trước:</li>
+</ul>
+<pre><code class="language-java">List&lt;Shadow&lt;Product&gt;&gt; shadows = javers.findShadows(query);
+Product oldVersion = shadows.get(1).get(); // Lấy bản ghi cũ
+productRepository.save(oldVersion); // Ghi đè lại vào bảng chính
+</code></pre>
+<p><strong>Tình huống 3: Kiểm soát &quot;Dấu chân&quot; User (Author Tracking)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn muốn ghi log không chỉ Username mà cả <strong>IP Address</strong> của người thực hiện thay đổi.</li>
+<li><strong>Giải pháp:</strong> JaVers cho phép đính kèm &quot;Commit Properties&quot;. Bạn có thể viết một <code>AuthorProvider</code> để tự động lấy IP từ Request và gắn vào mỗi lần ghi log. Dữ liệu này sẽ nằm trong bảng <code>jv_commit_property</code>.</li>
+</ul>
+<hr>
+<h3>Bảng tóm tắt cho Dev Frontend chuyển hệ</h3>
+<table>
+<thead>
+<tr>
+<th>Tính năng</th>
+<th>JaVers</th>
+<th>Tại sao Frontend sẽ thích?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Format dữ liệu</strong></td>
+<td>JSON</td>
+<td>Rất dễ để map vào các Component hiển thị lịch sử.</td>
+</tr>
+<tr>
+<td><strong>Cấu trúc bảng</strong></td>
+<td>Cố định (4 bảng)</td>
+<td>Không làm rối sơ đồ ERD của Database chính.</td>
+</tr>
+<tr>
+<td><strong>Khả năng Diff</strong></td>
+<td>Có sẵn</td>
+<td>Giúp bạn làm tính năng &quot;Show changes&quot; (như Git) cực nhanh.</td>
+</tr>
+<tr>
+<td><strong>Dung lượng</strong></td>
+<td>Tối ưu</td>
+<td>Chỉ lưu những gì thay đổi, không copy nguyên cả hàng dữ liệu thừa.</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>Gợi ý cuối cùng cho bạn:</strong> JaVers hoạt động cực kỳ mượt mà với <strong>Spring Security</strong>. Nó sẽ tự động lấy thông tin từ <code>SecurityContextHolder</code> để điền vào cột <code>author</code> trong bảng <code>jv_commit</code>.</p>
+<hr>
+<p>JaVers còn &quot;hạnh phúc&quot; hơn khi làm việc với NoSQL (đặc biệt là MongoDB) so với SQL truyền thống.</p>
+<p>Lý do là vì JaVers bản chất lưu trữ dữ liệu dưới dạng <strong>JSON</strong>. Trong SQL, nó phải tìm cách &quot;nhét&quot; JSON vào các cột Text hoặc JSONB, còn trong NoSQL, nó được sống đúng với bản ngã của mình.</p>
+<hr>
+<h1>Chủ đề 10.3: JaVers với NoSQL (MongoDB)</h1>
+<p>Khi sử dụng với MongoDB, JaVers sẽ không tạo ra 4 bảng như SQL mà sẽ tạo ra các <strong>Collections</strong> (tương đương với Table trong NoSQL).</p>
+<h3>1. Tại sao NoSQL + JaVers là &quot;cặp bài trùng&quot;?</h3>
+<ol>
+<li><strong>Schema-less:</strong> Nếu bạn thêm một field mới vào Entity, JaVers NoSQL tự động nhận và lưu vào JSON mà không cần chạy Script <code>ALTER TABLE</code> phức tạp.</li>
+<li><strong>Performance:</strong> Việc ghi và đọc JSON trong MongoDB nhanh hơn đáng kể so với việc xử lý các cột JSON trong RDBMS.</li>
+<li><strong>Nested Objects:</strong> NoSQL hỗ trợ lưu trữ các đối tượng lồng nhau (Embedded Objects) rất tốt, và JaVers tận dụng điều này để chụp ảnh (Snapshot) toàn bộ cây dữ liệu của bạn.</li>
+</ol>
+<hr>
+<h3>2. Cách sử dụng (Spring Boot 3 + MongoDB)</h3>
+<h4>A. Khai báo Dependency</h4>
+<p>Thay vì bản <code>sql</code>, bạn hãy dùng bản <code>mongo</code>.</p>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;org.javers&lt;/groupId&gt;
+    &lt;artifactId&gt;javers-spring-boot-starter-mongo&lt;/artifactId&gt;
+    &lt;version&gt;7.4.1&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4>B. Cấu hình (application.yml)</h4>
+<p>Bạn không cần tạo Migration Table vì MongoDB sẽ tự động tạo Collections khi có dữ liệu đầu tiên.</p>
+<pre><code class="language-yaml">spring:
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/audit_db
+      
+javers:
+  mappingStyle: FIELD
+  algorithm: LEVENSHTEIN_DISTANCE # Thuật toán so sánh sự khác biệt giữa các chuỗi
+</code></pre>
+<h4>C. Code thực tế</h4>
+<p>Vẫn là những Annotation quen thuộc, giúp bạn chuyển đổi từ SQL sang NoSQL mà gần như không phải sửa code logic.</p>
+<pre><code class="language-java">// 1. Entity của bạn
+@Document(collection = &quot;customers&quot;)
+@Getter @Setter
+public class Customer {
+    @Id
+    private String id;
+    private String name;
+    private Address address; // Object lồng nhau
+}
+
+// 2. Repository
+@JaversSpringDataAuditable
+public interface CustomerRepository extends MongoRepository&lt;Customer, String&gt; {
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Lưu vết thay đổi của các Document phức tạp</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn có một Document <code>Order</code> chứa mảng <code>List&lt;Item&gt;</code>. Mỗi Item lại có <code>Price</code>.</li>
+<li><strong>Giải pháp:</strong> JaVers NoSQL lưu toàn bộ cấu trúc này. Khi bạn đổi giá của một Item ở sâu bên trong, JaVers vẫn phát hiện ra và ghi lại: <code>items[2].price changed from 50 to 60</code>. Việc này trong SQL truyền thống là cực kỳ khó khăn.</li>
+</ul>
+<p><strong>Tình huống 2: Hệ thống đa quốc gia (Global Scale)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn dùng MongoDB Atlas (Cloud) để chạy app toàn cầu.</li>
+<li><strong>Giải pháp:</strong> JaVers hỗ trợ cấu hình <code>MongoJaversCache</code>. Dù dữ liệu của bạn nằm ở nhiều Node khác nhau trên thế giới, JaVers vẫn đảm bảo việc ghi log được đồng bộ và không làm nghẽn hệ thống nhờ cơ chế ghi không đồng bộ (nếu cấu hình thêm).</li>
+</ul>
+<p><strong>Tình huống 3: Kiểm tra lịch sử (Time-travel) ngay trên giao diện App</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> App của bạn có tính năng &quot;Xem lịch sử thay đổi&quot; giống như Google Docs.</li>
+<li><strong>Giải pháp:</strong> Với NoSQL, JaVers trả về kết quả dưới dạng BSON/JSON. Bạn chỉ cần viết một API đơn giản để trả thẳng cục JSON này về cho Frontend (React/Vue/App). Frontend chỉ việc map và hiển thị, không cần chuyển đổi phức tạp.</li>
+</ul>
+<hr>
+<h3>Bảng so sánh JaVers: SQL vs NoSQL</h3>
+<table>
+<thead>
+<tr>
+<th>Đặc điểm</th>
+<th>JaVers SQL (MySQL/Postgre)</th>
+<th>JaVers NoSQL (MongoDB)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Lưu trữ</strong></td>
+<td>4 bảng cố định</td>
+<td>2 collections chính (<code>jv_snapshots</code>, <code>jv_head_id</code>)</td>
+</tr>
+<tr>
+<td><strong>Migration</strong></td>
+<td>Cần file <code>.sql</code> (Flyway/Liquibase)</td>
+<td><strong>Không cần</strong> (Auto-create)</td>
+</tr>
+<tr>
+<td><strong>Cấu trúc phức tạp</strong></td>
+<td>Khó xử lý nếu lồng nhau quá sâu</td>
+<td><strong>Xử lý cực tốt</strong> các cấu trúc lồng nhau</td>
+</tr>
+<tr>
+<td><strong>Tốc độ ghi</strong></td>
+<td>Trung bình (phụ thuộc Transaction)</td>
+<td><strong>Rất nhanh</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<h3>⚠️ Một lưu ý nhỏ:</h3>
+<p>Mặc dù NoSQL không cần Migration, nhưng bạn vẫn nên quản lý Index cho các Collection của JaVers (như <code>global_id_fk</code> hay <code>commit_date</code>) để đảm bảo khi dữ liệu log lên tới hàng triệu bản ghi, việc truy vấn lịch sử vẫn mượt mà.</p>
+<hr>
+<p>Khi sử dụng <strong>JaVers</strong> với <strong>MongoDB</strong>, cấu hình thực tế khá đơn giản vì Spring Boot Starter của JaVers sẽ tự động tìm kiếm Bean <code>MongoDatabase</code> hoặc các thông số kết nối từ <code>spring.data.mongodb</code>.</p>
+<p>Dưới đây là chi tiết cấu hình để kết nối và vận hành JaVers trong hệ sinh thái NoSQL.</p>
+<hr>
+<h1>Chủ đề 10.4: Cấu hình kết nối JaVers với MongoDB</h1>
+<h3>1. Lý thuyết: Cơ chế kết nối</h3>
+<p>JaVers sử dụng một Bean có tên là <code>JaversSqlRepository</code> cho SQL và <code>MongoRepository</code> cho NoSQL. Khi bạn thêm starter <code>javers-spring-boot-starter-mongo</code>, JaVers sẽ tự động cấu hình một <code>Javers</code> bean bằng cách sử dụng kết nối MongoDB hiện có của ứng dụng.</p>
+<p>Nếu bạn đã có cấu hình <code>spring.data.mongodb</code> để ứng dụng chạy, JaVers sẽ &quot;mượn&quot; kết nối đó để tạo các Collection của nó.</p>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4>A. Cấu hình trong <code>application.yml</code></h4>
+<p>Đây là cách đơn giản nhất. JaVers sẽ tự động đi theo cấu hình này.</p>
+<pre><code class="language-yaml">spring:
+  data:
+    mongodb:
+      uri: mongodb://admin:password@localhost:27017/my_audit_db
+      # Hoặc cấu hình tách rời:
+      # host: localhost
+      # port: 27017
+      # database: my_audit_db
+
+javers:
+  # Cấu hình tên Collection nếu muốn khác mặc định (jv_snapshots, jv_head_id)
+  snapshotsCacheSize: 1000
+  mappingStyle: FIELD
+  algorithm: LEVENSHTEIN_DISTANCE
+  # Tắt tự động tạo bảng nếu bạn muốn quản lý thủ công (ít dùng với Mongo)
+  # sqlSchemaManagementEnabled: false 
+</code></pre>
+<h4>B. Cấu hình bằng Java (Nếu cần tùy chỉnh sâu)</h4>
+<p>Trong trường hợp bạn dùng nhiều Database Mongo hoặc muốn tách biệt Database dành riêng cho Audit Log, bạn cần định nghĩa Bean thủ công:</p>
+<pre><code class="language-java">@Configuration
+public class JaversMongoConfig {
+
+    @Bean
+    public Javers javers(MongoDatabase mongoDatabase) {
+        // mongoDatabase này được Spring tự động inject từ kết nối chính
+        MongoRepository javersRepository = new MongoRepository(mongoDatabase);
+
+        return JaversBuilder.javers()
+                .registerJaversRepository(javersRepository)
+                .build();
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Tách biệt Database Audit (Audit Isolation)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn muốn dữ liệu chính nằm ở DB <code>app_data</code>, nhưng toàn bộ Log của JaVers phải nằm ở DB <code>app_audit</code> để tránh làm chậm các truy vấn nghiệp vụ.</li>
+<li><strong>Giải pháp:</strong> Bạn tạo 2 Mongo Client. Một cái dùng cho ứng dụng chính, một cái dùng để khởi tạo <code>MongoRepository</code> cho JaVers như ví dụ Java Config ở trên. Điều này giúp bạn dễ dàng backup hoặc dọn dẹp log mà không ảnh hưởng tới dữ liệu khách hàng.</li>
+</ul>
+<p><strong>Tình huống 2: Quản lý &quot;Hết hạn&quot; dữ liệu Log (TTL Index)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Dữ liệu Audit Log trong MongoDB ngày càng lớn và bạn chỉ muốn giữ lại log trong vòng 2 năm.</li>
+<li><strong>Giải pháp:</strong> Vì MongoDB hỗ trợ <strong>TTL Index</strong>, bạn có thể tạo một index trên trường <code>commitDate</code> trong collection <code>jv_snapshots</code> của JaVers.</li>
+</ul>
+<pre><code class="language-javascript">// Chạy lệnh này trong Mongo Shell
+db.jv_snapshots.createIndex({ &quot;commitDate&quot;: 1 }, { expireAfterSeconds: 63072000 })
+</code></pre>
+<p>MongoDB sẽ tự động xóa các log cũ, giúp hệ thống luôn gọn nhẹ mà không cần viết code xóa thủ công.</p>
+<p><strong>Tình huống 3: Tracking User thông qua JWT</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> JaVers cần biết ai là người thực hiện thay đổi để ghi vào cột <code>author</code>.</li>
+<li><strong>Giải pháp:</strong> Tích hợp với <code>AuthorProvider</code>. Khi User từ App/Frontend gửi request kèm JWT, Spring Security giải mã ra Username, JaVers sẽ gọi hàm này để lấy tên ghi vào log.</li>
+</ul>
+<pre><code class="language-java">@Component
+public class SpringSecurityAuthorProvider implements AuthorProvider {
+    @Override
+    public String provide() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) {
+            return &quot;system_user&quot;;
+        }
+        return auth.getName();
+    }
+}
+</code></pre>
+<hr>
+<h3>Tóm tắt cho Dev chuyển hệ:</h3>
+<p>Việc dùng JaVers với Mongo giống như bạn đang dùng một thư viện &quot;Auto-save history&quot; cho các JSON Object.</p>
+<ul>
+<li><strong>Frontend:</strong> Không cần quan tâm Backend lưu thế nào, chỉ cần gọi API <code>GET /history</code> và nhận về danh sách JSON các thay đổi.</li>
+<li><strong>Backend:</strong> Chỉ cần quan tâm đến việc cấu hình đúng <code>uri</code> của Mongo và đảm bảo <code>AuthorProvider</code> lấy được tên User.</li>
+</ul>
+
+          </article>
+
+          <!-- Navigation Footer (Next/Prev) -->
+          <div class="mt-12 pt-8 border-t border-gray-200 flex justify-between">
+            <a href="topic09.html" class="text-indigo-600 font-medium hover:text-indigo-800">← Chủ đề 9: Concurrency & Multi-threading</a><a href="topic_black_holes.html" class="text-indigo-600 font-medium hover:text-indigo-800">🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging →</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div
+      onclick="toggleSidebar()"
+      id="overlay"
+      class="fixed inset-0 bg-black/50 z-10 lg:hidden hidden"
+      style="display: none"
+    ></div>
+    <script>
+      // Simple overlay logic
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      // Sync overlay with sidebar state check if needed, but for "simplest" just toggle visibility in CSS or JS.
+      // Actually, let's keep it simple.
+    </script>
+  </body>
+</html>
