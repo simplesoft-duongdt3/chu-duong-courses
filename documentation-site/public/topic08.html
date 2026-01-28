@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>📘 Cẩm Nang Toàn Tập: JPA Relationships & Migration (2026 Edition)</title>
+    <!-- Tailwind CSS via CDN for simplicity and reliability -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for Sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <button
+            onclick="toggleSidebar()"
+            class="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <a
+            href="index.html"
+            class="ml-3 lg:ml-0 text-xl font-bold text-gray-900 tracking-tight"
+          >
+            <span class="text-indigo-600">Spring Boot</span> for Frontend Devs
+          </a>
+        </div>
+        <!-- Optional Top Links -->
+        <div class="hidden md:flex space-x-4">
+          <a
+            href="https://github.com/chu-duong-courses"
+            target="_blank"
+            class="text-gray-500 hover:text-gray-900 transition font-medium"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto flex items-start">
+      <!-- Sidebar Navigation -->
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="fixed inset-0 z-50 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 lg:w-64 lg:h-[calc(100vh-4rem)] lg:bg-transparent lg:border-r lg:border-gray-200 lg:sticky lg:top-16 overflow-y-auto"
+      >
+        <div class="p-4 flex justify-between items-center lg:hidden border-b border-gray-100 mb-2">
+            <span class="font-bold text-gray-900">Menu</span>
+            <button onclick="toggleSidebar()" class="p-2 -mr-2 text-gray-500 hover:text-gray-700">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="p-4 space-y-1">
+          <div class="mb-4">
+            <p
+              class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+            >
+              Chương trình học
+            </p>
+            <a href="index.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Spring Boot for Frontend Devs
+        </a>
+<a href="topic01.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 1: Request-Response Cycle & The Middleware Chain
+        </a>
+<a href="topic02.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 2: IoC Container & Dependency Injection (DI)
+        </a>
+<a href="topic03.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 3: Persistence với Spring Data JPA & Hibernate
+        </a>
+<a href="topic04.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 4: Transaction Management - Quản lý giao dịch
+        </a>
+<a href="topic05.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 5: Validation & Global Exception Handling
+        </a>
+<a href="topic06.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 6: Spring Security & JWT (Stateless Authentication)
+        </a>
+<a href="topic07.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 7: Logging & Monitoring (Actuator)
+        </a>
+<a href="topic08.html" class="block px-2 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-gray-100 group flex items-center">
+            📘 Cẩm Nang Toàn Tập: JPA Relationships & Migration (2026 Edition)
+        </a>
+<a href="topic_black_holes.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging
+        </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0 p-4 sm:p-6 lg:padding-8">
+        <div class="max-w-4xl mx-auto">
+          <article
+            class="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-xl shadow-none"
+          >
+            <h1>📘 Cẩm Nang Toàn Tập: JPA Relationships &amp; Migration (2026 Edition)</h1>
+<p>Tài liệu này tổng hợp toàn bộ kiến thức từ thiết kế Database, code Java (Entity &amp; Repository), SQL Migration và các ví dụ thực tế.</p>
+<hr>
+<h2>1. Mối quan hệ One-to-One (1 - 1)</h2>
+<p>Mỗi bản ghi ở bảng A liên kết với duy nhất một bản ghi ở bảng B.</p>
+<h3>📝 Hiện thực hóa &amp; Migration</h3>
+<ul>
+<li><strong>Cấu trúc:</strong> Một bên giữ khóa ngoại (<strong>Foreign Key</strong>) kèm ràng buộc <strong>UNIQUE</strong>.</li>
+<li><strong>SQL Migration:</strong></li>
+</ul>
+<pre><code class="language-sql">CREATE TABLE passports (
+    id BIGSERIAL PRIMARY KEY,
+    passport_number VARCHAR(20) NOT NULL UNIQUE
+);
+
+CREATE TABLE users (
+    id BIGSERIAL PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    passport_id BIGINT UNIQUE, -- UNIQUE tạo ra quan hệ 1-1
+    CONSTRAINT fk_user_passport FOREIGN KEY (passport_id) REFERENCES passports(id)
+);
+</code></pre>
+<h3>💻 Code Implementation (User &amp; Passport)</h3>
+<pre><code class="language-java">@Entity
+public class User {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = &quot;passport_id&quot;, referencedColumnName = &quot;id&quot;, unique = true)
+    private Passport passport;
+}
+
+@Entity
+public class Passport {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String passportNumber;
+
+    @OneToOne(mappedBy = &quot;passport&quot;) // Passport là bên bị động (Inverse side)
+    private User user;
+}
+</code></pre>
+<h3>💡 3 Ví dụ thực tế &amp; Query</h3>
+<ol>
+<li><strong>User &amp; Passport:</strong> <code>userRepo.findByPassport_PassportNumber(String num)</code></li>
+<li><strong>Store &amp; Manager:</strong> <code>managerRepo.findByStore_Id(Long id)</code> (1 cửa hàng - 1 quản lý).</li>
+<li><strong>Order &amp; Invoice:</strong> <code>invoiceRepo.findByOrder_OrderCode(String code)</code> (1 đơn hàng - 1 hóa đơn).</li>
+</ol>
+<hr>
+<h2>2. Mối quan hệ One-to-Many &amp; Many-to-One (1 - N)</h2>
+<p>Phía &quot;Nhiều&quot; luôn là phía giữ khóa ngoại. Đây là quan hệ phổ biến nhất.</p>
+<h3>📝 Hiện thực hóa &amp; Migration</h3>
+<ul>
+<li><strong>Cấu trúc:</strong> Bảng &quot;Nhiều&quot; (Con) chứa FK trỏ về bảng &quot;Một&quot; (Cha).</li>
+<li><strong>SQL Migration:</strong></li>
+</ul>
+<pre><code class="language-sql">CREATE TABLE posts (
+    id BIGSERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE comments (
+    id BIGSERIAL PRIMARY KEY,
+    content TEXT NOT NULL,
+    post_id BIGINT,
+    CONSTRAINT fk_comment_post FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
+);
+</code></pre>
+<h3>💻 Code Implementation (Post &amp; Comment)</h3>
+<pre><code class="language-java">@Entity
+public class Post {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String title;
+
+    @OneToMany(mappedBy = &quot;post&quot;, cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List&lt;Comment&gt; comments = new ArrayList&lt;&gt;();
+}
+
+@Entity
+public class Comment {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String content;
+    
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = &quot;post_id&quot;)
+    private Post post;
+}
+</code></pre>
+<h3>💡 3 Ví dụ thực tế &amp; Query</h3>
+<ol>
+<li><strong>Post &amp; Comment:</strong> <code>commentRepo.findByPostId(Long id)</code></li>
+<li><strong>Department &amp; Employee:</strong> <code>employeeRepo.findByDepartment_Name(String name)</code></li>
+<li><strong>Category &amp; Product:</strong> <code>productRepo.findByCategory_Id(Long catId)</code></li>
+</ol>
+<hr>
+<h2>3. Mối quan hệ Many-to-Many (N - N)</h2>
+<p>Cần một bảng trung gian (<strong>Join Table</strong>) để kết nối hai thực thể.</p>
+<h3>📝 Hiện thực hóa &amp; Migration</h3>
+<ul>
+<li><strong>Cấu trúc:</strong> Tạo bảng thứ 3 chứa 2 cột FK trỏ về 2 bảng chính.</li>
+<li><strong>SQL Migration:</strong></li>
+</ul>
+<pre><code class="language-sql">CREATE TABLE students (id BIGSERIAL PRIMARY KEY, name VARCHAR(100));
+CREATE TABLE courses (id BIGSERIAL PRIMARY KEY, title VARCHAR(100));
+
+CREATE TABLE student_course (
+    student_id BIGINT NOT NULL,
+    course_id BIGINT NOT NULL,
+    PRIMARY KEY (student_id, course_id),
+    CONSTRAINT fk_sc_student FOREIGN KEY (student_id) REFERENCES students(id),
+    CONSTRAINT fk_sc_course FOREIGN KEY (course_id) REFERENCES courses(id)
+);
+</code></pre>
+<h3>💻 Code Implementation (Student &amp; Course)</h3>
+<pre><code class="language-java">@Entity
+public class Student {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+
+    @ManyToMany
+    @JoinTable(
+        name = &quot;student_course&quot;,
+        joinColumns = @JoinColumn(name = &quot;student_id&quot;),
+        inverseJoinColumns = @JoinColumn(name = &quot;course_id&quot;)
+    )
+    private Set&lt;Course&gt; courses = new HashSet&lt;&gt;();
+}
+
+@Entity
+public class Course {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String title;
+
+    @ManyToMany(mappedBy = &quot;courses&quot;) // Course là bên bị động
+    private Set&lt;Student&gt; students = new HashSet&lt;&gt;();
+}
+</code></pre>
+<h3>💡 3 Ví dụ thực tế &amp; Query</h3>
+<ol>
+<li><strong>Student &amp; Course:</strong> <code>courseRepo.findByStudents_Id(Long id)</code></li>
+<li><strong>Post &amp; Tag:</strong> <code>postRepo.findByTags_Name(String tagName)</code></li>
+<li><strong>User &amp; Role:</strong> <code>userRepo.findByRoles_Name(String roleName)</code></li>
+</ol>
+<hr>
+<h2>⚙️ Bảng Tóm Tắt Kỹ Thuật</h2>
+<table>
+<thead>
+<tr>
+<th>Đặc điểm</th>
+<th>One-to-One</th>
+<th>One-to-Many</th>
+<th>Many-to-Many</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Phía giữ FK</strong></td>
+<td>Bên nào cũng được</td>
+<td>Phía &quot;Nhiều&quot; (Con)</td>
+<td>Bảng trung gian</td>
+</tr>
+<tr>
+<td><strong>mappedBy</strong></td>
+<td>Ở phía không giữ FK</td>
+<td>Ở phía &quot;Một&quot; (Cha)</td>
+<td>Ở phía &quot;Bị động&quot;</td>
+</tr>
+<tr>
+<td><strong>FetchType</strong></td>
+<td>Mặc định EAGER</td>
+<td>Mặc định LAZY</td>
+<td>Mặc định LAZY</td>
+</tr>
+<tr>
+<td><strong>Kiểu Collection</strong></td>
+<td>Không có</td>
+<td><code>List</code> hoặc <code>Set</code></td>
+<td>Ưu tiên dùng <code>Set</code></td>
+</tr>
+</tbody></table>
+<hr>
+<h2>🚀 Quy trình Migration &amp; Vận hành Chuẩn</h2>
+<ol>
+<li><strong>Cấu hình An toàn:</strong> Luôn dùng <code>spring.jpa.hibernate.ddl-auto=validate</code> trên Production.</li>
+<li><strong>Công cụ gen Migration:</strong> Sử dụng <strong>JPA Buddy</strong> trên IntelliJ IDEA. Công cụ này sẽ giúp bạn gen SQL từ Entity cực kỳ chính xác và nhanh chóng.</li>
+<li><strong>Đặt tên Constraint:</strong> Đừng để Hibernate tự đặt tên. Hãy đặt tên tường minh (ví dụ: <code>FK_COMMENT_POST</code>) trong <code>@JoinColumn</code> để dễ debug.</li>
+<li><strong>Xử lý hiệu năng:</strong> Luôn dùng <code>FetchType.LAZY</code> để tránh tải dữ liệu thừa. Nếu bị lỗi <code>LazyInitializationException</code>, hãy cân nhắc sử dụng <code>@EntityGraph</code> hoặc <code>JOIN FETCH</code> trong Query.</li>
+</ol>
+<hr>
+<h1>🚀 Thấu hiểu FetchType: EAGER vs LAZY</h1>
+<p>Trong JPA, có hai chiến lược tải dữ liệu chính. Việc chọn sai chiến lược là nguyên nhân hàng đầu dẫn đến ứng dụng chạy chậm hoặc lỗi &quot;huyền thoại&quot; <code>LazyInitializationException</code>.</p>
+<h2>1. FetchType.EAGER (Tải tức thì)</h2>
+<p>Khi bạn tải thực thể cha, Hibernate sẽ dùng câu lệnh <code>JOIN</code> để lấy luôn tất cả thực thể con liên quan ngay lập tức.</p>
+<ul>
+<li><strong>Cơ chế:</strong> &quot;Lấy tất cả một lần cho xong&quot;.</li>
+<li><strong>Mặc định cho:</strong> <code>@ManyToOne</code> và <code>@OneToOne</code>.</li>
+<li><strong>Ví dụ thực tế:</strong> <strong>User &amp; Role</strong>.</li>
+<li>Khi một người dùng đăng nhập, bạn <strong>luôn luôn</strong> cần biết họ có quyền gì (ADMIN hay USER) để phân quyền. Việc tải Role ngay cùng lúc với User là hợp lý vì dữ liệu Role thường rất nhỏ và luôn được sử dụng.</li>
+</ul>
+<pre><code class="language-java">@ManyToOne(fetch = FetchType.EAGER)
+@JoinColumn(name = &quot;role_id&quot;)
+private Role role; 
+// Ngay khi findById(user), Hibernate sẽ thực hiện LEFT JOIN roles để lấy dữ liệu.
+</code></pre>
+<hr>
+<h2>2. FetchType.LAZY (Tải trì hoãn)</h2>
+<p>Khi bạn tải thực thể cha, thực thể con sẽ <strong>không</strong> được tải lên. Hibernate chỉ tạo ra một đối tượng &quot;giả&quot; (Proxy). Chỉ khi nào bạn thực sự gọi đến hàm getter của thực thể con, Hibernate mới chạy thêm một câu lệnh SQL để lấy dữ liệu.</p>
+<ul>
+<li><strong>Cơ chế:</strong> &quot;Khi nào cần thì mới lấy&quot;.</li>
+<li><strong>Mặc định cho:</strong> <code>@OneToMany</code> và <code>@ManyToMany</code>.</li>
+<li><strong>Ví dụ thực tế:</strong> <strong>Post &amp; Comment</strong>.</li>
+<li>Một bài báo có thể có 1000 bình luận. Nếu người dùng chỉ lướt qua danh sách tiêu đề bài báo, việc tải 1000 bình luận cho mỗi bài báo là một thảm họa về hiệu năng (gây tốn RAM và chậm Database). Chỉ khi người dùng click vào xem chi tiết bài báo, chúng ta mới tải bình luận.</li>
+</ul>
+<pre><code class="language-java">@OneToMany(mappedBy = &quot;post&quot;, fetch = FetchType.LAZY)
+private List&lt;Comment&gt; comments;
+// findById(post) -&gt; Chỉ lấy thông tin Post.
+// post.getComments() -&gt; Lúc này SQL mới được thực thi để lấy Comments.
+</code></pre>
+<hr>
+<h2>📊 So sánh và Lời khuyên</h2>
+<table>
+<thead>
+<tr>
+<th>Đặc điểm</th>
+<th>EAGER</th>
+<th>LAZY</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Tốc độ tải cha</strong></td>
+<td>Chậm hơn (do phải JOIN nhiều bảng)</td>
+<td>Rất nhanh</td>
+</tr>
+<tr>
+<td><strong>Sử dụng bộ nhớ</strong></td>
+<td>Tốn nhiều RAM hơn</td>
+<td>Tiết kiệm RAM</td>
+</tr>
+<tr>
+<td><strong>Số lượng Query</strong></td>
+<td>Thường là 1 câu lệnh JOIN phức tạp</td>
+<td>Ban đầu 1, sau đó thêm N câu lệnh (N+1)</td>
+</tr>
+<tr>
+<td><strong>Rủi ro</strong></td>
+<td>Gây nặng hệ thống nếu data con lớn</td>
+<td>Lỗi <code>LazyInitializationException</code></td>
+</tr>
+</tbody></table>
+<h3>💡 Quy tắc &quot;vàng&quot; từ các chuyên gia:</h3>
+<ol>
+<li><strong>Luôn ưu tiên LAZY cho tất cả các quan hệ.</strong> Kể cả <code>@ManyToOne</code> (vốn mặc định là EAGER), bạn cũng nên chuyển sang LAZY nếu không chắc chắn luôn cần dữ liệu đó.</li>
+<li><strong>Chỉ dùng EAGER</strong> khi bạn chắc chắn 100% rằng: &quot;Cứ hễ đụng đến thằng A là chắc chắn phải dùng đến thằng B&quot; và dữ liệu thằng B rất nhỏ.</li>
+<li><strong>Cách xử lý LAZY trong Query:</strong> Nếu bạn dùng LAZY nhưng trong một số trường hợp cụ thể lại muốn lấy hết dữ liệu trong 1 câu Query để tối ưu, hãy sử dụng <code>JOIN FETCH</code> trong JPQL hoặc <code>@EntityGraph</code>.</li>
+</ol>
+<hr>
+<h2>⚠️ Cảnh báo lỗi: LazyInitializationException</h2>
+<p>Đây là lỗi xảy ra khi bạn cố gắng truy cập dữ liệu LAZY (ví dụ: <code>post.getComments()</code>) sau khi Session của Hibernate đã đóng (thường là sau khi kết thúc tầng Service).</p>
+<ul>
+<li><strong>Cách fix 1:</strong> Thêm <code>@Transactional</code> vào method ở Service để giữ Session mở lâu hơn.</li>
+<li><strong>Cách fix 2:</strong> Sử dụng DTO để map dữ liệu ngay tại tầng Service trước khi trả về Controller.</li>
+<li><strong>Cách fix 3 (Khuyên dùng):</strong> Sử dụng <code>JOIN FETCH</code> trong Repository để lấy dữ liệu chủ động cho những trường hợp cần thiết.</li>
+</ul>
+<hr>
+<p>Đây là &quot;vũ khí&quot; tối thượng để bạn giải quyết triệt để vấn đề hiệu năng trong JPA. Khi bạn sử dụng <code>JOIN FETCH</code>, Hibernate sẽ thực hiện một câu lệnh SQL <code>JOIN</code> duy nhất để lấy cả thực thể Cha và các thực thể Con, thay vì thực hiện N+1 câu lệnh riêng lẻ.</p>
+<hr>
+<h3>1. Vấn đề N+1 là gì? (Nhắc lại nhanh)</h3>
+<p>Giả sử bạn có 10 bài viết (<strong>Post</strong>), mỗi bài có nhiều bình luận (<strong>Comment</strong>).</p>
+<ul>
+<li><strong>Không có JOIN FETCH:</strong> 1. Một câu lệnh lấy 10 Posts.</li>
+</ul>
+<ol start="2">
+<li>Với mỗi Post, Hibernate chạy thêm 1 câu lệnh lấy Comments -&gt; Tổng cộng <strong>1 + 10 = 11 queries</strong>.</li>
+</ol>
+<ul>
+<li><strong>Có JOIN FETCH:</strong> Chỉ <strong>1 query</strong> duy nhất lấy tất cả Posts và Comments đi kèm.</li>
+</ul>
+<hr>
+<h3>2. Cách viết Query JOIN FETCH</h3>
+<p>Bạn có thể thực hiện việc này ngay trong tầng <strong>Repository</strong> bằng cách sử dụng annotation <code>@Query</code>.</p>
+<h4>A. Đối với quan hệ One-to-Many (Ví dụ: Post &amp; Comments)</h4>
+<pre><code class="language-java">public interface PostRepository extends JpaRepository&lt;Post, Long&gt; {
+
+    @Query(&quot;SELECT p FROM Post p LEFT JOIN FETCH p.comments WHERE p.id = :id&quot;)
+    Optional&lt;Post&gt; findByIdWithComments(@Param(&quot;id&quot;) Long id);
+
+    @Query(&quot;SELECT DISTINCT p FROM Post p LEFT JOIN FETCH p.comments&quot;)
+    List&lt;Post&gt; findAllWithComments();
+}
+</code></pre>
+<ul>
+<li><strong><code>LEFT JOIN FETCH</code></strong>: Lấy Post ngay cả khi nó không có Comment nào.</li>
+<li><strong><code>DISTINCT</code></strong>: Cần thiết khi dùng <code>JOIN FETCH</code> với <code>List</code> để tránh kết quả bị trùng lặp (do cơ chế Cartesian Product của SQL).</li>
+</ul>
+<h4>B. Đối với quan hệ Many-to-One (Ví dụ: Employee &amp; Department)</h4>
+<p>Mặc dù <code>@ManyToOne</code> thường là <code>EAGER</code>, nhưng nếu bạn đã chuyển nó sang <code>LAZY</code> để tối ưu, hãy dùng <code>JOIN FETCH</code> khi cần:</p>
+<pre><code class="language-java">public interface EmployeeRepository extends JpaRepository&lt;Employee, Long&gt; {
+
+    @Query(&quot;SELECT e FROM Employee e JOIN FETCH e.department&quot;)
+    List&lt;Employee&gt; findAllEmployeesWithDepartment();
+}
+</code></pre>
+<hr>
+<h3>3. Giải pháp thay thế hiện đại: <code>@EntityGraph</code></h3>
+<p>Nếu bạn không muốn viết câu query JPQL dài dòng, Spring Data JPA cung cấp <code>@EntityGraph</code>. Đây là cách &quot;cấu hình&quot; Fetch Plan một cách linh hoạt.</p>
+<pre><code class="language-java">public interface PostRepository extends JpaRepository&lt;Post, Long&gt; {
+
+    @EntityGraph(attributePaths = {&quot;comments&quot;})
+    List&lt;Post&gt; findAll(); 
+    // Phương thức này giờ đây sẽ tự động FETCH comments trong 1 query
+}
+</code></pre>
+<hr>
+<h3>4. So sánh nhanh</h3>
+<table>
+<thead>
+<tr>
+<th>Đặc điểm</th>
+<th>JPQL JOIN FETCH</th>
+<th>@EntityGraph</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Độ linh hoạt</strong></td>
+<td>Rất cao, tùy biến được WHERE, GROUP BY...</td>
+<td>Thấp hơn, chủ yếu dùng để khai báo các trường cần lấy.</td>
+</tr>
+<tr>
+<td><strong>Sự tường minh</strong></td>
+<td>Nhìn vào thấy ngay câu SQL sẽ chạy.</td>
+<td>Ngắn gọn, code sạch (clean code).</td>
+</tr>
+<tr>
+<td><strong>Khuyên dùng</strong></td>
+<td>Khi câu truy vấn phức tạp, nhiều điều kiện.</td>
+<td>Khi bạn chỉ muốn lấy thêm dữ liệu con một cách đơn giản.</td>
+</tr>
+</tbody></table>
+<hr>
+<h3>⚠️ Lưu ý quan trọng khi dùng JOIN FETCH</h3>
+<ol>
+<li><strong>Đừng Fetch quá nhiều:</strong> Đừng <code>JOIN FETCH</code> 3-4 bảng cùng lúc (ví dụ: Post -&gt; Comments -&gt; Authors -&gt; Tags). Điều này tạo ra &quot;Cartesian Product&quot; cực lớn, làm tràn bộ nhớ và chậm Database.</li>
+<li><strong>Pagination (Phân trang):</strong> Hibernate <strong>không thể</strong> phân trang (<code>Pageable</code>) chính xác trong SQL khi dùng <code>JOIN FETCH</code> với bộ sưu tập (<code>Collection</code>). Nó sẽ tải hết dữ liệu vào RAM rồi mới phân trang (rất nguy hiểm).</li>
+</ol>
+<ul>
+<li><em>Giải pháp:</em> Nếu cần phân trang, hãy fetch phía &quot;Nhiều&quot; bằng cách dùng <code>@BatchSize</code> hoặc dùng 2 câu query riêng biệt.</li>
+</ul>
+<p>Đây là một trong những chủ đề &quot;nâng cao&quot; nhất và dễ gây lỗi hệ thống nhất trong Spring Boot JPA. Nếu bạn dùng <code>Pageable</code> kết hợp với <code>JOIN FETCH</code> cho một quan hệ Một-Nhiều, Hibernate sẽ quăng một cảnh báo cực kỳ nguy hiểm:</p>
+<blockquote>
+<p><em>“firstResult/maxResults specified with collection fetch; applying in memory!”</em></p>
+</blockquote>
+<p><strong>Điều này có nghĩa là:</strong> Hibernate sẽ lôi <strong>toàn bộ</strong> dữ liệu từ Database vào RAM, sau đó mới tự cắt xén để phân trang trong bộ nhớ. Nếu bảng của bạn có 1 triệu dòng, Server của bạn sẽ &quot;đắp chiếu&quot; ngay lập tức (OutOfMemory).</p>
+<p>Dưới đây là 3 cách xử lý an toàn và chuyên nghiệp nhất:</p>
+<hr>
+<h3>Cách 1: Sử dụng <code>@BatchSize</code> (Đơn giản &amp; Hiệu quả)</h3>
+<p>Thay vì cố gắng lấy tất cả trong một câu Query duy nhất, chúng ta chia để trị. Bạn lấy danh sách &quot;Cha&quot; trước, sau đó Hibernate sẽ tự động gom các ID của cha để lấy &quot;Con&quot; theo từng đợt (Batch).</p>
+<p><strong>Entity:</strong></p>
+<pre><code class="language-java">@Entity
+public class Post {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @BatchSize(size = 20) // Hibernate sẽ lấy comments bằng câu lệnh: WHERE post_id IN (?, ?, ..., ?)
+    @OneToMany(mappedBy = &quot;post&quot;)
+    private List&lt;Comment&gt; comments;
+}
+</code></pre>
+<p><strong>Repository:</strong></p>
+<pre><code class="language-java">// Query bình thường, không dùng JOIN FETCH cho comments
+Page&lt;Post&gt; findAll(Pageable pageable);
+</code></pre>
+<ul>
+<li><strong>Ưu điểm:</strong> Phân trang cực nhanh ở mức Database (SQL dùng <code>LIMIT</code>, <code>OFFSET</code> chuẩn).</li>
+<li><strong>Nhược điểm:</strong> Vẫn tốn thêm một vài câu query phụ, nhưng số lượng query được giảm thiểu đáng kể nhờ <code>size</code>.</li>
+</ul>
+<hr>
+<h3>Cách 2: Truy vấn 2 bước (Bí kíp thực chiến)</h3>
+<p>Đây là cách các &quot;pro&quot; thường dùng để tối ưu hóa tuyệt đối. Chúng ta tách việc phân trang và việc lấy dữ liệu liên quan ra làm 2 bước riêng biệt.</p>
+<p><strong>Bước 1:</strong> Lấy danh sách ID của các bản ghi &quot;Cha&quot; đã được phân trang.<br><strong>Bước 2:</strong> Lấy toàn bộ dữ liệu kèm các quan hệ dựa trên danh sách ID đó.</p>
+<p><strong>Repository:</strong></p>
+<pre><code class="language-java">public interface PostRepository extends JpaRepository&lt;Post, Long&gt; {
+    
+    // 1. Chỉ lấy danh sách ID (nhẹ và nhanh)
+    @Query(&quot;SELECT p.id FROM Post p&quot;)
+    Page&lt;Long&gt; findAllIds(Pageable pageable);
+
+    // 2. Lấy dữ liệu đầy đủ theo danh sách ID (dùng IN)
+    @Query(&quot;SELECT DISTINCT p FROM Post p LEFT JOIN FETCH p.comments WHERE p.id IN :ids&quot;)
+    List&lt;Post&gt; findAllByIdInWithComments(@Param(&quot;ids&quot;) List&lt;Long&gt; ids);
+}
+</code></pre>
+<p><strong>Service:</strong></p>
+<pre><code class="language-java">// 1. Lấy danh sách ID đã phân trang
+Page&lt;Long&gt; postIds = postRepository.findAllIds(pageable);
+
+// 2. Fetch toàn bộ dữ liệu dựa trên danh sách ID đó
+List&lt;Post&gt; posts = postRepository.findAllByIdInWithComments(postIds.getContent());
+
+// 3. Trả về đối tượng Page thủ công
+return new PageImpl&lt;&gt;(posts, pageable, postIds.getTotalElements());
+</code></pre>
+<hr>
+<h3>Cách 3: Cấu hình Global (Khuyên dùng)</h3>
+<p>Thay vì đặt <code>@BatchSize</code> ở từng Entity, bạn có thể cấu hình cho toàn bộ dự án trong file <code>application.yml</code>. Đây là cách làm &quot;sạch&quot; code nhất.</p>
+<pre><code class="language-yaml">spring:
+  jpa:
+    properties:
+      hibernate:
+        default_batch_fetch_size: 20
+</code></pre>
+<p>Khi có cấu hình này, bất cứ khi nào bạn truy cập vào một quan hệ <code>LAZY</code>, Hibernate sẽ tự động chờ để gom đủ 20 ID rồi mới thực hiện một câu Query lấy dữ liệu con một thể. Nó giải quyết được 80% vấn đề N+1 mà vẫn cho phép phân trang an toàn.</p>
+<hr>
+<h3>Phân trang an toàn (Safe Pagination)</h3>
+<p><strong>Vấn đề:</strong> Không dùng <code>JOIN FETCH</code> cùng với <code>Pageable</code> cho quan hệ Một-Nhiều.<br><strong>Giải pháp:</strong></p>
+<ul>
+<li><strong>Bước 1:</strong> Cấu hình <code>default_batch_fetch_size: 20</code> trong <code>application.yml</code>.</li>
+<li><strong>Bước 2:</strong> Truy vấn phân trang bình thường trên thực thể Cha.</li>
+<li><strong>Bước 3:</strong> Để Hibernate tự động batch-fetch thực thể con khi cần.</li>
+</ul>
+<h3>📊 Bảng tổng kết chiến lược</h3>
+<table>
+<thead>
+<tr>
+<th>Tình huống</th>
+<th>Chiến lược</th>
+<th>Annotation/Config</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Cần lấy 1 đối tượng duy nhất</td>
+<td><code>JOIN FETCH</code></td>
+<td><code>@Query</code></td>
+</tr>
+<tr>
+<td>Cần lấy danh sách, không phân trang</td>
+<td><code>JOIN FETCH</code> + <code>DISTINCT</code></td>
+<td><code>@Query</code></td>
+</tr>
+<tr>
+<td>Cần lấy danh sách + Phân trang</td>
+<td><strong>Batch Fetching</strong></td>
+<td><code>default_batch_fetch_size</code></td>
+</tr>
+<tr>
+<td>Quan hệ 1-1 hoặc N-1</td>
+<td><code>JOIN FETCH</code> thoải mái</td>
+<td>N/A</td>
+</tr>
+</tbody></table>
+<h3>Orphan Removal</h3>
+<p><code>orphanRemoval = true</code> là một thiết lập cực kỳ quan trọng trong JPA, thường bị nhầm lẫn với <code>CascadeType.REMOVE</code>.</p>
+<p>Hiểu một cách đơn giản nhất: <strong>&quot;Khi đứa con bị bỏ rơi (không còn liên kết với cha), nó sẽ bị xóa khỏi xã hội (Database).&quot;</strong></p>
+<p>Dưới đây là chi tiết về cách nó hoạt động và sự khác biệt cốt lõi:</p>
+<hr>
+<h4>Ý nghĩa của <code>orphanRemoval = true</code></h4>
+<p>Trong mối quan hệ <strong>Một - Nhiều</strong> hoặc <strong>Một - Một</strong>, khi bạn loại bỏ một thực thể con ra khỏi danh sách (Collection) của thực thể cha, JPA sẽ coi thực thể con đó là một &quot;trẻ mồ côi&quot; (orphan).</p>
+<ul>
+<li><strong>Nếu <code>orphanRemoval = false</code> (Mặc định):</strong> JPA chỉ ngắt kết nối (set <code>post_id = NULL</code> trong DB). Bản ghi con vẫn tồn tại &quot;vất vưởng&quot; trong Database.</li>
+<li><strong>Nếu <code>orphanRemoval = true</code>:</strong> JPA sẽ tự động thực thi lệnh <code>DELETE</code> bản ghi con đó trong Database ngay khi nó bị xóa khỏi danh sách của cha.</li>
+</ul>
+<hr>
+<h4>So sánh <code>orphanRemoval = true</code> vs <code>CascadeType.REMOVE</code></h4>
+<p>Đây là phần dễ gây lú nhất. Hãy nhìn vào bảng so sánh này:</p>
+<table>
+<thead>
+<tr>
+<th>Tình huống</th>
+<th><code>CascadeType.REMOVE</code></th>
+<th><code>orphanRemoval = true</code></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Xóa thực thể Cha</strong></td>
+<td>Thực thể Con bị xóa theo.</td>
+<td>Thực thể Con bị xóa theo.</td>
+</tr>
+<tr>
+<td><strong>Xóa Con khỏi danh sách của Cha</strong></td>
+<td><strong>Không xóa</strong> Con trong DB (chỉ ngắt liên kết).</td>
+<td><strong>Xóa luôn</strong> bản ghi Con trong DB.</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>Chốt lại:</strong> <code>orphanRemoval</code> mạnh hơn <code>CascadeType.REMOVE</code> ở chỗ nó kiểm soát được cả việc &quot;ngắt kết nối&quot; giữa hai thực thể.</p>
+</blockquote>
+<hr>
+<h4>Ví dụ Code thực tế</h4>
+<p>Hãy quay lại ví dụ <strong>Post (Bài viết)</strong> và <strong>Comment (Bình luận)</strong>:</p>
+<pre><code class="language-java">@Entity
+public class Post {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    // Khi xóa một Comment khỏi list này, Comment đó sẽ bị DELETE khỏi DB
+    @OneToMany(mappedBy = &quot;post&quot;, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List&lt;Comment&gt; comments = new ArrayList&lt;&gt;();
+}
+</code></pre>
+<p><strong>Cách thực hiện xóa trong Service:</strong></p>
+<pre><code class="language-java">@Transactional
+public void removeComment(Long postId, Long commentId) {
+    Post post = postRepository.findById(postId).orElseThrow();
+    
+    // Chỉ cần xóa khỏi List trong Java
+    post.getComments().removeIf(c -&gt; c.getId().equals(commentId));
+    
+    // JPA sẽ tự động sinh ra câu lệnh: DELETE FROM comments WHERE id = :commentId
+}
+</code></pre>
+<hr>
+<h3>4. Khi nào nên dùng?</h3>
+<ul>
+<li><p><strong>Nên dùng:</strong> Khi thực thể con <strong>không thể tồn tại độc lập</strong> nếu thiếu thực thể cha.</p>
+</li>
+<li><p><em>Ví dụ:</em> Một <code>Comment</code> không thể tồn tại nếu không thuộc về <code>Post</code> nào. Một <code>OrderItem</code> (dòng hàng) không thể tồn tại nếu không có <code>Order</code> (đơn hàng).</p>
+</li>
+<li><p><strong>Không nên dùng:</strong> Khi thực thể con có thể tồn tại độc lập hoặc có thể chuyển sang &quot;cha&quot; khác.</p>
+</li>
+<li><p><em>Ví dụ:</em> <code>Employee</code> và <code>Department</code>. Nếu nhân viên rời phòng ban này, họ có thể sang phòng ban khác hoặc chờ phân công, không nên xóa họ khỏi công ty.</p>
+</li>
+</ul>
+<hr>
+<h3>⚠️ Lưu ý quan trọng</h3>
+<p>Để <code>orphanRemoval</code> hoạt động chính xác, bạn nên:</p>
+<ol>
+<li><strong>Sử dụng trên phía chủ động (Parent side):</strong> Thường là <code>@OneToMany</code> hoặc <code>@OneToOne</code>.</li>
+<li><strong>Không gán danh sách mới:</strong> Thay vì <code>post.setComments(newArrayList)</code>, hãy dùng <code>post.getComments().clear()</code> và <code>post.getComments().addAll(newList)</code> để Hibernate có thể theo dõi các đối tượng bị loại bỏ.</li>
+</ol>
+
+          </article>
+
+          <!-- Navigation Footer (Next/Prev) -->
+          <div class="mt-12 pt-8 border-t border-gray-200 flex justify-between">
+            <a href="topic07.html" class="text-indigo-600 font-medium hover:text-indigo-800">← Chủ đề 7: Logging & Monitoring (Actuator)</a><a href="topic_black_holes.html" class="text-indigo-600 font-medium hover:text-indigo-800">🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging →</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div
+      onclick="toggleSidebar()"
+      id="overlay"
+      class="fixed inset-0 bg-black/50 z-10 lg:hidden hidden"
+      style="display: none"
+    ></div>
+    <script>
+      // Simple overlay logic
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      // Sync overlay with sidebar state check if needed, but for "simplest" just toggle visibility in CSS or JS.
+      // Actually, let's keep it simple.
+    </script>
+  </body>
+</html>

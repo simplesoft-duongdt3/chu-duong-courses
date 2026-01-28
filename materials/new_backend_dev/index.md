@@ -60,6 +60,13 @@ Backend không có `console.log` để user chụp màn hình gửi cho bạn đ
 * **Logging (SLF4J/Logback):** Ghi log sao cho hiệu quả, không làm đầy ổ cứng nhưng vẫn đủ để debug.
 * **Spring Boot Actuator:** Theo dõi "sức khỏe" của hệ thống (CPU, RAM, DB Connection).
 
+### 8. Cẩm Nang Toàn Tập: JPA Relationships & Migration
+
+Tổng hợp toàn bộ kiến thức từ thiết kế Database, code Java (Entity & Repository), SQL Migration và các ví dụ thực tế.
+
+* **JPA Relationships:**
+* **Migration:**
+
 ---
 
 ### Bảng so sánh nhanh để bạn dễ hình dung:
