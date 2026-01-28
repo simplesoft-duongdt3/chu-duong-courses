@@ -1,0 +1,431 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chủ đề 6: Spring Security & JWT (Stateless Authentication)</title>
+    <!-- Tailwind CSS via CDN for simplicity and reliability -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for Sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <button
+            onclick="toggleSidebar()"
+            class="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <a
+            href="index.html"
+            class="ml-3 lg:ml-0 text-xl font-bold text-gray-900 tracking-tight"
+          >
+            <span class="text-indigo-600">Spring Boot</span> for Frontend Devs
+          </a>
+        </div>
+        <!-- Optional Top Links -->
+        <div class="hidden md:flex space-x-4">
+          <a
+            href="https://github.com/chu-duong-courses"
+            target="_blank"
+            class="text-gray-500 hover:text-gray-900 transition font-medium"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto flex items-start">
+      <!-- Sidebar Navigation -->
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="fixed inset-0 z-50 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 lg:w-64 lg:h-[calc(100vh-4rem)] lg:bg-transparent lg:border-r lg:border-gray-200 lg:sticky lg:top-16 overflow-y-auto"
+      >
+        <div class="p-4 flex justify-between items-center lg:hidden border-b border-gray-100 mb-2">
+            <span class="font-bold text-gray-900">Menu</span>
+            <button onclick="toggleSidebar()" class="p-2 -mr-2 text-gray-500 hover:text-gray-700">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="p-4 space-y-1">
+          <div class="mb-4">
+            <p
+              class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+            >
+              Chương trình học
+            </p>
+            <a href="index.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Spring Boot for Frontend Devs
+        </a>
+<a href="topic01.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 1: Request-Response Cycle & The Middleware Chain
+        </a>
+<a href="topic02.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 2: IoC Container & Dependency Injection (DI)
+        </a>
+<a href="topic03.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 3: Persistence với Spring Data JPA & Hibernate
+        </a>
+<a href="topic04.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 4: Transaction Management - Quản lý giao dịch
+        </a>
+<a href="topic05.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 5: Validation & Global Exception Handling
+        </a>
+<a href="topic06.html" class="block px-2 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 6: Spring Security & JWT (Stateless Authentication)
+        </a>
+<a href="topic07.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 7: Logging & Monitoring (Actuator)
+        </a>
+<a href="topic_black_holes.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging
+        </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0 p-4 sm:p-6 lg:padding-8">
+        <div class="max-w-4xl mx-auto">
+          <article
+            class="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-xl shadow-none"
+          >
+            <h1>Chủ đề 6: Spring Security &amp; JWT (Stateless Authentication)</h1>
+<p>Trong Spring Boot 3, Spring Security đã thay đổi hoàn toàn cách cấu hình (chuyển sang dạng Lambda). Chúng ta sẽ tập trung vào cơ chế <strong>Stateless</strong> (không lưu Session trên server), vốn là tiêu chuẩn cho các ứng dụng Web/App hiện đại.</p>
+<h3>1. Lý thuyết: Quy trình &quot;Soi chiếu&quot; của Security Filter Chain</h3>
+<p>Spring Security không phải là một đoạn code nằm trong Controller. Nó là một <strong>chuỗi các bộ lọc (Filter Chain)</strong> đứng chắn trước <code>DispatcherServlet</code>.</p>
+<ol>
+<li><strong>Request tới:</strong> Mang theo Header <code>Authorization: Bearer &lt;token&gt;</code>.</li>
+<li><strong>JwtFilter:</strong> Đây là chốt chặn quan trọng nhất bạn phải tự viết. Nó bóc tách Token, kiểm tra chữ ký (Signature) và thời hạn (Expiration).</li>
+<li><strong>SecurityContextHolder:</strong> Nếu Token hợp lệ, Filter sẽ &quot;đóng dấu&quot; và lưu thông tin User vào đây. Các tầng sau (Service/Controller) chỉ cần nhìn vào dấu này là biết User là ai.</li>
+<li><strong>Authorization:</strong> Kiểm tra xem User đó có quyền (Role) vào API này không.</li>
+</ol>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình (Spring Boot 3 style)</h3>
+<h4>A. JwtUtils (Lớp tiện ích để tạo và giải mã Token)</h4>
+<p>Sử dụng thư viện <code>jjwt</code>.</p>
+<pre><code class="language-java">@Component
+public class JwtUtils {
+    private String secretKey = &quot;chuoi_bi_mat_cuc_ky_dai_va_an_toan_nay_nhe&quot;;
+
+    public String generateToken(String username) {
+        return Jwts.builder()
+                .setSubject(username)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 ngày
+                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .compact();
+    }
+
+    public String getUsernameFromToken(String token) {
+        return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    }
+}
+</code></pre>
+<h4>B. JwtAuthenticationFilter (Chốt chặn cửa khẩu)</h4>
+<p>Mỗi request đều phải đi qua đây.</p>
+<pre><code class="language-java">public class JwtFilter extends OncePerRequestFilter {
+    @Autowired private JwtUtils jwtUtils;
+    @Autowired private UserDetailsService userDetailsService;
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) 
+            throws ServletException, IOException {
+        
+        String authHeader = request.getHeader(&quot;Authorization&quot;);
+        if (authHeader != null &amp;&amp; authHeader.startsWith(&quot;Bearer &quot;)) {
+            String token = authHeader.substring(7);
+            String username = jwtUtils.getUsernameFromToken(token);
+
+            if (username != null &amp;&amp; SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                // &quot;Đóng dấu&quot; hợp lệ vào Context
+                UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(auth);
+            }
+        }
+        chain.doFilter(request, response);
+    }
+}
+</code></pre>
+<h4>C. Cấu hình Security (SecurityConfig)</h4>
+<p>Đây là nơi bạn phân luồng: API nào công khai, API nào cần đăng nhập.</p>
+<pre><code class="language-java">@Configuration
+@EnableWebSecurity
+@EnableMethodSecurity // Cho phép dùng @PreAuthorize ở Controller
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.csrf(csrf -&gt; csrf.disable()) // Tắt CSRF vì dùng JWT
+            .sessionManagement(session -&gt; session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .authorizeHttpRequests(auth -&gt; auth
+                .requestMatchers(&quot;/api/auth/**&quot;).permitAll() // API đăng nhập cho phép tất cả
+                .anyRequest().authenticated() // Còn lại phải có Token
+            );
+        
+        // Thêm JwtFilter vào trước bộ lọc UsernamePassword của Spring
+        http.addFilterBefore(jwtFilter(), UsernamePasswordAuthenticationFilter.class);
+        
+        return http.build();
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Public vs Private API</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn làm trang thương mại điện tử. Trang &quot;Danh sách sản phẩm&quot; ai cũng xem được, nhưng &quot;Thêm vào giỏ hàng&quot; thì phải đăng nhập.</li>
+<li><strong>Giải pháp:</strong> Cấu hình <code>requestMatchers(&quot;/api/products/**&quot;).permitAll()</code> trong SecurityConfig. Lúc này, nếu khách vãng lai vào xem, <code>JwtFilter</code> sẽ chạy nhưng không tìm thấy Token, <code>SecurityContext</code> trống, nhưng Spring vẫn cho qua vì URL này nằm trong danh sách <code>permitAll</code>.</li>
+</ul>
+<p><strong>Tình huống 2: Phân quyền theo Role (Admin/User)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn muốn chỉ Admin mới có quyền xóa sản phẩm.</li>
+<li><strong>Giải pháp:</strong> Sử dụng Annotation ngay tại Controller:</li>
+</ul>
+<pre><code class="language-java">@DeleteMapping(&quot;/{id}&quot;)
+@PreAuthorize(&quot;hasRole(&#39;ADMIN&#39;)&quot;)
+public void delete(@PathVariable Long id) { ... }
+</code></pre>
+<p>Nếu một User thường cố tình gọi API này bằng Postman, Spring sẽ trả về mã <code>403 Forbidden</code> ngay lập tức.</p>
+<p><strong>Tình huống 3: Token hết hạn (Token Expiration/Refresh)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Token chỉ có hạn 1 tiếng để bảo mật. Frontend làm thế nào để user không phải đăng nhập lại liên tục?</li>
+<li><strong>Giải pháp:</strong> Khi <code>JwtFilter</code> thấy Token hết hạn, nó trả về <code>401 Unauthorized</code>. Frontend (Axios Interceptor) bắt mã 401 này, gọi API <code>/api/auth/refresh</code> (dùng <strong>Refresh Token</strong> lưu trong HttpOnly Cookie) để lấy Access Token mới rồi tự động thực hiện lại request cũ. Người dùng sẽ không cảm thấy gì cả (Silent Refresh).</li>
+</ul>
+<hr>
+<h3>Bảng so sánh cho Dev Frontend</h3>
+<table>
+<thead>
+<tr>
+<th>Khái niệm</th>
+<th>Frontend</th>
+<th>Backend (Spring Security)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Authentication</strong></td>
+<td>Gửi Username/Password</td>
+<td>Xác thực và trả về JWT</td>
+</tr>
+<tr>
+<td><strong>Authorization</strong></td>
+<td>Ẩn/Hiện nút trên UI</td>
+<td>Chặn API từ tầng Filter (403)</td>
+</tr>
+<tr>
+<td><strong>Trạng thái (State)</strong></td>
+<td>Giữ Token trong Memory/Storage</td>
+<td>Không giữ gì (Stateless), giải mã Token mỗi request</td>
+</tr>
+<tr>
+<td><strong>Bảo mật</strong></td>
+<td>Chống XSS (LocalStorage)</td>
+<td>Chống SQL Injection, CORS, Brute force</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>Lời khuyên từ &quot;hậu phương&quot;:</strong> Đừng bao giờ lưu thông tin nhạy cảm (như quyền hạn hay số dư) vào Payload của JWT mà không có cơ chế kiểm tra lại ở DB. JWT có thể bị giải mã (Decode) cực dễ dàng bởi các công cụ online, nó chỉ an toàn vì có phần <strong>Signature</strong> để Backend biết nó có bị sửa đổi hay không thôi.</p>
+<hr>
+<p>Chào bạn! Việc hiểu rõ <strong>Refresh Token Flow</strong> là điểm phân biệt giữa một hệ thống &quot;chạy được&quot; và một hệ thống &quot;chạy an toàn, chuyên nghiệp&quot;.</p>
+<p>Nếu Access Token (AT) giống như một cái <strong>vé xem phim</strong> (ngắn hạn, dùng để vào cửa), thì Refresh Token (RT) giống như cái <strong>chứng minh thư</strong> (dài hạn, dùng để xin cấp lại vé mới mà không cần check-in lại từ đầu).</p>
+<hr>
+<h1>Chủ đề 6.1: Refresh Token Flow - Duy trì phiên đăng nhập an toàn</h1>
+<h3>1. Lý thuyết: Tại sao không dùng Access Token vô hạn?</h3>
+<p>Nếu bạn để AT có hạn dùng 1 năm, khi user bị lộ Token, kẻ xấu sẽ có toàn quyền truy cập trong 1 năm đó mà bạn không có cách nào ngăn chặn (vì JWT là stateless).<br><strong>Giải pháp:</strong></p>
+<ul>
+<li><strong>Access Token (AT):</strong> Sống cực ngắn (15 - 30 phút). Nếu mất, thiệt hại nhỏ.</li>
+<li><strong>Refresh Token (RT):</strong> Sống dài (7 - 30 ngày). Chỉ dùng để đổi lấy AT mới. RT thường được Backend lưu vào Database để có thể <strong>thu hồi (Revoke)</strong> khi cần.</li>
+</ul>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4>A. Refresh Token Entity (Lưu vào DB)</h4>
+<p>Khác với AT (không lưu DB), RT cần được lưu lại để chúng ta có thể &quot;hủy&quot; quyền truy cập của User nếu phát hiện nghi vấn.</p>
+<pre><code class="language-java">@Entity
+@Getter @Setter
+public class RefreshToken {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(nullable = false, unique = true)
+    private String token;
+
+    @Column(nullable = false)
+    private Instant expiryDate;
+
+    @OneToOne
+    @JoinColumn(name = &quot;user_id&quot;, referencedColumnName = &quot;id&quot;)
+    private User user;
+}
+</code></pre>
+<h4>B. Refresh Service (Xử lý logic đổi vé)</h4>
+<pre><code class="language-java">@Service
+public class RefreshTokenService {
+    @Autowired private RefreshTokenRepository refreshTokenRepository;
+    @Autowired private JwtUtils jwtUtils;
+
+    public String createRefreshToken(User user) {
+        RefreshToken rt = new RefreshToken();
+        rt.setUser(user);
+        rt.setToken(UUID.randomUUID().toString());
+        rt.setExpiryDate(Instant.now().plusSeconds(86400 * 7)); // 7 ngày
+        return refreshTokenRepository.save(rt).getToken();
+    }
+
+    @Transactional
+    public String refreshAccessToken(String requestToken) {
+        return refreshTokenRepository.findByToken(requestToken)
+            .filter(rt -&gt; rt.getExpiryDate().isAfter(Instant.now())) // Check hết hạn
+            .map(rt -&gt; jwtUtils.generateAccessToken(rt.getUser().getUsername())) // Tạo AT mới
+            .orElseThrow(() -&gt; new AppException(ErrorCode.TOKEN_EXPIRED));
+    }
+}
+</code></pre>
+<h4>C. Cấu hình HttpOnly Cookie (Bảo mật tối thượng)</h4>
+<p>Thay vì trả RT về JSON cho Frontend lưu vào LocalStorage (dễ bị XSS), Backend nên trả về qua <strong>HttpOnly Cookie</strong>. Trình duyệt sẽ tự giữ và gửi lên, Javascript không thể đọc được.</p>
+<pre><code class="language-java">// Trong AuthController
+ResponseCookie cookie = ResponseCookie.from(&quot;refreshToken&quot;, refreshToken)
+    .httpOnly(true)
+    .secure(true) // Chỉ gửi qua HTTPS
+    .path(&quot;/api/auth/refresh&quot;) // Chỉ gửi cookie khi gọi đúng API này
+    .maxAge(7 * 24 * 60 * 60)
+    .build();
+
+return ResponseEntity.ok()
+    .header(HttpHeaders.SET_COOKIE, cookie.toString())
+    .body(new JwtResponse(accessToken));
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Chức năng &quot;Đăng xuất khỏi tất cả thiết bị&quot;</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> User bị mất điện thoại và muốn đăng xuất tài khoản từ xa.</li>
+<li><strong>Giải pháp:</strong> Backend chỉ cần chạy lệnh <code>DELETE FROM refresh_tokens WHERE user_id = :id</code>. Khi đó, dù kẻ xấu có giữ Access Token thì cũng chỉ dùng được tối đa vài phút nữa. Khi AT hết hạn, chúng không thể dùng RT để lấy cái mới vì RT đã bị xóa khỏi DB.</li>
+</ul>
+<p><strong>Tình huống 2: Refresh Token Rotation (Xoay vòng Token)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Để tăng bảo mật, mỗi lần User dùng RT để lấy AT mới, Backend sẽ xóa luôn RT cũ và cấp một RT mới tinh.</li>
+<li><strong>Lợi ích:</strong> Nếu kẻ xấu lấy trộm được RT và dùng nó trước User, khi User thật dùng lại RT cũ đó, Backend thấy RT này đã được dùng rồi -&gt; Cảnh báo hệ thống bị xâm nhập và vô hiệu hóa toàn bộ phiên làm việc của User đó ngay lập tức.</li>
+</ul>
+<p><strong>Tình huống 3: Silent Refresh phía Frontend</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn không muốn trải nghiệm của User bị gián đoạn (hiện loading) khi đang cuộn trang mà Token hết hạn.</li>
+<li><strong>Giải pháp:</strong> Frontend cài đặt một <code>Axios Interceptor</code>. Khi nhận mã <code>401</code>, nó sẽ tạm dừng các request khác, gọi ngầm API <code>/refresh</code>. Sau khi có AT mới, nó tự động thực hiện lại các request cũ. User vẫn thấy trang web chạy mượt mà dù thực tế đã được cấp &quot;vé&quot; mới.</li>
+</ul>
+<hr>
+<h3>Bảng so sánh cho Dev Frontend</h3>
+<table>
+<thead>
+<tr>
+<th>Đặc điểm</th>
+<th>Access Token</th>
+<th>Refresh Token</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Nơi lưu (Khuyên dùng)</strong></td>
+<td>Memory (Biến trong JS)</td>
+<td><strong>HttpOnly Cookie</strong></td>
+</tr>
+<tr>
+<td><strong>Thời gian sống</strong></td>
+<td>Ngắn (15 phút)</td>
+<td>Dài (Nhiều ngày)</td>
+</tr>
+<tr>
+<td><strong>Lưu ở Backend?</strong></td>
+<td>Không (Stateless)</td>
+<td><strong>Có (Để kiểm soát/hủy)</strong></td>
+</tr>
+<tr>
+<td><strong>Kích thước</strong></td>
+<td>Lớn (Chứa nhiều Claim)</td>
+<td>Nhỏ (Thường là một chuỗi UUID)</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>Ghi chú quan trọng:</strong> Với Spring Boot 3, khi dùng <code>Cookie</code>, bạn cần chú ý cấu hình <strong>CORS</strong> <code>allowCredentials(true)</code> để trình duyệt cho phép gửi Cookie đi cùng request API.</p>
+
+          </article>
+
+          <!-- Navigation Footer (Next/Prev) -->
+          <div class="mt-12 pt-8 border-t border-gray-200 flex justify-between">
+            <a href="topic05.html" class="text-indigo-600 font-medium hover:text-indigo-800">← Chủ đề 5: Validation & Global Exception Handling</a><a href="topic07.html" class="text-indigo-600 font-medium hover:text-indigo-800">Chủ đề 7: Logging & Monitoring (Actuator) →</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div
+      onclick="toggleSidebar()"
+      id="overlay"
+      class="fixed inset-0 bg-black/50 z-10 lg:hidden hidden"
+      style="display: none"
+    ></div>
+    <script>
+      // Simple overlay logic
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      // Sync overlay with sidebar state check if needed, but for "simplest" just toggle visibility in CSS or JS.
+      // Actually, let's keep it simple.
+    </script>
+  </body>
+</html>

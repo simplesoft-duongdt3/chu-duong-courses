@@ -1,0 +1,71 @@
+0 verbose cli /usr/local/Cellar/node/23.11.0/bin/node /usr/local/bin/npm
+1 info using npm@10.9.2
+2 info using node@v23.11.0
+3 silly config load:file:/usr/local/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/duong/Documents/GitHub/chu-duong-courses/documentation-site/.npmrc
+5 silly config load:file:/Users/duong/.npmrc
+6 silly config load:file:/usr/local/etc/npmrc
+7 verbose title npm install @tailwindcss/typography
+8 verbose argv "install" "--save-dev" "@tailwindcss/typography" "--cache" "./.npm-cache"
+9 verbose logfile logs-max:10 dir:/Users/duong/Documents/GitHub/chu-duong-courses/documentation-site/.npm-cache/_logs/2026-01-28T05_27_48_901Z-
+10 verbose logfile /Users/duong/Documents/GitHub/chu-duong-courses/documentation-site/.npm-cache/_logs/2026-01-28T05_27_48_901Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+13 silly idealTree buildDeps
+14 silly fetch manifest @tailwindcss/typography@*
+15 silly packumentCache full:https://registry.npmjs.org/@tailwindcss%2ftypography cache-miss
+16 http fetch GET 200 https://registry.npmjs.org/@tailwindcss%2ftypography 822ms (cache miss)
+17 silly packumentCache full:https://registry.npmjs.org/@tailwindcss%2ftypography set size:undefined disposed:false
+18 silly fetch manifest tailwindcss@^4.1.18
+19 silly packumentCache full:https://registry.npmjs.org/tailwindcss cache-miss
+20 http cache https://registry.npmjs.org/tailwindcss 20ms (cache hit)
+21 silly packumentCache full:https://registry.npmjs.org/tailwindcss set size:10106959 disposed:false
+22 silly placeDep ROOT @tailwindcss/typography@0.5.19 OK for: documentation-site@1.0.0 want: *
+23 silly fetch manifest postcss-selector-parser@6.0.10
+24 silly packumentCache full:https://registry.npmjs.org/postcss-selector-parser cache-miss
+25 http fetch GET 200 https://registry.npmjs.org/postcss-selector-parser 64ms (cache miss)
+26 silly packumentCache full:https://registry.npmjs.org/postcss-selector-parser set size:undefined disposed:false
+27 silly placeDep ROOT postcss-selector-parser@6.0.10 OK for: @tailwindcss/typography@0.5.19 want: 6.0.10
+28 silly fetch manifest cssesc@^3.0.0
+29 silly packumentCache full:https://registry.npmjs.org/cssesc cache-miss
+30 silly fetch manifest util-deprecate@^1.0.2
+31 silly packumentCache full:https://registry.npmjs.org/util-deprecate cache-miss
+32 http fetch GET 200 https://registry.npmjs.org/cssesc 61ms (cache miss)
+33 silly packumentCache full:https://registry.npmjs.org/cssesc set size:undefined disposed:false
+34 http fetch GET 200 https://registry.npmjs.org/util-deprecate 203ms (cache miss)
+35 silly packumentCache full:https://registry.npmjs.org/util-deprecate set size:undefined disposed:false
+36 silly placeDep ROOT cssesc@3.0.0 OK for: postcss-selector-parser@6.0.10 want: ^3.0.0
+37 silly placeDep ROOT util-deprecate@1.0.2 OK for: postcss-selector-parser@6.0.10 want: ^1.0.2
+38 silly reify moves {}
+39 silly audit bulk request {
+39 silly audit   marked: [ '17.0.1' ],
+39 silly audit   tailwindcss: [ '4.1.18' ],
+39 silly audit   '@tailwindcss/typography': [ '0.5.19' ],
+39 silly audit   'postcss-selector-parser': [ '6.0.10' ],
+39 silly audit   cssesc: [ '3.0.0' ],
+39 silly audit   'util-deprecate': [ '1.0.2' ]
+39 silly audit }
+40 http cache util-deprecate@https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz 0ms (cache hit)
+41 http cache cssesc@https://registry.npmjs.org/cssesc/-/cssesc-3.0.0.tgz 0ms (cache hit)
+42 http cache postcss-selector-parser@https://registry.npmjs.org/postcss-selector-parser/-/postcss-selector-parser-6.0.10.tgz 0ms (cache hit)
+43 http cache @tailwindcss/typography@https://registry.npmjs.org/@tailwindcss/typography/-/typography-0.5.19.tgz 0ms (cache hit)
+44 silly tarball no local data for util-deprecate@https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz. Extracting by manifest.
+45 silly tarball no local data for cssesc@https://registry.npmjs.org/cssesc/-/cssesc-3.0.0.tgz. Extracting by manifest.
+46 silly tarball no local data for postcss-selector-parser@https://registry.npmjs.org/postcss-selector-parser/-/postcss-selector-parser-6.0.10.tgz. Extracting by manifest.
+47 silly tarball no local data for @tailwindcss/typography@https://registry.npmjs.org/@tailwindcss/typography/-/typography-0.5.19.tgz. Extracting by manifest.
+48 http fetch GET 200 https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz 88ms (cache miss)
+49 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 216ms
+50 silly audit report {}
+51 http fetch GET 200 https://registry.npmjs.org/cssesc/-/cssesc-3.0.0.tgz 243ms (cache miss)
+52 http fetch GET 200 https://registry.npmjs.org/@tailwindcss/typography/-/typography-0.5.19.tgz 255ms (cache miss)
+53 http fetch GET 200 https://registry.npmjs.org/postcss-selector-parser/-/postcss-selector-parser-6.0.10.tgz 257ms (cache miss)
+54 silly ADD node_modules/util-deprecate
+55 silly ADD node_modules/cssesc
+56 silly ADD node_modules/postcss-selector-parser
+57 silly ADD node_modules/@tailwindcss/typography
+58 verbose cwd /Users/duong/Documents/GitHub/chu-duong-courses/documentation-site
+59 verbose os Darwin 24.6.0
+60 verbose node v23.11.0
+61 verbose npm  v10.9.2
+62 verbose exit 0
+63 info ok

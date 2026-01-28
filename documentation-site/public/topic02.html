@@ -1,0 +1,513 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chủ đề 2: IoC Container & Dependency Injection (DI)</title>
+    <!-- Tailwind CSS via CDN for simplicity and reliability -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for Sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <button
+            onclick="toggleSidebar()"
+            class="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <a
+            href="index.html"
+            class="ml-3 lg:ml-0 text-xl font-bold text-gray-900 tracking-tight"
+          >
+            <span class="text-indigo-600">Spring Boot</span> for Frontend Devs
+          </a>
+        </div>
+        <!-- Optional Top Links -->
+        <div class="hidden md:flex space-x-4">
+          <a
+            href="https://github.com/chu-duong-courses"
+            target="_blank"
+            class="text-gray-500 hover:text-gray-900 transition font-medium"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto flex items-start">
+      <!-- Sidebar Navigation -->
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="fixed inset-0 z-50 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 lg:w-64 lg:h-[calc(100vh-4rem)] lg:bg-transparent lg:border-r lg:border-gray-200 lg:sticky lg:top-16 overflow-y-auto"
+      >
+        <div class="p-4 flex justify-between items-center lg:hidden border-b border-gray-100 mb-2">
+            <span class="font-bold text-gray-900">Menu</span>
+            <button onclick="toggleSidebar()" class="p-2 -mr-2 text-gray-500 hover:text-gray-700">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="p-4 space-y-1">
+          <div class="mb-4">
+            <p
+              class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+            >
+              Chương trình học
+            </p>
+            <a href="index.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Spring Boot for Frontend Devs
+        </a>
+<a href="topic01.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 1: Request-Response Cycle & The Middleware Chain
+        </a>
+<a href="topic02.html" class="block px-2 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 2: IoC Container & Dependency Injection (DI)
+        </a>
+<a href="topic03.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 3: Persistence với Spring Data JPA & Hibernate
+        </a>
+<a href="topic04.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 4: Transaction Management - Quản lý giao dịch
+        </a>
+<a href="topic05.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 5: Validation & Global Exception Handling
+        </a>
+<a href="topic06.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 6: Spring Security & JWT (Stateless Authentication)
+        </a>
+<a href="topic07.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 7: Logging & Monitoring (Actuator)
+        </a>
+<a href="topic_black_holes.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging
+        </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0 p-4 sm:p-6 lg:padding-8">
+        <div class="max-w-4xl mx-auto">
+          <article
+            class="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-xl shadow-none"
+          >
+            <p>Chào mừng bạn đến với &quot;linh hồn&quot; của Spring Framework. Nếu ở Frontend, bạn thường xuyên dùng <code>import</code> hoặc <code>require</code> để sử dụng một module, thì ở Spring Boot, việc khởi tạo và quản lý đối tượng (Object) lại do hệ thống đảm nhận.</p>
+<hr>
+<h1>Chủ đề 2: IoC Container &amp; Dependency Injection (DI)</h1>
+<h3>1. Lý thuyết: &quot;Đừng gọi cho chúng tôi, chúng tôi sẽ gọi cho bạn&quot;</h3>
+<h4><strong>Inversion of Control (IoC) - Đảo ngược quyền điều khiển</strong></h4>
+<p>Trong lập trình truyền thống, nếu lớp <code>A</code> cần lớp <code>B</code>, bạn sẽ viết: <code>B objB = new B()</code>. Tức là bạn (người code) nắm quyền điều khiển việc tạo đối tượng.<br>Trong Spring, bạn chỉ cần khai báo: &quot;Tôi cần một đối tượng kiểu <code>B</code>&quot;. Spring sẽ tự tìm, tự tạo và đưa nó cho bạn. Quyền điều khiển đã bị &quot;đảo ngược&quot; từ tay bạn sang tay Framework (IoC Container).</p>
+<h4><strong>Dependency Injection (DI) - Tiêm phụ thuộc</strong></h4>
+<p>DI là cách thức cụ thể để thực hiện IoC. Spring sẽ &quot;tiêm&quot; (inject) các phụ thuộc vào một class thông qua:</p>
+<ol>
+<li><strong>Constructor Injection</strong> (Khuyên dùng).</li>
+<li><strong>Setter Injection</strong>.</li>
+<li><strong>Field Injection</strong> (Dùng <code>@Autowired</code> trực tiếp lên biến - không khuyến khích cho logic phức tạp).</li>
+</ol>
+<h4><strong>Spring Bean là gì?</strong></h4>
+<p>Một cái tên nghe rất kêu cho một khái niệm đơn giản: <strong>Bean là một Object được quản lý bởi Spring IoC Container</strong>. Nếu bạn tự <code>new</code>, đó là Object thường. Nếu Spring <code>new</code> cho bạn, đó là Bean.</p>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4><strong>A. Cách định nghĩa một Bean</strong></h4>
+<p>Sử dụng các Stereotype Annotations để đánh dấu class là một Bean.</p>
+<pre><code class="language-java">@Service // Đánh dấu đây là một Bean tầng nghiệp vụ
+public class EmailService {
+    public void sendEmail(String message) {
+        System.out.println(&quot;Sending email: &quot; + message);
+    }
+}
+</code></pre>
+<h4><strong>B. Cách &quot;Tiêm&quot; (Inject) Bean - Constructor Injection</strong></h4>
+<p>Đây là cách tốt nhất vì nó giúp code dễ Unit Test và đảm bảo tính bất biến (Immutable).</p>
+<pre><code class="language-java">@RestController
+@RequestMapping(&quot;/api/notifications&quot;)
+public class NotificationController {
+
+    private final EmailService emailService;
+
+    // Spring sẽ tự động tìm Bean EmailService và truyền vào đây
+    // Từ Spring 4.3+, nếu chỉ có 1 constructor, không cần gắn @Autowired
+    public NotificationController(EmailService emailService) {
+        this.emailService = emailService;
+    }
+
+    @PostMapping(&quot;/send&quot;)
+    public String notifyUser() {
+        emailService.sendEmail(&quot;Chào mừng bạn đến với Spring Boot 3!&quot;);
+        return &quot;Sent!&quot;;
+    }
+}
+</code></pre>
+<h4>**C. Cấu hình Bean thủ công bằng <code>@Bean**</code></h4>
+<p>Dùng khi bạn muốn khởi tạo Object từ thư viện bên thứ 3 (ví dụ: ModelMapper, Jedis, v.v.) mà bạn không thể sửa code nguồn của họ để thêm <code>@Service</code>.</p>
+<pre><code class="language-java">@Configuration
+public class AppConfig {
+
+    @Bean
+    public RestTemplate restTemplate() {
+        // Tự cấu hình một lần, dùng ở mọi nơi trong App
+        return new RestTemplate();
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Loose Coupling - Thay đổi triển khai mà không sửa code</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn có giao diện <code>PaymentStorage</code>. Hiện tại bạn đang lưu vào <code>MySQL</code>. Sau này sếp muốn chuyển sang <code>S3</code>.</li>
+<li><strong>Giải pháp:</strong> 1. Tạo Interface <code>StorageService</code>.</li>
+</ul>
+<ol start="2">
+<li>Tạo 2 class triển khai: <code>MysqlStorage</code> và <code>S3Storage</code> đều đánh dấu là Bean.</li>
+<li>Khi cần đổi, bạn chỉ cần thay đổi Annotation <code>@Primary</code> hoặc dùng <code>@Qualifier</code> để chọn cái muốn dùng. Code ở Controller/Service sử dụng Interface nên <strong>không phải thay đổi một dòng nào</strong>.</li>
+</ol>
+<p><strong>Tình huống 2: Quản lý Singleton (Tối ưu bộ nhớ)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn có một class <code>ConfigurationManager</code> chuyên đọc file config nặng. Nếu mỗi request bạn lại <code>new</code> nó một lần, server sẽ sớm hết RAM.</li>
+<li><strong>Giải pháp:</strong> Mặc định mọi Bean trong Spring là <strong>Singleton</strong>. Spring chỉ tạo đúng một instance duy nhất của <code>ConfigurationManager</code> và dùng chung cho toàn bộ ứng dụng. Dev Frontend sẽ thấy nó giống như một <code>Global State</code> nhưng an toàn hơn.</li>
+</ul>
+<p><strong>Tình huống 3: Circular Dependency (Lỗi vòng lặp)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Class <code>A</code> cần class <code>B</code> trong constructor, và class <code>B</code> cũng lại cần class <code>A</code>.</li>
+<li><strong>Giải pháp:</strong> Spring Boot 3 sẽ báo lỗi ngay khi khởi động để bảo vệ bạn. Điều này ép buộc bạn phải thiết kế lại kiến trúc (ví dụ: tách logic chung ra class <code>C</code>), giúp code Backend luôn mạch lạc, tránh sự chồng chéo &quot;spaghetti&quot; thường thấy khi dev frontend lạm dụng import vòng quanh.</li>
+</ul>
+<hr>
+<h3>Tóm tắt so sánh cho Dev Frontend</h3>
+<table>
+<thead>
+<tr>
+<th>Khái niệm</th>
+<th>Frontend (JS/TS)</th>
+<th>Backend (Spring Boot)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Khởi tạo</strong></td>
+<td><code>import { S } from &#39;./S&#39;; const s = new S();</code></td>
+<td><code>@Autowired</code> hoặc Constructor Injection</td>
+</tr>
+<tr>
+<td><strong>Quản lý</strong></td>
+<td>Dev tự quản lý vòng đời</td>
+<td>Spring IoC Container quản lý</td>
+</tr>
+<tr>
+<td><strong>Phạm vi (Scope)</strong></td>
+<td>Thường là module-based</td>
+<td>Mặc định là Singleton (toàn App)</td>
+</tr>
+<tr>
+<td><strong>Ràng buộc</strong></td>
+<td>Khó kiểm soát phụ thuộc chéo</td>
+<td>Phát hiện lỗi phụ thuộc ngay khi start app</td>
+</tr>
+</tbody></table>
+<hr>
+<p>Việc chỉ dùng <code>@Service</code> hay <code>@Component</code> là quá đơn giản. Trong các dự án thực tế, việc cấu hình Bean thủ công bằng <code>@Bean</code> chính là nơi thể hiện trình độ thiết kế hệ thống.</p>
+<hr>
+<h1>Chủ đề 2.1: Nâng cao về @Bean và Bí mật của Singleton Scope</h1>
+<h3>1. Lý thuyết: Tại sao lại là Singleton?</h3>
+<p>Trong thế giới Spring, mặc định mọi Bean là <strong>Singleton</strong>. Điều này có nghĩa là Spring IoC Container chỉ tạo ra <strong>duy nhất một thực thể (instance)</strong> của Bean đó cho toàn bộ vòng đời của ứng dụng.</p>
+<p><strong>Tại sao Spring lại chọn như vậy?</strong></p>
+<ol>
+<li><strong>Tiết kiệm tài nguyên (Memory &amp; CPU):</strong> Việc khởi tạo một Object trong Java kèm theo việc &quot;tiêm&quot; hàng chục phụ thuộc khác vào nó tốn chi phí. Thay vì tạo mới cho mỗi Request (như cách JavaScript thường làm với các biến cục bộ), Spring dùng lại một instance duy nhất.</li>
+<li><strong>Hiệu năng Garbage Collection (GC):</strong> Ít object được tạo ra và hủy đi đồng nghĩa với việc bộ dọn rác (GC) của Java làm việc ít hơn, giúp ứng dụng chạy mượt mà, tránh tình trạng &quot;Stop the world&quot;.</li>
+<li><strong>Stateless Services:</strong> Đa số các Service trong Backend là &quot;không trạng thái&quot; (stateless). Nó giống như một cái máy xay sinh tố: nó chỉ có logic (xay), không lưu trữ trái cây cũ bên trong. Do đó, cả nghìn người dùng chung một &quot;máy xay&quot; là hoàn toàn khả thi.</li>
+</ol>
+<blockquote>
+<p><strong>Cảnh báo cho Frontend Dev:</strong> Nếu bạn khai báo một biến <code>private int count = 0;</code> trong một <code>@Service</code> và tăng nó mỗi khi có API gọi vào, thì <strong>tất cả người dùng</strong> sẽ cùng tăng cái biến đó. Đây là lỗi bảo mật và logic cực kỳ nghiêm trọng.</p>
+</blockquote>
+<hr>
+<h3>2. Ví dụ Code: Các trường hợp @Bean phức tạp</h3>
+<h4>A. Bean có điều kiện (@Conditional)</h4>
+<p>Giả sử bạn muốn dùng Memcached khi ở môi trường thật, nhưng dùng Map (tạm thời) khi chạy máy local để đỡ phải cài đặt.</p>
+<pre><code class="language-java">@Configuration
+public class CacheConfig {
+
+    @Bean
+    @ConditionalOnProperty(name = &quot;app.cache.type&quot;, havingValue = &quot;redis&quot;)
+    public CacheService redisCacheService() {
+        return new RedisCacheService(); // Chỉ khởi tạo nếu config là redis
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(CacheService.class)
+    public CacheService localCacheService() {
+        return new LocalMapCacheService(); // Khởi tạo nếu không có thằng nào ở trên khớp
+    }
+}
+</code></pre>
+<h4>B. Nạp cấu hình từ bên ngoài vào Bean</h4>
+<p>Bạn không nên hardcode thông số. Hãy để <code>@Bean</code> đọc từ file <code>.yml</code> hoặc <code>.properties</code>.</p>
+<pre><code class="language-java">@Configuration
+public class ThirdPartyConfig {
+
+    @Value(&quot;${stripe.api.key}&quot;)
+    private String apiKey;
+
+    @Bean
+    public StripeClient stripeClient() {
+        // Khởi tạo thư viện bên thứ 3 với thông số từ config
+        return new StripeClient(apiKey);
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Tích hợp SDK của bên thứ 3 (Ví dụ: Firebase/S3)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> SDK của Firebase yêu cầu bạn phải nạp file <code>serviceAccountKey.json</code> và khởi tạo một lần duy nhất. Bạn không thể sửa code của Google để thêm <code>@Service</code>.</li>
+<li><strong>Giải pháp:</strong> Viết một class <code>@Configuration</code>, dùng <code>@Bean</code> để đọc file JSON, khởi tạo <code>FirebaseApp</code>. Sau đó, ở bất kỳ đâu trong dự án, bạn chỉ cần <code>@Autowired</code> cái <code>FirebaseApp</code> đó để dùng.</li>
+</ul>
+<p><strong>Tình huống 2: Giải quyết bài toán &quot;Đa chi nhánh&quot; (Multi-tenancy)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Hệ thống của bạn phục vụ nhiều công ty. Mỗi công ty có một Database khác nhau.</li>
+<li><strong>Giải pháp:</strong> Bạn không thể định nghĩa cứng một Bean <code>DataSource</code>. Bạn cần dùng <code>@Bean</code> kết hợp với <code>AbstractRoutingDataSource</code>. Spring sẽ dựa vào mã công ty trong Request để &quot;nhấc&quot; đúng Bean Database tương ứng ra xử lý.</li>
+</ul>
+<p><strong>Tình huống 3: Prototype Scope - Khi bạn CẦN trạng thái riêng</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn viết một logic xử lý file Excel cực lớn, cần lưu trữ trạng thái hàng đang đọc để báo cáo tiến độ (Percent complete) riêng cho mỗi người dùng.</li>
+<li><strong>Giải pháp:</strong> Lúc này Singleton sẽ làm hỏng dữ liệu của nhau. Bạn phải khai báo <code>@Bean</code> với <code>@Scope(&quot;prototype&quot;)</code>. Mỗi lần bạn gọi <code>getBean()</code>, Spring sẽ tạo ra một instance <strong>mới tinh</strong>.</li>
+</ul>
+<hr>
+<h3>Bảng so sánh Scopes phổ biến</h3>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Đặc điểm</th>
+<th>Phù hợp cho</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Singleton</strong> (Mặc định)</td>
+<td>1 instance cho cả App</td>
+<td>Service, Repository, Controller</td>
+</tr>
+<tr>
+<td><strong>Prototype</strong></td>
+<td>Mỗi lần inject là 1 instance mới</td>
+<td>Object chứa dữ liệu tạm thời (Stateful)</td>
+</tr>
+<tr>
+<td><strong>Request</strong></td>
+<td>1 instance cho mỗi HTTP request</td>
+<td>Lưu thông tin User, Log cho từng request</td>
+</tr>
+<tr>
+<td><strong>Session</strong></td>
+<td>1 instance cho mỗi phiên đăng nhập</td>
+<td>Giỏ hàng (Shopping Cart)</td>
+</tr>
+</tbody></table>
+<hr>
+<h3>Tóm tắt cho &quot;Dân App/Frontend&quot;</h3>
+<p>Hãy tưởng tượng <strong>Singleton</strong> giống như một cái <strong>Global Store</strong> nhưng chỉ chứa các <strong>Hàm (Functions)</strong>. Bạn không bao giờ lưu dữ liệu của user vào đó. Nếu muốn lưu dữ liệu tạm thời cho từng user, hãy dùng Database hoặc Redis.</p>
+<hr>
+<p>Việc hiểu rõ <strong>Bean Scope</strong> là bước ngoặt giúp bạn kiểm soát được bộ nhớ và tránh những lỗi &quot;data leak&quot; (dữ liệu người này lẫn sang người kia) cực kỳ nguy hiểm trong Backend.</p>
+<p>Dưới đây là nội dung chi tiết cho phần Bean Scopes.</p>
+<hr>
+<h1>Chủ đề 2.2: Chi tiết về Bean Scopes - Khi nào tạo mới, khi nào dùng chung?</h1>
+<p>Trong Spring Boot 3, việc chọn Scope quyết định <strong>vòng đời</strong> và <strong>phạm vi chia sẻ</strong> của một đối tượng.</p>
+<h3>1. Lý thuyết: 4 loại Scope phổ biến nhất</h3>
+<ol>
+<li><strong>Singleton (Mặc định):</strong> Spring IoC container tạo đúng 1 instance duy nhất. Mọi chỗ <code>@Autowired</code> đều dùng chung instance này.</li>
+<li><strong>Prototype:</strong> Mỗi lần <code>@Autowired</code> hoặc gọi <code>getBean()</code>, Spring sẽ tạo ra 1 instance <strong>mới hoàn toàn</strong>.</li>
+<li><strong>Request Scope:</strong> Mỗi HTTP Request đến sẽ có 1 instance riêng. Request kết thúc, Bean bị hủy. (Chỉ dùng trong Web App).</li>
+<li><strong>Session Scope:</strong> Instance tồn tại xuyên suốt một phiên làm việc của người dùng (từ lúc Login đến lúc Logout/Hết hạn).</li>
+</ol>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4>A. Singleton &amp; Prototype (Cơ bản)</h4>
+<pre><code class="language-java">@Component
+@Scope(&quot;singleton&quot;) // Có thể bỏ qua vì là mặc định
+public class StatisticsService {
+    // Dùng chung cho toàn App để đếm tổng số request
+    private int totalCalls = 0;
+    public synchronized void increment() { totalCalls++; }
+}
+
+@Component
+@Scope(&quot;prototype&quot;)
+public class DataExporter {
+    // Mỗi lần export một file Excel, ta cần một &quot;thằng thợ&quot; mới 
+    // để không bị lẫn lộn dữ liệu giữa các file
+    public void export(List&lt;?&gt; data) { /* logic */ }
+}
+</code></pre>
+<h4>B. Request Scope: Lưu thông tin User từ Token</h4>
+<p>Đây là cách cực hay để bạn không phải truyền <code>userId</code> qua từng hàm trong Service.</p>
+<pre><code class="language-java">@Component
+@WebScope // Tương đương @Scope(value = WebApplicationContext.SCOPE_REQUEST, proxyMode = ScopedProxyMode.TARGET_CLASS)
+public class UserContext {
+    private String currentUsername;
+    private String userIp;
+
+    // Getters/Setters...
+}
+
+// Cách dùng trong Filter (Trích xuất từ JWT)
+@Component
+public class JwtFilter extends OncePerRequestFilter {
+    @Autowired private UserContext userContext;
+
+    @Override
+    protected void doFilterInternal(...) {
+        String username = extractUsername(request); 
+        userContext.setCurrentUsername(username); // Chỉ có tác dụng trong request này
+        chain.doFilter(request, response);
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Singleton - &quot;Cái phễu&quot; tập trung dữ liệu</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn cần một bộ nhớ đệm (In-memory Cache) để lưu danh sách các tỉnh thành Việt Nam (ít thay đổi).</li>
+<li><strong>Giải pháp:</strong> Dùng <strong>Singleton</strong>. Dữ liệu được nạp 1 lần duy nhất khi Server khởi động. Tất cả người dùng đều truy cập vào cùng một danh sách này, giúp tiết kiệm RAM và không phải gọi Database liên tục.</li>
+</ul>
+<p><strong>Tình huống 2: Request Scope - &quot;Chiếc hộp&quot; bí mật của mỗi yêu cầu</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn muốn ghi Log cho mỗi API bao gồm: <code>TimeStart</code>, <code>UserId</code>, <code>Action</code>, <code>Duration</code>. Nếu dùng Singleton, dữ liệu các Request chạy song song sẽ đè lên nhau.</li>
+<li><strong>Giải pháp:</strong> Dùng <strong>Request Scope</strong>. Khi Request A vào, Spring tạo một <code>LogContext</code>. Khi Request B vào, Spring tạo một <code>LogContext</code> khác. Hai cái này hoàn toàn độc lập. Cuối Request, bạn lấy dữ liệu ra ghi vào DB/File.</li>
+</ul>
+<p><strong>Tình huống 3: Giải quyết bài toán &quot;Singleton inject Prototype&quot; (Bài toán khó)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Một <code>OrderService</code> (Singleton) cần gọi một <code>ImageProcessor</code> (Prototype). Vì <code>OrderService</code> chỉ khởi tạo 1 lần, nên nó cũng chỉ được &quot;tiêm&quot; <code>ImageProcessor</code> đúng 1 lần. Kết quả là <code>ImageProcessor</code> vô tình trở thành Singleton!</li>
+<li><strong>Giải pháp (Code mẫu):</strong> Dùng <code>ObjectProvider</code>.</li>
+</ul>
+<pre><code class="language-java">@Service
+public class OrderService {
+    // Thay vì @Autowired trực tiếp ImageProcessor
+    @Autowired
+    private ObjectProvider&lt;ImageProcessor&gt; imageProcessorProvider;
+
+    public void processOrder() {
+        // Mỗi lần gọi .getIfAvailable(), Spring sẽ tạo 1 instance Prototype mới
+        ImageProcessor processor = imageProcessorProvider.getIfAvailable();
+        processor.handle();
+    }
+}
+</code></pre>
+<hr>
+<h3>Tóm tắt so sánh cho Dev Frontend</h3>
+<table>
+<thead>
+<tr>
+<th>Scope</th>
+<th>Tương ứng trong Frontend</th>
+<th>Lưu ý quan trọng</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Singleton</strong></td>
+<td>Redux Store / Global Variable</td>
+<td>Không được lưu dữ liệu riêng của User vào đây.</td>
+</tr>
+<tr>
+<td><strong>Prototype</strong></td>
+<td><code>new ClassName()</code> mỗi khi cần</td>
+<td>Spring không quản lý việc hủy Bean này (cẩn thận memory leak).</td>
+</tr>
+<tr>
+<td><strong>Request</strong></td>
+<td>Một biến trong hàm <code>useEffect</code></td>
+<td>Rất hữu ích để làm Audit Log hoặc Multi-tenancy.</td>
+</tr>
+<tr>
+<td><strong>Session</strong></td>
+<td><code>sessionStorage</code></td>
+<td>Tốn RAM Server vì phải giữ Object chờ người dùng.</td>
+</tr>
+</tbody></table>
+<hr>
+<h3>Bài tập nhỏ cho bạn:</h3>
+<p>Nếu bạn làm một trang <strong>Giỏ hàng (Shopping Cart)</strong> cho Web truyền thống (không dùng LocalStorage ở App), bạn sẽ chọn Scope nào cho <code>CartBean</code>?</p>
+<ol>
+<li>Singleton</li>
+<li>Prototype</li>
+<li>Session</li>
+<li>Request</li>
+</ol>
+<h2><em>(Gợi ý: Giỏ hàng cần tồn tại khi user chuyển từ trang này sang trang khác nhưng mỗi user phải có giỏ hàng riêng).</em></h2>
+
+          </article>
+
+          <!-- Navigation Footer (Next/Prev) -->
+          <div class="mt-12 pt-8 border-t border-gray-200 flex justify-between">
+            <a href="topic01.html" class="text-indigo-600 font-medium hover:text-indigo-800">← Chủ đề 1: Request-Response Cycle & The Middleware Chain</a><a href="topic03.html" class="text-indigo-600 font-medium hover:text-indigo-800">Chủ đề 3: Persistence với Spring Data JPA & Hibernate →</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div
+      onclick="toggleSidebar()"
+      id="overlay"
+      class="fixed inset-0 bg-black/50 z-10 lg:hidden hidden"
+      style="display: none"
+    ></div>
+    <script>
+      // Simple overlay logic
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      // Sync overlay with sidebar state check if needed, but for "simplest" just toggle visibility in CSS or JS.
+      // Actually, let's keep it simple.
+    </script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+0 verbose cli /usr/local/Cellar/node/23.11.0/bin/node /usr/local/bin/npm
+1 info using npm@10.9.2
+2 info using node@v23.11.0
+3 silly config load:file:/usr/local/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/duong/Documents/GitHub/chu-duong-courses/documentation-site/.npmrc
+5 silly config load:file:/Users/duong/.npmrc
+6 silly config load:file:/usr/local/etc/npmrc
+7 verbose title npm install highlight.js
+8 verbose argv "install" "highlight.js" "--cache" "./.npm-cache"
+9 verbose logfile logs-max:10 dir:/Users/duong/Documents/GitHub/chu-duong-courses/documentation-site/.npm-cache/_logs/2026-01-28T05_53_06_116Z-
+10 verbose logfile /Users/duong/Documents/GitHub/chu-duong-courses/documentation-site/.npm-cache/_logs/2026-01-28T05_53_06_116Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+13 silly idealTree buildDeps
+14 silly fetch manifest highlight.js@*
+15 silly packumentCache full:https://registry.npmjs.org/highlight.js cache-miss
+16 http fetch GET 200 https://registry.npmjs.org/highlight.js 250ms (cache miss)
+17 silly packumentCache full:https://registry.npmjs.org/highlight.js set size:undefined disposed:false
+18 silly placeDep ROOT highlight.js@11.11.1 OK for: documentation-site@1.0.0 want: *
+19 silly reify moves {}
+20 silly audit bulk request {
+20 silly audit   '@tailwindcss/typography': [ '0.5.19' ],
+20 silly audit   cssesc: [ '3.0.0' ],
+20 silly audit   marked: [ '17.0.1' ],
+20 silly audit   'postcss-selector-parser': [ '6.0.10' ],
+20 silly audit   tailwindcss: [ '4.1.18' ],
+20 silly audit   'util-deprecate': [ '1.0.2' ],
+20 silly audit   'highlight.js': [ '11.11.1' ]
+20 silly audit }
+21 http cache highlight.js@https://registry.npmjs.org/highlight.js/-/highlight.js-11.11.1.tgz 0ms (cache hit)
+22 silly tarball no local data for highlight.js@https://registry.npmjs.org/highlight.js/-/highlight.js-11.11.1.tgz. Extracting by manifest.
+23 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 253ms
+24 silly audit report {}
+25 http fetch GET 200 https://registry.npmjs.org/highlight.js/-/highlight.js-11.11.1.tgz 599ms (cache miss)
+26 silly ADD node_modules/highlight.js
+27 verbose cwd /Users/duong/Documents/GitHub/chu-duong-courses/documentation-site
+28 verbose os Darwin 24.6.0
+29 verbose node v23.11.0
+30 verbose npm  v10.9.2
+31 verbose exit 0
+32 info ok

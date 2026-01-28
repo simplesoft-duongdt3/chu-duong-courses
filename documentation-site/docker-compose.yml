@@ -1,0 +1,9 @@
+version: '3'
+services:
+  web:
+    build: .
+    image: spring-boot-docs
+    container_name: spring-boot-docs-container
+    ports:
+      - "8080:80"
+    restart: always

@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spring Boot for Frontend Devs</title>
+    <!-- Tailwind CSS via CDN for simplicity and reliability -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for Sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <button
+            onclick="toggleSidebar()"
+            class="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <a
+            href="index.html"
+            class="ml-3 lg:ml-0 text-xl font-bold text-gray-900 tracking-tight"
+          >
+            <span class="text-indigo-600">Spring Boot</span> for Frontend Devs
+          </a>
+        </div>
+        <!-- Optional Top Links -->
+        <div class="hidden md:flex space-x-4">
+          <a
+            href="https://github.com/chu-duong-courses"
+            target="_blank"
+            class="text-gray-500 hover:text-gray-900 transition font-medium"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto flex items-start">
+      <!-- Sidebar Navigation -->
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="fixed inset-0 z-50 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 lg:w-64 lg:h-[calc(100vh-4rem)] lg:bg-transparent lg:border-r lg:border-gray-200 lg:sticky lg:top-16 overflow-y-auto"
+      >
+        <div class="p-4 flex justify-between items-center lg:hidden border-b border-gray-100 mb-2">
+            <span class="font-bold text-gray-900">Menu</span>
+            <button onclick="toggleSidebar()" class="p-2 -mr-2 text-gray-500 hover:text-gray-700">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="p-4 space-y-1">
+          <div class="mb-4">
+            <p
+              class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+            >
+              Chương trình học
+            </p>
+            <a href="index.html" class="block px-2 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-gray-100 group flex items-center">
+            Spring Boot for Frontend Devs
+        </a>
+<a href="topic01.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 1: Request-Response Cycle & The Middleware Chain
+        </a>
+<a href="topic02.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 2: IoC Container & Dependency Injection (DI)
+        </a>
+<a href="topic03.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 3: Persistence với Spring Data JPA & Hibernate
+        </a>
+<a href="topic04.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 4: Transaction Management - Quản lý giao dịch
+        </a>
+<a href="topic05.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 5: Validation & Global Exception Handling
+        </a>
+<a href="topic06.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 6: Spring Security & JWT (Stateless Authentication)
+        </a>
+<a href="topic07.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 7: Logging & Monitoring (Actuator)
+        </a>
+<a href="topic_black_holes.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging
+        </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0 p-4 sm:p-6 lg:padding-8">
+        <div class="max-w-4xl mx-auto">
+          <article
+            class="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-xl shadow-none"
+          >
+            <h1>Spring Boot for Frontend Devs</h1>
+<p>Việc chuyển từ Frontend/App sang Backend giống như việc bạn từ một người thiết kế nội thất (tập trung vào trải nghiệm, thẩm mỹ, tương tác) chuyển sang làm kỹ sư xây dựng và hệ thống điện nước (tập trung vào kết cấu, sự bền bỉ và luồng dữ liệu).</p>
+<p>Dưới đây là danh sách những &quot;khoảng trống&quot; phổ biến nhất mà các dev Frontend thường gặp phải khi bước chân vào Spring Boot:</p>
+<hr>
+<h3>1. Tư duy về &quot;Luồng chạy&quot; (Request-Response Cycle)</h3>
+<p>Ở Frontend, bạn quen với Event-driven (click, hover, async/await). Ở Backend, mọi thứ xoay quanh vòng đời của một HTTP Request.</p>
+<ul>
+<li><strong>Filter vs. Interceptor:</strong> Bạn cần biết chặn request ở đâu (Security, Logging) trước khi nó chạm tới Controller.</li>
+<li><strong>DispatcherServlet:</strong> &quot;Trái tim&quot; của Spring MVC. Hiểu cách nó điều phối request là cực kỳ quan trọng.</li>
+</ul>
+<h3>2. Dependency Injection (DI) &amp; Inversion of Control (IoC)</h3>
+<p>Frontend (như Angular) cũng có DI, nhưng Spring nâng nó lên một tầm cao mới bằng <strong>Reflection</strong>.</p>
+<ul>
+<li><strong>Bean Lifecycle:</strong> Một object trong Spring không chỉ là <code>new Object()</code>. Nó được Spring quản lý từ lúc sinh ra đến lúc chết đi.</li>
+<li><strong>Scopes:</strong> Bạn cần phân biệt khi nào dùng <code>Singleton</code> (mặc định), <code>Prototype</code>, hay <code>Request/Session scope</code>.</li>
+</ul>
+<h3>3. &quot;Cơn ác mộng&quot; mang tên Persistence (JPA/Hibernate)</h3>
+<p>Đây là nơi các Frontend dev dễ &quot;gục ngã&quot; nhất.</p>
+<ul>
+<li><strong>Entity vs. DTO:</strong> Tuyệt đối không bao giờ trả trực tiếp Entity (database model) ra ngoài API.</li>
+<li><strong>Lazy Loading vs. Eager Loading:</strong> Nếu không hiểu cái này, bạn sẽ gặp lỗi <code>LazyInitializationException</code> hoặc vấn đề hiệu năng kinh điển mang tên <strong>N+1 Query</strong>.</li>
+<li><strong>Transaction Management (<code>@Transactional</code>):</strong> Hiểu về tính toàn vẹn dữ liệu (ACID). Nếu một bước lỗi, toàn bộ phải rollback.</li>
+</ul>
+<h3>4. Concurrency &amp; Multi-threading</h3>
+<p>Trong khi JavaScript (Frontend) chạy đơn luồng (Single-threaded) với Event Loop, Java là đa luồng.</p>
+<ul>
+<li><strong>Thread Safety:</strong> Khi 100 người cùng gọi vào một Service, các biến global sẽ ra sao?</li>
+<li><strong>ThreadLocal:</strong> Cách Spring lưu trữ thông tin user hiện tại xuyên suốt các layer.</li>
+</ul>
+<h3>5. Layered Architecture (Kiến trúc phân tầng)</h3>
+<p>Frontend thường tổ chức theo Component. Backend Spring Boot chuẩn mực phải chia tầng:</p>
+<ul>
+<li><strong>Controller:</strong> Chỉ nhận và validate input.</li>
+<li><strong>Service:</strong> Nơi chứa logic nghiệp vụ (Business Logic).</li>
+<li><strong>Repository:</strong> Chỉ làm việc với Database.</li>
+</ul>
+<blockquote>
+<p><strong>Lưu ý:</strong> Đừng bao giờ viết code logic xử lý dữ liệu ngay trong Controller.</p>
+</blockquote>
+<h3>6. Spring Security (Authentication &amp; Authorization)</h3>
+<p>Frontend chỉ việc lưu Token vào LocalStorage và gửi đi. Backend phải:</p>
+<ul>
+<li>Cấu hình Filter Chain.</li>
+<li>Giải mã JWT, kiểm tra Role/Authority.</li>
+<li>Xử lý CORS và CSRF (phía Server-side).</li>
+</ul>
+<h3>7. Observability (Khả năng quan sát)</h3>
+<p>Backend không có <code>console.log</code> để user chụp màn hình gửi cho bạn đâu.</p>
+<ul>
+<li><strong>Logging (SLF4J/Logback):</strong> Ghi log sao cho hiệu quả, không làm đầy ổ cứng nhưng vẫn đủ để debug.</li>
+<li><strong>Spring Boot Actuator:</strong> Theo dõi &quot;sức khỏe&quot; của hệ thống (CPU, RAM, DB Connection).</li>
+</ul>
+<hr>
+<h3>Bảng so sánh nhanh để bạn dễ hình dung:</h3>
+<table>
+<thead>
+<tr>
+<th>Khái niệm</th>
+<th>Frontend (Web/App)</th>
+<th>Backend (Spring Boot 3)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Quản lý trạng thái</strong></td>
+<td>Redux, Context API, Vuex</td>
+<td>Database (PostgreSQL, MySQL), Redis</td>
+</tr>
+<tr>
+<td><strong>Luồng xử lý</strong></td>
+<td>Async/Await, Event Loop</td>
+<td>Multi-threading, Thread Pool</td>
+</tr>
+<tr>
+<td><strong>Bảo mật</strong></td>
+<td>Ẩn/Hiện UI dựa trên Role</td>
+<td>Method Security (<code>@PreAuthorize</code>), Filter</td>
+</tr>
+<tr>
+<td><strong>Giao tiếp</strong></td>
+<td>Gọi API (Axios, Fetch)</td>
+<td>Xây dựng API (REST, GraphQL, gRPC)</td>
+</tr>
+</tbody></table>
+
+          </article>
+
+          <!-- Navigation Footer (Next/Prev) -->
+          <div class="mt-12 pt-8 border-t border-gray-200 flex justify-between">
+            <span></span><a href="topic01.html" class="text-indigo-600 font-medium hover:text-indigo-800">Chủ đề 1: Request-Response Cycle & The Middleware Chain →</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div
+      onclick="toggleSidebar()"
+      id="overlay"
+      class="fixed inset-0 bg-black/50 z-10 lg:hidden hidden"
+      style="display: none"
+    ></div>
+    <script>
+      // Simple overlay logic
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      // Sync overlay with sidebar state check if needed, but for "simplest" just toggle visibility in CSS or JS.
+      // Actually, let's keep it simple.
+    </script>
+  </body>
+</html>

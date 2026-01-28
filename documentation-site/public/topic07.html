@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chủ đề 7: Logging & Monitoring (Actuator)</title>
+    <!-- Tailwind CSS via CDN for simplicity and reliability -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for Sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <button
+            onclick="toggleSidebar()"
+            class="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <a
+            href="index.html"
+            class="ml-3 lg:ml-0 text-xl font-bold text-gray-900 tracking-tight"
+          >
+            <span class="text-indigo-600">Spring Boot</span> for Frontend Devs
+          </a>
+        </div>
+        <!-- Optional Top Links -->
+        <div class="hidden md:flex space-x-4">
+          <a
+            href="https://github.com/chu-duong-courses"
+            target="_blank"
+            class="text-gray-500 hover:text-gray-900 transition font-medium"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto flex items-start">
+      <!-- Sidebar Navigation -->
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="fixed inset-0 z-50 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 lg:w-64 lg:h-[calc(100vh-4rem)] lg:bg-transparent lg:border-r lg:border-gray-200 lg:sticky lg:top-16 overflow-y-auto"
+      >
+        <div class="p-4 flex justify-between items-center lg:hidden border-b border-gray-100 mb-2">
+            <span class="font-bold text-gray-900">Menu</span>
+            <button onclick="toggleSidebar()" class="p-2 -mr-2 text-gray-500 hover:text-gray-700">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="p-4 space-y-1">
+          <div class="mb-4">
+            <p
+              class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+            >
+              Chương trình học
+            </p>
+            <a href="index.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Spring Boot for Frontend Devs
+        </a>
+<a href="topic01.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 1: Request-Response Cycle & The Middleware Chain
+        </a>
+<a href="topic02.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 2: IoC Container & Dependency Injection (DI)
+        </a>
+<a href="topic03.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 3: Persistence với Spring Data JPA & Hibernate
+        </a>
+<a href="topic04.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 4: Transaction Management - Quản lý giao dịch
+        </a>
+<a href="topic05.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 5: Validation & Global Exception Handling
+        </a>
+<a href="topic06.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 6: Spring Security & JWT (Stateless Authentication)
+        </a>
+<a href="topic07.html" class="block px-2 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 7: Logging & Monitoring (Actuator)
+        </a>
+<a href="topic_black_holes.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging
+        </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0 p-4 sm:p-6 lg:padding-8">
+        <div class="max-w-4xl mx-auto">
+          <article
+            class="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-xl shadow-none"
+          >
+            <p>Chào bạn! Chào mừng bạn đến với &quot;trạm kiểm soát&quot; cuối cùng trong chuỗi hành trình. Ở Frontend, khi có lỗi, bạn mở <strong>Chrome DevTools</strong> hoặc xem <strong>Sentry</strong>. Nhưng ở Backend, khi server đã &quot;lên sóng&quot; (Deploy), bạn không thể nhảy vào máy chủ để xem nó đang chạy thế nào.</p>
+<p>Đó là lý do <strong>Logging</strong> và <strong>Actuator</strong> ra đời. Nếu Logging là &quot;đôi mắt&quot; giúp bạn nhìn thấy diễn biến bên trong code, thì Actuator là &quot;nhịp tim&quot; giúp bạn biết hệ thống còn sống hay đã &quot;ngất&quot;.</p>
+<hr>
+<h1>Chủ đề 7: Logging &amp; Monitoring (Actuator)</h1>
+<h3>1. Lý thuyết: Quản lý hộp đen</h3>
+<h4><strong>Logging (Ghi nhật ký)</strong></h4>
+<p>Đừng bao giờ dùng <code>System.out.println()</code> trong Spring Boot! Tại sao? Vì nó làm giảm hiệu năng và không thể quản lý. Chúng ta dùng <strong>SLF4J</strong> (Giao diện) kết hợp với <strong>Logback</strong> (Bộ máy thực thi).</p>
+<ul>
+<li><strong>Log Levels:</strong> 1. <code>ERROR</code>: Lỗi nghiêm trọng (cần sửa ngay).</li>
+</ul>
+<ol start="2">
+<li><code>WARN</code>: Cảnh báo (có thể gây lỗi tương lai).</li>
+<li><code>INFO</code>: Thông tin quan trọng (App bắt đầu, User đăng nhập).</li>
+<li><code>DEBUG</code>: Thông tin chi tiết để gỡ lỗi (chỉ bật ở môi trường Dev).</li>
+<li><code>TRACE</code>: Chi tiết nhất từng bước chạy.</li>
+</ol>
+<h4><strong>Spring Boot Actuator</strong></h4>
+<p>Đây là một thư viện cung cấp các <strong>Endpoints</strong> (đường dẫn API) để bạn &quot;soi&quot; vào bên trong ứng dụng. Bạn có thể xem lượng RAM đang dùng, số lượng Request đang chờ, hoặc thậm chí là danh sách tất cả các Beans đang chạy.</p>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4><strong>A. Logging chuyên nghiệp với Lombok</strong></h4>
+<p>Thay vì khai báo Logger thủ công, hãy dùng <code>@Slf4j</code>.</p>
+<pre><code class="language-java">@Service
+@Slf4j // Tự động tạo biến &#39;log&#39;
+public class PaymentService {
+
+    public void processPayment(String orderId, double amount) {
+        log.info(&quot;Bắt đầu xử lý thanh toán cho đơn hàng: {}&quot;, orderId);
+        
+        try {
+            // Logic thanh toán...
+            if (amount &lt; 0) {
+                log.warn(&quot;Phát hiện số tiền âm cho đơn hàng {}: {}&quot;, orderId, amount);
+            }
+        } catch (Exception e) {
+            log.error(&quot;Lỗi nghiêm trọng khi thanh toán đơn hàng {}: {}&quot;, orderId, e.getMessage());
+        }
+    }
+}
+</code></pre>
+<h4><strong>B. Cấu hình Actuator (<code>application.yml</code>)</strong></h4>
+<p>Mặc định Actuator khóa hầu hết các cổng vì lý do bảo mật. Bạn cần mở chúng ra.</p>
+<pre><code class="language-yaml">management:
+  endpoints:
+    web:
+      exposure:
+        include: &quot;health,info,metrics,prometheus&quot; # Mở các cổng cần thiết
+  endpoint:
+    health:
+      show-details: always # Hiện chi tiết trạng thái DB, Disk, v.v.
+</code></pre>
+<h4><strong>C. Custom Health Indicator</strong></h4>
+<p>Bạn có thể tự viết code để báo cho hệ thống biết khi nào Service của bạn &quot;không ổn&quot;.</p>
+<pre><code class="language-java">@Component
+public class ExternalApiHealthIndicator implements HealthIndicator {
+    @Override
+    public Health health() {
+        boolean isExternalApiUp = checkApi(); // Hàm check API bên thứ 3
+        if (isExternalApiUp) {
+            return Health.up().withDetail(&quot;External API&quot;, &quot;Active&quot;).build();
+        }
+        return Health.down().withDetail(&quot;External API&quot;, &quot;Down&quot;).build();
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Debug lỗi &quot;chỉ xảy ra trên Production&quot;</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Ở máy local (Dev) thì chạy ngon, nhưng lên server (Prod) thì thi thoảng bị lỗi 500 mà không rõ nguyên nhân.</li>
+<li><strong>Giải pháp:</strong> Bạn vào cấu hình Log, nâng level lên <code>DEBUG</code> cho riêng package đó. Sau đó xem log file để thấy giá trị biến tại thời điểm lỗi. Với <code>Logback</code>, bạn có thể cấu hình để log tự động nén và xóa sau 30 ngày để không làm đầy ổ cứng.</li>
+</ul>
+<p><strong>Tình huống 2: Hệ thống tự động phục hồi (Auto-healing)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Server bị treo do tràn bộ nhớ (Memory Leak) hoặc Database bị ngắt kết nối.</li>
+<li><strong>Giải pháp:</strong> Các công cụ như <strong>Kubernetes</strong> hoặc <strong>AWS</strong> sẽ liên tục gọi vào endpoint <code>/actuator/health</code>. Nếu nó nhận về trạng thái <code>DOWN</code>, nó sẽ tự động &quot;giết&quot; con Server cũ và khởi động một con mới ngay lập tức. User sẽ không hề hay biết.</li>
+</ul>
+<p><strong>Tình huống 3: Theo dõi hiệu năng (Metrics)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn muốn biết API nào đang bị chậm nhất để tối ưu.</li>
+<li><strong>Giải pháp:</strong> Dùng Actuator kết hợp với <strong>Prometheus</strong> và <strong>Grafana</strong>. Bạn sẽ có một Dashboard biểu đồ cực đẹp (giống như Google Analytics cho Backend) để xem: &quot;À, API <code>/api/orders</code> đang mất tận 2 giây để phản hồi, cần check lại Database Index!&quot;.</li>
+</ul>
+<hr>
+<h3>Bảng so sánh cho &quot;Thanh niên Frontend&quot;</h3>
+<table>
+<thead>
+<tr>
+<th>Đặc điểm</th>
+<th>Frontend (DevTools)</th>
+<th>Backend (Logging/Actuator)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Ghi vết</strong></td>
+<td><code>console.log()</code></td>
+<td><code>log.info()</code>, <code>log.error()</code></td>
+</tr>
+<tr>
+<td><strong>Kiểm tra trạng thái</strong></td>
+<td>Network Tab</td>
+<td><code>/actuator/health</code></td>
+</tr>
+<tr>
+<td><strong>Phân tích hiệu năng</strong></td>
+<td>Lighthouse, Performance Tab</td>
+<td><code>/actuator/metrics</code>, Grafana</td>
+</tr>
+<tr>
+<td><strong>Lưu trữ</strong></td>
+<td>Mất khi F5 trang</td>
+<td>Lưu vào File hoặc Log Central (ELK Stack)</td>
+</tr>
+</tbody></table>
+<hr>
+<blockquote>
+<p><strong>Lời khuyên chân thành:</strong> Đừng bao giờ log các thông tin nhạy cảm của User như <strong>Password</strong>, <strong>Số thẻ tín dụng</strong>, hay <strong>Token</strong> vào file log. Nếu file log này bị lộ, đó sẽ là một thảm họa bảo mật!</p>
+</blockquote>
+<hr>
+<p>Nếu ở Frontend bạn chỉ có một cái &quot;hố&quot; duy nhất là <code>console.log</code>, thì ở Backend, Logging là một <strong>hệ thống quản trị dữ liệu</strong>.</p>
+<p>Ở Spring Boot 3, công cụ mặc định là <strong>Logback</strong> (đi kèm với SLF4J). Chúng ta sẽ đi từ cấu hình đơn giản đến những thiết lập &quot;chuẩn công nghiệp&quot; để bảo vệ ổ cứng server.</p>
+<hr>
+<h1>Chi tiết về Logging: Từ Console đến Chiến lược Rotation</h1>
+<h3>1. Cấu hình cơ bản (application.yml)</h3>
+<p>Với những dự án nhỏ, bạn có thể cấu hình nhanh ngay trong file <code>application.yml</code>.</p>
+<pre><code class="language-yaml">logging:
+  level:
+    root: INFO
+    com.example.demo: DEBUG # Log chi tiết cho code của bạn
+    org.hibernate.SQL: DEBUG # Xem câu lệnh SQL của JPA
+  pattern:
+    # Cấu hình màu sắc và định dạng hiển thị trên Console
+    console: &quot;%d{yyyy-MM-dd HH:mm:ss} %-5level [%thread] %logger{36} : %msg%n&quot;
+  file:
+    name: logs/app-backend.log # Tự động tạo folder logs và file
+</code></pre>
+<hr>
+<h3>2. Cấu hình nâng cao với <code>logback-spring.xml</code></h3>
+<p>Khi bạn cần <strong>Log Rotation</strong> (Xoay vòng log - ví dụ: mỗi ngày một file, hoặc file đầy 10MB thì cắt), bạn <strong>phải</strong> dùng file <code>src/main/resources/logback-spring.xml</code>. Spring Boot sẽ ưu tiên file này hơn mọi cấu hình trong <code>.yml</code>.</p>
+<h4>Ví dụ file cấu hình chuẩn:</h4>
+<pre><code class="language-xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;configuration&gt;
+    &lt;property name=&quot;LOG_PATH&quot; value=&quot;./logs&quot; /&gt;
+
+    &lt;appender name=&quot;Console&quot; class=&quot;ch.qos.logback.core.ConsoleAppender&quot;&gt;
+        &lt;encoder&gt;
+            &lt;pattern&gt;%d{HH:mm:ss.SSS} [%thread] %highlight(%-5level) %cyan(%logger{36}) - %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;appender name=&quot;RollingFile&quot; class=&quot;ch.qos.logback.core.rolling.RollingFileAppender&quot;&gt;
+        &lt;file&gt;${LOG_PATH}/application.log&lt;/file&gt;
+        
+        &lt;rollingPolicy class=&quot;ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy&quot;&gt;
+            &lt;fileNamePattern&gt;${LOG_PATH}/archived/app.%d{yyyy-MM-dd}.%i.log.gz&lt;/fileNamePattern&gt;
+            
+            &lt;maxFileSize&gt;10MB&lt;/maxFileSize&gt;
+            
+            &lt;maxHistory&gt;30&lt;/maxHistory&gt;
+            
+            &lt;totalSizeCap&gt;1GB&lt;/totalSizeCap&gt;
+        &lt;/rollingPolicy&gt;
+
+        &lt;encoder&gt;
+            &lt;pattern&gt;%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n&lt;/pattern&gt;
+        &lt;/encoder&gt;
+    &lt;/appender&gt;
+
+    &lt;root level=&quot;INFO&quot;&gt;
+        &lt;appender-ref ref=&quot;Console&quot; /&gt;
+        &lt;appender-ref ref=&quot;RollingFile&quot; /&gt;
+    &lt;/root&gt;
+&lt;/configuration&gt;
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: &quot;Cứu nguy&quot; ổ cứng Server</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn deploy app lên server, sau 1 tháng app sập vì... đầy ổ cứng. Nguyên nhân là file log lên tới 50GB.</li>
+<li><strong>Giải pháp:</strong> Sử dụng <code>SizeAndTimeBasedRollingPolicy</code> như ví dụ trên. Việc giới hạn <code>maxFileSize</code> và <code>maxHistory</code> đảm bảo hệ thống luôn tự dọn dẹp (delete) các bản tin cũ, giữ cho ổ cứng luôn &quot;thở&quot; được.</li>
+</ul>
+<p><strong>Tình huống 2: Log tập trung (Centralized Logging với ELK Stack)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn có 5 con server chạy cùng lúc. Khi có lỗi, bạn không thể SSH vào từng con để đọc file <code>.log</code> được.</li>
+<li><strong>Giải pháp:</strong> Thay vì log dạng text thuần túy, bạn cấu hình Logback xuất ra định dạng <strong>JSON</strong>. Các hệ thống như Logstash sẽ &quot;hút&quot; các file JSON này về một kho chung (Elasticsearch) để bạn dùng giao diện (Kibana) tìm kiếm lỗi như dùng Google.</li>
+</ul>
+<p><strong>Tình huống 3: Mute (Tắt bớt) Log của thư viện bên thứ 3</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Khi bạn bật mode <code>DEBUG</code>, các thư viện như Spring Security hay Hibernate in ra hàng nghìn dòng log khiến bạn không tìm thấy log của chính mình.</li>
+<li><strong>Giải pháp:</strong> Cấu hình level riêng biệt cho từng package.</li>
+</ul>
+<pre><code class="language-yaml">logging:
+  level:
+    org.springframework: WARN # Chỉ hiện lỗi của Spring
+    com.yourproject: DEBUG    # Hiện chi tiết log của bạn
+</code></pre>
+<hr>
+<h3>Các mẹo &quot;bỏ túi&quot; cho bạn:</h3>
+<ul>
+<li><strong>MDC (Mapped Diagnostic Context):</strong> Đây là kỹ thuật cực hay để gán <code>userId</code> hoặc <code>traceId</code> vào mọi dòng log. Khi user báo lỗi, bạn chỉ cần search <code>traceId</code> đó là thấy toàn bộ lịch sử di chuyển của request đó qua các Service.</li>
+<li><strong>Async Logging:</strong> Việc ghi log ra file là thao tác I/O chậm. Trong các hệ thống chịu tải cao, người ta bọc Appender trong lớp <code>AsyncAppender</code> để việc ghi log không làm chậm logic chính của API.</li>
+</ul>
+<p><strong>Tóm tắt cho Dev Frontend:</strong></p>
+<ul>
+<li><strong>Console:</strong> Để xem khi code (giống <code>console.log</code>).</li>
+<li><strong>File:</strong> Để lưu vết khi chạy thật.</li>
+<li><strong>Rotation:</strong> Để Server không bị &quot;chết chùm&quot; vì đầy bộ nhớ.</li>
+</ul>
+
+          </article>
+
+          <!-- Navigation Footer (Next/Prev) -->
+          <div class="mt-12 pt-8 border-t border-gray-200 flex justify-between">
+            <a href="topic06.html" class="text-indigo-600 font-medium hover:text-indigo-800">← Chủ đề 6: Spring Security & JWT (Stateless Authentication)</a><a href="topic_black_holes.html" class="text-indigo-600 font-medium hover:text-indigo-800">🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging →</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div
+      onclick="toggleSidebar()"
+      id="overlay"
+      class="fixed inset-0 bg-black/50 z-10 lg:hidden hidden"
+      style="display: none"
+    ></div>
+    <script>
+      // Simple overlay logic
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      // Sync overlay with sidebar state check if needed, but for "simplest" just toggle visibility in CSS or JS.
+      // Actually, let's keep it simple.
+    </script>
+  </body>
+</html>

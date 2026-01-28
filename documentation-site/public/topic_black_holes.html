@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging</title>
+    <!-- Tailwind CSS via CDN for simplicity and reliability -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for Sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <button
+            onclick="toggleSidebar()"
+            class="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <a
+            href="index.html"
+            class="ml-3 lg:ml-0 text-xl font-bold text-gray-900 tracking-tight"
+          >
+            <span class="text-indigo-600">Spring Boot</span> for Frontend Devs
+          </a>
+        </div>
+        <!-- Optional Top Links -->
+        <div class="hidden md:flex space-x-4">
+          <a
+            href="https://github.com/chu-duong-courses"
+            target="_blank"
+            class="text-gray-500 hover:text-gray-900 transition font-medium"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto flex items-start">
+      <!-- Sidebar Navigation -->
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="fixed inset-0 z-50 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 lg:w-64 lg:h-[calc(100vh-4rem)] lg:bg-transparent lg:border-r lg:border-gray-200 lg:sticky lg:top-16 overflow-y-auto"
+      >
+        <div class="p-4 flex justify-between items-center lg:hidden border-b border-gray-100 mb-2">
+            <span class="font-bold text-gray-900">Menu</span>
+            <button onclick="toggleSidebar()" class="p-2 -mr-2 text-gray-500 hover:text-gray-700">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="p-4 space-y-1">
+          <div class="mb-4">
+            <p
+              class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+            >
+              Chương trình học
+            </p>
+            <a href="index.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Spring Boot for Frontend Devs
+        </a>
+<a href="topic01.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 1: Request-Response Cycle & The Middleware Chain
+        </a>
+<a href="topic02.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 2: IoC Container & Dependency Injection (DI)
+        </a>
+<a href="topic03.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 3: Persistence với Spring Data JPA & Hibernate
+        </a>
+<a href="topic04.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 4: Transaction Management - Quản lý giao dịch
+        </a>
+<a href="topic05.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 5: Validation & Global Exception Handling
+        </a>
+<a href="topic06.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 6: Spring Security & JWT (Stateless Authentication)
+        </a>
+<a href="topic07.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 7: Logging & Monitoring (Actuator)
+        </a>
+<a href="topic_black_holes.html" class="block px-2 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-gray-100 group flex items-center">
+            🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging
+        </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0 p-4 sm:p-6 lg:padding-8">
+        <div class="max-w-4xl mx-auto">
+          <article
+            class="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-xl shadow-none"
+          >
+            <h1>🛡️ Spring Boot 3 Survival Guide: 12 &quot;Black Holes&quot; &amp; Deep Debugging</h1>
+<p>Tài liệu này tổng hợp 12 lỗi logic &quot;ngầm&quot; cực kỳ phổ biến trong Spring Boot 3, giải thích từ gốc rễ cơ chế (Proxy, Threading, Hibernate) kèm code mẫu và giải pháp.</p>
+<hr>
+<h2>1. Self-invocation (Tự gọi nội bộ)</h2>
+<h3>📖 Lý thuyết chuyên sâu</h3>
+<p>Spring sử dụng <strong>AOP (Aspect Oriented Programming)</strong> dựa trên cơ chế <strong>Proxy</strong>. Khi một Bean được tạo ra, Spring không trả về instance thực mà trả về một &quot;vỏ bọc&quot; (Proxy).</p>
+<ul>
+<li><strong>Cơ chế:</strong> Khi gọi từ bên ngoài, Proxy sẽ đánh chặn (intercept) để thực hiện logic phụ (mở Transaction, kiểm tra Cache).</li>
+<li><strong>Hố đen:</strong> Nếu gọi nội bộ (<code>this.method()</code>), bạn đang gọi trực tiếp vào instance thực, bỏ qua hoàn toàn Proxy. Do đó, các Annotation trên method bị gọi sẽ vô hiệu.</li>
+</ul>
+<h3>❌ Code lỗi</h3>
+<pre><code class="language-java">@Service
+public class UserService {
+    public void register() {
+        saveData(); // Gọi nội bộ: Transaction bị phớt lờ hoàn toàn!
+    }
+
+    @Transactional
+    public void saveData() { /* Lưu DB */ }
+}
+</code></pre>
+<h3>✅ Cách fix</h3>
+<p><strong>Cách 1 (Khuyên dùng):</strong> Tách logic sang một Service khác.<br><strong>Cách 2 (Self-injection):</strong> Tự inject chính mình để gọi qua Proxy.</p>
+<pre><code class="language-java">@Service
+public class UserService {
+    @Autowired @Lazy private UserService self;
+
+    public void register() {
+        self.saveData(); // Gọi qua Proxy thành công
+    }
+}
+</code></pre>
+<hr>
+<h2>2. @Transactional &amp; Checked Exception</h2>
+<h3>📖 Lý thuyết chuyên sâu</h3>
+<p>Theo thiết kế mặc định của Spring (kế thừa từ chuẩn EJB), hệ thống chỉ tự động rollback khi gặp <strong>Unchecked Exception</strong> (<code>RuntimeException</code> và <code>Error</code>). Các <strong>Checked Exception</strong> (những lỗi bắt buộc phải <code>try-catch</code> hoặc <code>throws</code>) được coi là lỗi nghiệp vụ mà lập trình viên phải tự xử lý, nên Spring sẽ vẫn <strong>Commit</strong> dữ liệu.</p>
+<h3>❌ Code lỗi</h3>
+<pre><code class="language-java">@Transactional
+public void processOrder() throws IOException {
+    repo.save(order);
+    if (fileError) throw new IOException(&quot;Lỗi lưu file&quot;); // DB vẫn commit dù throw lỗi!
+}
+</code></pre>
+<h3>✅ Cách fix</h3>
+<pre><code class="language-java">@Transactional(rollbackFor = Exception.class) // Rollback cho mọi loại Exception
+</code></pre>
+<hr>
+<h2>3. &quot;Mất tích&quot; Context trong @Async</h2>
+<h3>📖 Lý thuyết chuyên sâu</h3>
+<p>Thông tin người dùng (<code>SecurityContext</code>) hoặc dữ liệu Request (<code>RequestContext</code>) được Spring lưu trữ trong <strong>ThreadLocal</strong>. <code>@Async</code> sẽ đẩy tác vụ sang một Thread mới từ Thread Pool. Vì <code>ThreadLocal</code> mặc định không tự sao chép sang Thread con, nên Thread mới sẽ thấy các Context này là <code>null</code>.</p>
+<h3>❌ Code lỗi</h3>
+<pre><code class="language-java">@Async
+public void sendAuditLog() {
+    // Trả về null hoặc AnonymousUser vì chạy ở Thread khác
+    String user = SecurityContextHolder.getContext().getAuthentication().getName(); 
+}
+</code></pre>
+<h3>✅ Cách fix</h3>
+<p>Dùng <code>DelegatingSecurityContextAsyncTaskExecutor</code> để copy Context hoặc truyền dữ liệu trực tiếp vào tham số hàm.</p>
+<hr>
+<h2>4. LazyInitializationException (Ngoài ranh giới Transaction)</h2>
+<h3>📖 Lý thuyết chuyên sâu</h3>
+<p>Hibernate sử dụng cơ chế <strong>Lazy Loading</strong> (chỉ tải dữ liệu khi cần). Việc này yêu cầu một Hibernate Session (kết nối) còn mở. Thông thường, Session này gắn liền với Transaction ở tầng Service. Khi method Service kết thúc, Transaction đóng, Session đóng. Nếu tầng Controller hoặc View (Jackson) cố truy cập field Lazy, lỗi sẽ xảy ra.</p>
+<h3>❌ Code lỗi</h3>
+<pre><code class="language-java">// Controller
+User user = userService.findById(id); 
+return user; // Jackson gọi user.getRoles() -&gt; Session đã đóng -&gt; Exception!
+</code></pre>
+<h3>✅ Cách fix</h3>
+<p>Sử dụng <strong>Entity Graph</strong> hoặc <strong>Join Fetch</strong> trong Repository để lấy dữ liệu ngay tại tầng Service.</p>
+<pre><code class="language-java">@Query(&quot;SELECT u FROM User u JOIN FETCH u.roles WHERE u.id = :id&quot;)
+User findByIdWithRoles(Long id);
+</code></pre>
+<hr>
+<h2>5. Cạm bẫy Class/Method <code>final</code></h2>
+<h3>📖 Lý thuyết chuyên sâu</h3>
+<p>Thư viện <strong>CGLIB</strong> (mặc định trong Spring) tạo Proxy bằng cách tạo ra một Class con kế thừa Class của bạn. Trong Java, không thể kế thừa Class <code>final</code> hoặc ghi đè (override) Method <code>final</code>. Do đó, Spring không thể chèn logic Proxy vào.</p>
+<h3>❌ Code lỗi</h3>
+<pre><code class="language-java">@Service
+public final class MyService { // Spring không thể tạo Proxy cho Class này
+    @Transactional
+    public final void update() {} // Method này sẽ không bao giờ có Transaction
+}
+</code></pre>
+<h3>✅ Cách fix</h3>
+<p>Loại bỏ từ khóa <code>final</code> ở những nơi cần dùng Annotation của Spring.</p>
+<hr>
+<h2>6. @ManyToMany và Foreign Key &quot;Mất tích&quot;</h2>
+<h3>📖 Lý thuyết chuyên sâu</h3>
+<p>Trong quan hệ <code>@ManyToMany</code>, Hibernate yêu cầu bạn xác định bên nào là &quot;chủ&quot; (owner - không có <code>mappedBy</code>) và bên nào là &quot;nghịch&quot;. Nếu bạn chỉ thêm đối tượng vào danh sách của bên &quot;nghịch&quot;, Hibernate sẽ không lưu gì vào bảng trung gian.</p>
+<h3>❌ Code lỗi</h3>
+<pre><code class="language-java">// Giả sử Category là bên nghịch (có mappedBy)
+product.getCategories().add(category); 
+categoryRepo.save(category); // Bảng trung gian product_category không có dữ liệu!
+</code></pre>
+<h3>✅ Cách fix</h3>
+<p>Luôn cập nhật cả hai đầu của quan hệ thông qua Helper Method.</p>
+<hr>
+<h2>7. <code>@TransactionalEventListener</code> &amp; AFTER_COMMIT</h2>
+<h3>📖 Lý thuyết chuyên sâu</h3>
+<p>Khi sử dụng pha <code>AFTER_COMMIT</code>, Listener chỉ chạy khi DB đã thực hiện lệnh Commit xong. Tại thời điểm này, Transaction cũ đã kết thúc và Connection thường đã ở trạng thái Read-only hoặc đã đóng. Mọi lệnh <code>save()</code> bình thường sẽ bị lờ đi.</p>
+<h3>❌ Code lỗi</h3>
+<pre><code class="language-java">@TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
+public void onUserRegistered(UserEvent event) {
+    logRepo.save(new Log(event.userId())); // Không báo lỗi nhưng DB không có log mới
+}
+</code></pre>
+<h3>✅ Cách fix</h3>
+<p>Sử dụng <code>Propagation.REQUIRES_NEW</code> để mở một Transaction hoàn toàn mới.</p>
+<pre><code class="language-java">@Transactional(propagation = Propagation.REQUIRES_NEW)
+public void onUserRegistered(...) { ... }
+</code></pre>
+<hr>
+<h2>8. Lỗi HashCode/Equals với Hibernate Entity</h2>
+<h3>📖 Lý thuyết chuyên sâu</h3>
+<p>Khi một Entity được đưa vào <code>Set</code> (như <code>HashSet</code>), vị trí của nó phụ thuộc vào <code>hashCode()</code>. Đối với Entity dùng ID tự tăng (Identity), ID sẽ là <code>null</code> trước khi save và có giá trị sau khi save. Điều này làm thay đổi <code>hashCode</code>, khiến <code>Set</code> không tìm thấy Object đó nữa dù nó vẫn ở đó.</p>
+<h3>❌ Code lỗi</h3>
+<pre><code class="language-java">@EqualsAndHashCode(of = &quot;id&quot;) // ID thay đổi từ null -&gt; Long khiến HashCode thay đổi
+public class Product { ... }
+</code></pre>
+<h3>✅ Cách fix</h3>
+<p>Dùng một <strong>Business Key</strong> (như mã UUID cố định hoặc Email) hoặc so sánh theo tham chiếu nếu không có Business Key.</p>
+<hr>
+<h2>9. Virtual Thread Pinning (Spring Boot 3.2+)</h2>
+<h3>📖 Lý thuyết chuyên sâu</h3>
+<p>Virtual Threads (Java 21) rất nhẹ, nhưng chúng sẽ bị &quot;ghim&quot; (pinning) vào Thread vật lý nếu gặp khối <code>synchronized</code>. Nếu khối này chứa các tác vụ I/O lâu, toàn bộ Thread vật lý bị chặn, làm mất đi lợi thế của Virtual Threads.</p>
+<h3>❌ Code lỗi</h3>
+<pre><code class="language-java">public synchronized void heavyIO() { // Pinning xảy ra ở đây
+    // Thực hiện gọi API bên ngoài hoặc truy vấn DB
+}
+</code></pre>
+<h3>✅ Cách fix</h3>
+<p>Sử dụng <code>ReentrantLock</code> thay cho <code>synchronized</code>.</p>
+<hr>
+<h2>10. Thứ tự thực thi Aspect (@Order)</h2>
+<h3>📖 Lý thuyết chuyên sâu</h3>
+<p>Spring quản lý các Aspect theo một chuỗi (Interceptor Chain). Nếu bạn có một Aspect tùy chỉnh (ví dụ Logging) và <code>@Transactional</code>, mà Logging chạy &quot;sâu&quot; hơn Transaction, nó có thể ghi nhận dữ liệu đã lưu thành công ngay cả khi Transaction sau đó bị Rollback.</p>
+<h3>✅ Cách fix</h3>
+<p>Sử dụng Annotation <code>@Order</code> để xác định thứ tự. Số nhỏ hơn sẽ chạy &quot;vòng ngoài&quot; (được thực thi trước và kết thúc sau).</p>
+<hr>
+<h2>11. Thứ tự Load Bean với @ConditionalOnMissingBean</h2>
+<h3>📖 Lý thuyết chuyên sâu</h3>
+<p>Trong Spring Boot, các Bean được load theo thứ tự quét Component. Nếu Bean của bạn được khởi tạo <strong>sau</strong> Bean của một thư viện nào đó có dùng <code>@ConditionalOnMissingBean</code>, thì điều kiện của thư viện đã được check xong và Bean của bạn không thể ghi đè (override) được nữa.</p>
+<h3>✅ Cách fix</h3>
+<p>Sử dụng <code>@AutoConfigureBefore</code> hoặc <code>@AutoConfigureAfter</code> trong các lớp <code>@Configuration</code> để chỉ định thứ tự load Bean chính xác.</p>
+<hr>
+<h2>12. Quên @StepScope trong Spring Batch</h2>
+<h3>📖 Lý thuyết chuyên sâu</h3>
+<p>Trong Spring Batch, các tham số như <code>jobParameters</code> không có sẵn khi ứng dụng khởi động. Chúng chỉ có giá trị khi một Step bắt đầu chạy. Nếu không có <code>@StepScope</code>, Spring sẽ cố gắng khởi tạo Bean ngay lập tức (Eagerly) và gây lỗi vì thiếu tham số.</p>
+<h3>❌ Code lỗi</h3>
+<pre><code class="language-java">@Bean
+public ItemReader reader(@Value(&quot;#{jobParameters[&#39;input.file&#39;]}&quot;) String path) {
+    return new FlatFileItemReader(path); // &#39;path&#39; luôn là null khi khởi động
+}
+</code></pre>
+<h3>✅ Cách fix</h3>
+<p>Thêm <code>@StepScope</code> để trì hoãn việc tạo Bean cho đến khi Step thực sự chạy.</p>
+<hr>
+<h3>💡 Bảng tổng kết nhanh</h3>
+<table>
+<thead>
+<tr>
+<th>Lỗi</th>
+<th>Nguyên nhân gốc</th>
+<th>Keyword tìm kiếm</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Self-invocation</strong></td>
+<td>Bỏ qua AOP Proxy</td>
+<td><code>Spring AOP internal call</code></td>
+</tr>
+<tr>
+<td><strong>Checked Rollback</strong></td>
+<td>Mặc định chỉ bắt Runtime</td>
+<td><code>Transactional rollbackFor</code></td>
+</tr>
+<tr>
+<td><strong>Missing Context</strong></td>
+<td>ThreadLocal không copy</td>
+<td><code>SecurityContext Async</code></td>
+</tr>
+<tr>
+<td><strong>Lazy Init</strong></td>
+<td>Session đã đóng</td>
+<td><code>FetchType.LAZY Proxy</code></td>
+</tr>
+<tr>
+<td><strong>No Save (After Commit)</strong></td>
+<td>Transaction đã hoàn tất</td>
+<td><code>TransactionalEventListener REQUIRES_NEW</code></td>
+</tr>
+<tr>
+<td><strong>Virtual Thread Slow</strong></td>
+<td>Thread Pinning</td>
+<td><code>Virtual Thread synchronized</code></td>
+</tr>
+</tbody></table>
+<hr>
+
+          </article>
+
+          <!-- Navigation Footer (Next/Prev) -->
+          <div class="mt-12 pt-8 border-t border-gray-200 flex justify-between">
+            <a href="topic07.html" class="text-indigo-600 font-medium hover:text-indigo-800">← Chủ đề 7: Logging & Monitoring (Actuator)</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div
+      onclick="toggleSidebar()"
+      id="overlay"
+      class="fixed inset-0 bg-black/50 z-10 lg:hidden hidden"
+      style="display: none"
+    ></div>
+    <script>
+      // Simple overlay logic
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      // Sync overlay with sidebar state check if needed, but for "simplest" just toggle visibility in CSS or JS.
+      // Actually, let's keep it simple.
+    </script>
+  </body>
+</html>

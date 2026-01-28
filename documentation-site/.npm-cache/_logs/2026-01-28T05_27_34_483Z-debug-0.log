@@ -1,0 +1,48 @@
+0 verbose cli /usr/local/Cellar/node/23.11.0/bin/node /usr/local/bin/npm
+1 info using npm@10.9.2
+2 info using node@v23.11.0
+3 silly config load:file:/usr/local/lib/node_modules/npm/npmrc
+4 silly config load:file:/Users/duong/Documents/GitHub/chu-duong-courses/documentation-site/.npmrc
+5 silly config load:file:/Users/duong/.npmrc
+6 silly config load:file:/usr/local/etc/npmrc
+7 verbose title npm install tailwindcss marked
+8 verbose argv "install" "--save-dev" "tailwindcss" "marked" "--cache" "./.npm-cache"
+9 verbose logfile logs-max:10 dir:/Users/duong/Documents/GitHub/chu-duong-courses/documentation-site/.npm-cache/_logs/2026-01-28T05_27_34_483Z-
+10 verbose logfile /Users/duong/Documents/GitHub/chu-duong-courses/documentation-site/.npm-cache/_logs/2026-01-28T05_27_34_483Z-debug-0.log
+11 silly logfile done cleaning log files
+12 silly packumentCache heap:4345298944 maxSize:1086324736 maxEntrySize:543162368
+13 silly idealTree buildDeps
+14 silly fetch manifest tailwindcss@*
+15 silly packumentCache full:https://registry.npmjs.org/tailwindcss cache-miss
+16 http fetch GET 200 https://registry.npmjs.org/npm 314ms
+17 http fetch GET 200 https://registry.npmjs.org/tailwindcss 394ms (cache miss)
+18 silly packumentCache full:https://registry.npmjs.org/tailwindcss set size:undefined disposed:false
+19 silly fetch manifest marked@*
+20 silly packumentCache full:https://registry.npmjs.org/marked cache-miss
+21 http fetch GET 200 https://registry.npmjs.org/marked 109ms (cache miss)
+22 silly packumentCache full:https://registry.npmjs.org/marked set size:undefined disposed:false
+23 silly placeDep ROOT marked@17.0.1 OK for: documentation-site@1.0.0 want: *
+24 silly placeDep ROOT tailwindcss@4.1.18 OK for: documentation-site@1.0.0 want: *
+25 silly reify moves {}
+26 silly audit bulk request { marked: [ '17.0.1' ], tailwindcss: [ '4.1.18' ] }
+27 http cache tailwindcss@https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.1.18.tgz 1ms (cache hit)
+28 http cache marked@https://registry.npmjs.org/marked/-/marked-17.0.1.tgz 0ms (cache hit)
+29 silly tarball no local data for tailwindcss@https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.1.18.tgz. Extracting by manifest.
+30 silly tarball no local data for marked@https://registry.npmjs.org/marked/-/marked-17.0.1.tgz. Extracting by manifest.
+31 http fetch GET 200 https://registry.npmjs.org/tailwindcss/-/tailwindcss-4.1.18.tgz 85ms (cache miss)
+32 http fetch POST 200 https://registry.npmjs.org/-/npm/v1/security/advisories/bulk 234ms
+33 silly audit report {}
+34 http fetch GET 200 https://registry.npmjs.org/marked/-/marked-17.0.1.tgz 240ms (cache miss)
+35 silly ADD node_modules/tailwindcss
+36 silly ADD node_modules/marked
+37 verbose cwd /Users/duong/Documents/GitHub/chu-duong-courses/documentation-site
+38 verbose os Darwin 24.6.0
+39 verbose node v23.11.0
+40 verbose npm  v10.9.2
+41 notice
+41 notice New major version of npm available! 10.9.2 -> 11.8.0
+41 notice Changelog: https://github.com/npm/cli/releases/tag/v11.8.0
+41 notice To update run: npm install -g npm@11.8.0
+41 notice  { force: true, [Symbol(proc-log.meta)]: true }
+42 verbose exit 0
+43 info ok

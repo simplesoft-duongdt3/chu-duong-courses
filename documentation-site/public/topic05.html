@@ -1,0 +1,545 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chủ đề 5: Validation & Global Exception Handling</title>
+    <!-- Tailwind CSS via CDN for simplicity and reliability -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for Sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <button
+            onclick="toggleSidebar()"
+            class="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <a
+            href="index.html"
+            class="ml-3 lg:ml-0 text-xl font-bold text-gray-900 tracking-tight"
+          >
+            <span class="text-indigo-600">Spring Boot</span> for Frontend Devs
+          </a>
+        </div>
+        <!-- Optional Top Links -->
+        <div class="hidden md:flex space-x-4">
+          <a
+            href="https://github.com/chu-duong-courses"
+            target="_blank"
+            class="text-gray-500 hover:text-gray-900 transition font-medium"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto flex items-start">
+      <!-- Sidebar Navigation -->
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="fixed inset-0 z-50 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 lg:w-64 lg:h-[calc(100vh-4rem)] lg:bg-transparent lg:border-r lg:border-gray-200 lg:sticky lg:top-16 overflow-y-auto"
+      >
+        <div class="p-4 flex justify-between items-center lg:hidden border-b border-gray-100 mb-2">
+            <span class="font-bold text-gray-900">Menu</span>
+            <button onclick="toggleSidebar()" class="p-2 -mr-2 text-gray-500 hover:text-gray-700">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="p-4 space-y-1">
+          <div class="mb-4">
+            <p
+              class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+            >
+              Chương trình học
+            </p>
+            <a href="index.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Spring Boot for Frontend Devs
+        </a>
+<a href="topic01.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 1: Request-Response Cycle & The Middleware Chain
+        </a>
+<a href="topic02.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 2: IoC Container & Dependency Injection (DI)
+        </a>
+<a href="topic03.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 3: Persistence với Spring Data JPA & Hibernate
+        </a>
+<a href="topic04.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 4: Transaction Management - Quản lý giao dịch
+        </a>
+<a href="topic05.html" class="block px-2 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 5: Validation & Global Exception Handling
+        </a>
+<a href="topic06.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 6: Spring Security & JWT (Stateless Authentication)
+        </a>
+<a href="topic07.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 7: Logging & Monitoring (Actuator)
+        </a>
+<a href="topic_black_holes.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging
+        </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0 p-4 sm:p-6 lg:padding-8">
+        <div class="max-w-4xl mx-auto">
+          <article
+            class="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-xl shadow-none"
+          >
+            <p>Nếu ở Frontend, bạn thường xử lý lỗi bằng <code>try-catch</code> quanh các hàm gọi API hoặc dùng Axios Interceptors để bắt mã 400, 500 rồi hiển thị Toast Message, thì ở Backend, chúng ta cần một &quot;tấm lưới&quot; khổng lồ để bắt mọi sai sót trước khi chúng biến thành những dòng log Java loằng ngoằng gửi về cho người dùng.</p>
+<hr>
+<h1>Chủ đề 5: Validation &amp; Global Exception Handling</h1>
+<p>Trong Spring Boot 3, mục tiêu của chúng ta là: <strong>Dữ liệu vào phải sạch, dữ liệu ra (lỗi) phải đẹp.</strong></p>
+<h3>1. Lý thuyết: Tầng phòng ngự và Tầng xử lý</h3>
+<ul>
+<li><strong>Bean Validation (Jakarta Validation):</strong> Sử dụng các Annotation như <code>@NotNull</code>, <code>@Size</code>, <code>@Min</code>, <code>@Email</code> trực tiếp trên các DTO. Đây là tầng phòng ngự đầu tiên ngay tại Controller.</li>
+<li><strong>@RestControllerAdvice:</strong> Một &quot;Interceptor đặc biệt&quot; chuyên đi nhặt các Exception bị ném ra từ bất kỳ đâu (Controller, Service, Repository).</li>
+<li><strong>Error Response DTO:</strong> Thay vì trả về lỗi mặc định của Spring (thường thiếu thông tin hoặc quá thô), chúng ta định nghĩa một cấu trúc JSON thống nhất để Frontend dễ dàng xử lý (ví dụ: luôn có <code>code</code>, <code>message</code>, và <code>timestamp</code>).</li>
+</ul>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4>A. Định nghĩa DTO với Validation</h4>
+<p>Đừng bao giờ tin dữ liệu từ Frontend gửi lên, dù bạn đã check ở đó rồi!</p>
+<pre><code class="language-java">public record UserRegistrationDTO(
+    @NotBlank(message = &quot;Username không được để trống&quot;)
+    @Size(min = 3, max = 20, message = &quot;Username phải từ 3-20 ký tự&quot;)
+    String username,
+
+    @Email(message = &quot;Email không hợp lệ&quot;)
+    String email,
+
+    @Min(value = 18, message = &quot;Bạn phải trên 18 tuổi&quot;)
+    int age
+) {}
+</code></pre>
+<h4>B. Controller nhận dữ liệu</h4>
+<p>Sử dụng Annotation <code>@Valid</code> để kích hoạt bộ kiểm tra.</p>
+<pre><code class="language-java">@PostMapping(&quot;/register&quot;)
+public ResponseEntity&lt;String&gt; register(@Valid @RequestBody UserRegistrationDTO dto) {
+    return ResponseEntity.ok(&quot;Đăng ký thành công!&quot;);
+}
+</code></pre>
+<h4>C. Global Exception Handler (Tấm lưới bảo hiểm)</h4>
+<pre><code class="language-java">@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    // 1. Bắt lỗi Validation (400 Bad Request)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity&lt;Map&lt;String, String&gt;&gt; handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map&lt;String, String&gt; errors = new HashMap&lt;&gt;();
+        ex.getBindingResult().getFieldErrors().forEach(error -&gt; 
+            errors.put(error.getField(), error.getDefaultMessage()));
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+    }
+
+    // 2. Bắt lỗi logic nghiệp vụ tự định nghĩa
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleBusinessException(BusinessException ex) {
+        ErrorResponse error = new ErrorResponse(&quot;BIZ_ERR&quot;, ex.getMessage());
+        return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(error);
+    }
+
+    // 3. Bắt mọi lỗi không mong muốn (500 Internal Server Error)
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleAllExceptions(Exception ex) {
+        // Ghi log lỗi tại đây để admin kiểm tra
+        ErrorResponse error = new ErrorResponse(&quot;SYS_ERR&quot;, &quot;Hệ thống đang bận, vui lòng thử lại sau&quot;);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Hiển thị lỗi chi tiết trên Form Frontend</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Frontend cần biết chính xác field nào bị lỗi để tô đỏ (ví dụ: <code>email</code> không đúng định dạng).</li>
+<li><strong>Giải pháp:</strong> Backend trả về một Map các lỗi validation với HTTP 400. Frontend chỉ cần loop qua cái Map này để hiển thị message tương ứng ngay dưới các ô Input.</li>
+</ul>
+<p><strong>Tình huống 2: Xử lý lỗi &quot;Bản ghi đã tồn tại&quot; (Conflict)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> User đăng ký với Email đã có trong hệ thống.</li>
+<li><strong>Giải pháp:</strong> Trong Service, bạn check DB, nếu tồn tại thì <code>throw new BusinessException(&quot;Email này đã được sử dụng&quot;)</code>. Global Handler sẽ bắt được và trả về JSON chuẩn thay vì làm sập luồng xử lý.</li>
+</ul>
+<p><strong>Tình huống 3: Bảo mật thông tin hệ thống (Information Leakage)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Khi DB bị sập, Spring mặc định có thể trả về cả một đoạn StackTrace dài dằng dặc, lộ tên bảng, tên cột và logic code.</li>
+<li><strong>Giải pháp:</strong> Sử dụng cái &quot;lưới&quot; <code>ExceptionHandler(Exception.class)</code> để ẩn đi các chi tiết kỹ thuật và chỉ trả về một thông báo thân thiện: &quot;Something went wrong&quot;.</li>
+</ul>
+<hr>
+<h3>Bảng so sánh &quot;Tư duy bắt lỗi&quot;</h3>
+<table>
+<thead>
+<tr>
+<th>Đặc điểm</th>
+<th>Frontend</th>
+<th>Backend (Spring Boot)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Mục đích chính</strong></td>
+<td>Trải nghiệm người dùng (UX)</td>
+<td>Tính toàn vẹn dữ liệu &amp; Bảo mật</td>
+</tr>
+<tr>
+<td><strong>Công cụ</strong></td>
+<td><code>if/else</code>, <code>try-catch</code>, <code>Yup/Zod</code></td>
+<td><code>Jakarta Validation</code>, <code>@RestControllerAdvice</code></td>
+</tr>
+<tr>
+<td><strong>Kết quả trả về</strong></td>
+<td>Toast, Alert, Red Border</td>
+<td>JSON Object + HTTP Status Code</td>
+</tr>
+<tr>
+<td><strong>Phạm vi</strong></td>
+<td>Từng Component / Page</td>
+<td>Toàn bộ Application</td>
+</tr>
+</tbody></table>
+<hr>
+<blockquote>
+<p><strong>Mẹo nhỏ:</strong> Đừng cố bắt lỗi trong từng hàm Controller. Hãy cứ để nó &quot;ném&quot; (throw) thoải mái, vì chúng ta đã có <code>@RestControllerAdvice</code> lo liệu mọi thứ ở một nơi tập trung rồi. Code của bạn sẽ cực kỳ sạch sẽ!</p>
+</blockquote>
+<hr>
+<p>Việc tạo ra một <strong>Custom Exception</strong> riêng không chỉ giúp code của bạn &quot;sạch&quot; hơn mà còn giúp Frontend xử lý logic cực kỳ nhàn. Thay vì chỉ nhận về mã 500 chung chung, Frontend sẽ nhận được các <strong>Error Code</strong> cụ thể để hiển thị đúng thông báo hoặc thực hiện hướng xử lý riêng (ví dụ: code <code>TOKEN_EXPIRED</code> thì tự động đá user ra trang Login).</p>
+<hr>
+<h1>Chủ đề 5.1: Xây dựng Hệ thống Custom Exception chuẩn Enterprise</h1>
+<h3>1. Lý thuyết: Tại sao phải &quot;tự chế&quot; Exception?</h3>
+<p>Nếu bạn chỉ dùng các Exception có sẵn của Java (như <code>IllegalArgumentException</code>), bạn sẽ gặp 2 vấn đề:</p>
+<ol>
+<li><strong>Thiếu ngữ cảnh:</strong> Không phân biệt được lỗi này là do logic nghiệp vụ hay do hệ thống.</li>
+<li><strong>Khó bắt lỗi tập trung:</strong> Trong <code>@RestControllerAdvice</code>, bạn sẽ phải viết rất nhiều hàm <code>handle</code> cho từng loại Exception nhỏ lẻ.</li>
+</ol>
+<p><strong>Giải pháp:</strong> Tạo một lớp cha duy nhất (ví dụ: <code>AppException</code>) chứa thông tin về <strong>ErrorCode</strong> và <strong>HTTP Status</strong>.</p>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4>A. Định nghĩa Danh mục lỗi (ErrorCode Enum)</h4>
+<p>Đây là &quot;bảng mã&quot; dùng chung giữa Backend và Frontend.</p>
+<pre><code class="language-java">public enum ErrorCode {
+    USER_EXISTED(&quot;USER_001&quot;, &quot;User đã tồn tại&quot;, HttpStatus.BAD_REQUEST),
+    USER_NOT_FOUND(&quot;USER_002&quot;, &quot;Không tìm thấy User&quot;, HttpStatus.NOT_FOUND),
+    INSUFFICIENT_BALANCE(&quot;WALLET_001&quot;, &quot;Số dư không đủ&quot;, HttpStatus.PAYMENT_REQUIRED),
+    UNCATEGORIZED_EXCEPTION(&quot;SYS_999&quot;, &quot;Lỗi không xác định&quot;, HttpStatus.INTERNAL_SERVER_ERROR);
+
+    private final String code;
+    private final String message;
+    private final HttpStatus statusCode;
+
+    ErrorCode(String code, String message, HttpStatus statusCode) {
+        this.code = code;
+        this.message = message;
+        this.statusCode = statusCode;
+    }
+    // Getters...
+}
+</code></pre>
+<h4>B. Tạo lớp Exception tùy chỉnh</h4>
+<p>Lớp này sẽ kế thừa <code>RuntimeException</code> để không bắt buộc phải <code>try-catch</code> khắp nơi.</p>
+<pre><code class="language-java">@Getter
+public class AppException extends RuntimeException {
+    private final ErrorCode errorCode;
+
+    public AppException(ErrorCode errorCode) {
+        super(errorCode.getMessage());
+        this.errorCode = errorCode;
+    }
+}
+</code></pre>
+<h4>C. Cấu hình Global Handler để &quot;đọc&quot; Custom Exception</h4>
+<p>Lúc này, cái &quot;lưới&quot; của bạn sẽ cực kỳ gọn gàng.</p>
+<pre><code class="language-java">@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity&lt;ApiResponse&lt;Object&gt;&gt; handleAppException(AppException ex) {
+        ErrorCode errorCode = ex.getErrorCode();
+        
+        ApiResponse&lt;Object&gt; response = new ApiResponse&lt;&gt;();
+        response.setCode(errorCode.getCode());
+        response.setMessage(errorCode.getMessage());
+
+        return ResponseEntity
+                .status(errorCode.getStatusCode())
+                .body(response);
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Xử lý số dư ví (Fintech App)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Khi user nhấn &quot;Thanh toán&quot;, số dư trong ví không đủ.</li>
+<li><strong>Code xử lý:</strong> ```java<br>if (balance &lt; price) throw new AppException(ErrorCode.INSUFFICIENT_BALANCE);</li>
+</ul>
+<pre><code>
+</code></pre>
+<ul>
+<li><strong>Kết quả:</strong> Frontend nhận được JSON <code>{&quot;code&quot;: &quot;WALLET_001&quot;, &quot;message&quot;: &quot;Số dư không đủ&quot;}</code> với HTTP <code>402</code>. Frontend chỉ cần check <code>if (code === &#39;WALLET_001&#39;)</code> để hiện nút &quot;Nạp tiền ngay&quot;.</li>
+</ul>
+<p><strong>Tình huống 2: Tìm kiếm dữ liệu (Resource Mapping)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> User cố tình thay đổi ID trên URL để truy cập vào một sản phẩm không tồn tại.</li>
+<li><strong>Code xử lý:</strong></li>
+</ul>
+<pre><code class="language-java">Product product = repo.findById(id).orElseThrow(() -&gt; new AppException(ErrorCode.PRODUCT_NOT_FOUND));
+</code></pre>
+<ul>
+<li><strong>Kết quả:</strong> Trả về HTTP <code>404</code>. Frontend sẽ tự động redirect sang trang &quot;404 Not Found&quot; xinh xắn thay vì hiện trang trắng.</li>
+</ul>
+<p><strong>Tình huống 3: Đăng ký thành viên (Duplicate Entry)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Hai người cùng nhấn đăng ký với một email tại cùng một thời điểm.</li>
+<li><strong>Code xử lý:</strong> Trong tầng Service, trước khi lưu, bạn check <code>existsByEmail</code>. Nếu có, <code>throw new AppException(ErrorCode.USER_EXISTED)</code>.</li>
+<li><strong>Kết quả:</strong> Frontend nhận lỗi và thông báo ngay tại ô nhập liệu: &quot;Email này đã có người sử dụng&quot;.</li>
+</ul>
+<hr>
+<h3>Bảng so sánh &quot;Trước và Sau&quot; khi dùng Custom Exception</h3>
+<table>
+<thead>
+<tr>
+<th>Tiêu chí</th>
+<th>Cách làm truyền thống</th>
+<th>Cách làm Custom Exception</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Code trong Service</strong></td>
+<td><code>throw new RuntimeException(&quot;Lỗi rồi&quot;)</code></td>
+<td><code>throw new AppException(ErrorCode.XY_Z)</code></td>
+</tr>
+<tr>
+<td><strong>Thông tin trả về</strong></td>
+<td>String message thô sơ</td>
+<td>Object gồm Code, Message, Metadata</td>
+</tr>
+<tr>
+<td><strong>Phía Frontend</strong></td>
+<td>Khó bắt lỗi theo loại (phải so khớp chuỗi)</td>
+<td>Bắt lỗi cực nhanh qua mã Code định sẵn</td>
+</tr>
+<tr>
+<td><strong>Maintainability</strong></td>
+<td>Phải đi sửa từng chỗ <code>throw</code></td>
+<td>Chỉ cần sửa bản tin lỗi tại một file Enum duy nhất</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>Gợi ý cho bạn:</strong> Trong các dự án thực tế, người ta thường đính kèm thêm một trường <code>details</code> kiểu Map hoặc List vào <code>AppException</code> để chứa các thông tin bổ sung (ví dụ: danh sách các field bị lỗi validation).</p>
+<hr>
+<h1>Chủ đề 5.2: Hợp nhất Validation và Custom Exception</h1>
+<p>Mục tiêu của chúng ta là dù lỗi gì xảy ra, Frontend luôn nhận được:</p>
+<pre><code class="language-json">{
+  &quot;code&quot;: &quot;ERROR_CODE&quot;,
+  &quot;message&quot;: &quot;Thông báo chính&quot;,
+  &quot;details&quot;: { &quot;field&quot;: &quot;lỗi chi tiết&quot; } 
+}
+</code></pre>
+<h3>1. Lý thuyết: Cơ chế chuyển đổi (Mapping)</h3>
+<p>Khi bộ lọc <code>@Valid</code> phát hiện dữ liệu sai, nó sẽ ném ra <code>MethodArgumentNotValidException</code>. Nhiệm vụ của chúng ta là:</p>
+<ol>
+<li>Bắt lấy Exception này trong <code>GlobalExceptionHandler</code>.</li>
+<li>Trích xuất danh sách các field bị lỗi và message tương ứng.</li>
+<li>Đóng gói chúng vào cùng một định dạng mà <code>AppException</code> đang dùng.</li>
+</ol>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4>A. Cập nhật ErrorCode Enum</h4>
+<p>Thêm một mã dành riêng cho việc sai dữ liệu đầu vào.</p>
+<pre><code class="language-java">public enum ErrorCode {
+    INVALID_INPUT(&quot;VAL_001&quot;, &quot;Dữ liệu đầu vào không hợp lệ&quot;, HttpStatus.BAD_REQUEST),
+    // ... các code khác
+}
+</code></pre>
+<h4>B. Cấu hình ApiResponse DTO (Generic)</h4>
+<p>Cấu trúc này sẽ chứa cả dữ liệu thành công và thông tin lỗi.</p>
+<pre><code class="language-java">@Getter @Setter
+@JsonInclude(JsonInclude.Include.NON_NULL) // Chỉ hiện các trường không null
+public class ApiResponse&lt;T&gt; {
+    private String code = &quot;SUCCESS&quot;; // Mặc định là thành công
+    private String message;
+    private T result;
+    private Map&lt;String, String&gt; details; // Nơi chứa lỗi validation chi tiết
+}
+</code></pre>
+<h4>C. Xử lý tại GlobalExceptionHandler</h4>
+<p>Đây là nơi &quot;hợp nhất&quot; hai dòng lỗi về cùng một định dạng.</p>
+<pre><code class="language-java">@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    // 1. Xử lý lỗi nghiệp vụ (Custom Exception đã làm ở phần trước)
+    @ExceptionHandler(AppException.class)
+    public ResponseEntity&lt;ApiResponse&lt;Object&gt;&gt; handleAppException(AppException ex) {
+        ApiResponse&lt;Object&gt; response = new ApiResponse&lt;&gt;();
+        response.setCode(ex.getErrorCode().getCode());
+        response.setMessage(ex.getMessage());
+        return ResponseEntity.status(ex.getErrorCode().getStatusCode()).body(response);
+    }
+
+    // 2. Xử lý lỗi Validation (Hợp nhất vào đây)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity&lt;ApiResponse&lt;Object&gt;&gt; handleValidation(MethodArgumentNotValidException ex) {
+        Map&lt;String, String&gt; details = new HashMap&lt;&gt;();
+        
+        // Trích xuất từng field bị lỗi
+        ex.getBindingResult().getFieldErrors().forEach(error -&gt; 
+            details.put(error.getField(), error.getDefaultMessage())
+        );
+
+        ApiResponse&lt;Object&gt; response = new ApiResponse&lt;&gt;();
+        response.setCode(ErrorCode.INVALID_INPUT.getCode());
+        response.setMessage(ErrorCode.INVALID_INPUT.getMessage());
+        response.setDetails(details); // Gắn danh sách lỗi vào đây
+
+        return ResponseEntity.badRequest().body(response);
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Form Đăng ký phức tạp</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> User nhập thiếu Email, Password quá ngắn và Age là số âm.</li>
+<li><strong>Kết quả:</strong> Frontend nhận được JSON:</li>
+</ul>
+<pre><code class="language-json">{
+  &quot;code&quot;: &quot;VAL_001&quot;,
+  &quot;message&quot;: &quot;Dữ liệu đầu vào không hợp lệ&quot;,
+  &quot;details&quot;: {
+    &quot;email&quot;: &quot;Email không được để trống&quot;,
+    &quot;password&quot;: &quot;Password phải từ 8 ký tự&quot;,
+    &quot;age&quot;: &quot;Tuổi không được là số âm&quot;
+  }
+}
+</code></pre>
+<ul>
+<li><strong>Frontend Xử lý:</strong> Chỉ cần một hàm <code>mapping</code> duy nhất để hiển thị lỗi lên các input tương ứng.</li>
+</ul>
+<p><strong>Tình huống 2: Thay đổi ngôn ngữ lỗi (i18n)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn muốn message trong <code>details</code> tự động đổi sang tiếng Anh hoặc tiếng Việt.</li>
+<li><strong>Giải pháp:</strong> Bạn không cần sửa Handler. Chỉ cần tạo các file <code>messages.properties</code> và <code>messages_vi.properties</code>. Spring Validation sẽ tự động lấy message theo ngôn ngữ của Request và đưa vào <code>details</code>.</li>
+</ul>
+<p><strong>Tình huống 3: Lỗi lồng nhau (Nested Objects)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn gửi lên một Order có danh sách nhiều <code>OrderItem</code>. Một item trong đó bị sai giá.</li>
+<li><strong>Giải pháp:</strong> Bộ Handler trên vẫn sẽ bắt được và trả về <code>details</code> dạng: <code>&quot;items[0].price&quot;: &quot;Giá không được nhỏ hơn 0&quot;</code>. Frontend vẫn biết chính xác dòng nào trong bảng bị lỗi.</li>
+</ul>
+<hr>
+<h3>Bảng so sánh cho Dev Frontend</h3>
+<table>
+<thead>
+<tr>
+<th>Tiêu chí</th>
+<th>Trước khi hợp nhất</th>
+<th>Sau khi hợp nhất</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Cấu trúc JSON</strong></td>
+<td>Lúc thì mảng, lúc thì object</td>
+<td>Luôn luôn là một chuẩn duy nhất</td>
+</tr>
+<tr>
+<td><strong>Code phía Frontend</strong></td>
+<td>Viết nhiều <code>if/else</code> cho từng loại lỗi</td>
+<td>Dùng một bộ Parser duy nhất cho mọi API</td>
+</tr>
+<tr>
+<td><strong>Thông tin chi tiết</strong></td>
+<td>Thường chỉ có message chung</td>
+<td>Biết chính xác lỗi ở đâu (field-level)</td>
+</tr>
+<tr>
+<td><strong>Độ chuyên nghiệp</strong></td>
+<td>Giống đồ án sinh viên</td>
+<td>Đạt chuẩn Enterprise/Production</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>Lời khuyên:</strong> Việc trả về <code>details</code> là một Map rất tiện cho Web, nhưng nếu bạn làm cho App Mobile, đôi khi họ thích một <code>List</code> các Object lỗi hơn. Bạn có thể dễ dàng thay đổi kiểu dữ liệu của <code>details</code> trong <code>ApiResponse</code> để phù hợp với team Frontend của mình.</p>
+
+          </article>
+
+          <!-- Navigation Footer (Next/Prev) -->
+          <div class="mt-12 pt-8 border-t border-gray-200 flex justify-between">
+            <a href="topic04.html" class="text-indigo-600 font-medium hover:text-indigo-800">← Chủ đề 4: Transaction Management - Quản lý giao dịch</a><a href="topic06.html" class="text-indigo-600 font-medium hover:text-indigo-800">Chủ đề 6: Spring Security & JWT (Stateless Authentication) →</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div
+      onclick="toggleSidebar()"
+      id="overlay"
+      class="fixed inset-0 bg-black/50 z-10 lg:hidden hidden"
+      style="display: none"
+    ></div>
+    <script>
+      // Simple overlay logic
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      // Sync overlay with sidebar state check if needed, but for "simplest" just toggle visibility in CSS or JS.
+      // Actually, let's keep it simple.
+    </script>
+  </body>
+</html>

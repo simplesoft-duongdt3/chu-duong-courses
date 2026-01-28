@@ -1,0 +1,408 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chủ đề 4: Transaction Management - Quản lý giao dịch</title>
+    <!-- Tailwind CSS via CDN for simplicity and reliability -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for Sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <button
+            onclick="toggleSidebar()"
+            class="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <a
+            href="index.html"
+            class="ml-3 lg:ml-0 text-xl font-bold text-gray-900 tracking-tight"
+          >
+            <span class="text-indigo-600">Spring Boot</span> for Frontend Devs
+          </a>
+        </div>
+        <!-- Optional Top Links -->
+        <div class="hidden md:flex space-x-4">
+          <a
+            href="https://github.com/chu-duong-courses"
+            target="_blank"
+            class="text-gray-500 hover:text-gray-900 transition font-medium"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto flex items-start">
+      <!-- Sidebar Navigation -->
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="fixed inset-0 z-50 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 lg:w-64 lg:h-[calc(100vh-4rem)] lg:bg-transparent lg:border-r lg:border-gray-200 lg:sticky lg:top-16 overflow-y-auto"
+      >
+        <div class="p-4 flex justify-between items-center lg:hidden border-b border-gray-100 mb-2">
+            <span class="font-bold text-gray-900">Menu</span>
+            <button onclick="toggleSidebar()" class="p-2 -mr-2 text-gray-500 hover:text-gray-700">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="p-4 space-y-1">
+          <div class="mb-4">
+            <p
+              class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+            >
+              Chương trình học
+            </p>
+            <a href="index.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Spring Boot for Frontend Devs
+        </a>
+<a href="topic01.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 1: Request-Response Cycle & The Middleware Chain
+        </a>
+<a href="topic02.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 2: IoC Container & Dependency Injection (DI)
+        </a>
+<a href="topic03.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 3: Persistence với Spring Data JPA & Hibernate
+        </a>
+<a href="topic04.html" class="block px-2 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 4: Transaction Management - Quản lý giao dịch
+        </a>
+<a href="topic05.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 5: Validation & Global Exception Handling
+        </a>
+<a href="topic06.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 6: Spring Security & JWT (Stateless Authentication)
+        </a>
+<a href="topic07.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 7: Logging & Monitoring (Actuator)
+        </a>
+<a href="topic_black_holes.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging
+        </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0 p-4 sm:p-6 lg:padding-8">
+        <div class="max-w-4xl mx-auto">
+          <article
+            class="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-xl shadow-none"
+          >
+            <h2>Transaction Management. Đây là nơi ranh giới giữa một &quot;Junior&quot; và một &quot;Senior&quot; Backend được phân định rõ ràng nhất.</h2>
+<p>Nếu ở Frontend, bạn gọi 3 API liên tiếp và cái thứ 2 bị lỗi, bạn thường phải viết logic để &quot;undo&quot; cái thứ nhất (hoặc mặc kệ nó). Trong Spring Boot, chúng ta có <strong>Transaction</strong> để đảm bảo mọi thứ diễn ra theo quy tắc: <strong>&quot;Được ăn cả, ngã về không&quot;</strong>.</p>
+<hr>
+<h1>Chủ đề 4: Transaction Management - Quản lý giao dịch</h1>
+<h3>1. Lý thuyết: ACID và Phép màu của Proxy</h3>
+<p>Trong Backend, một &quot;Transaction&quot; (Giao dịch) là một đơn vị công việc không thể chia cắt. Nó tuân thủ tính chất <strong>ACID</strong> (Atomicity, Consistency, Isolation, Durability).</p>
+<ul>
+<li><strong>@Transactional:</strong> Là Annotation quyền lực nhất. Khi bạn đánh dấu một hàm với <code>@Transactional</code>, Spring sẽ tạo một <strong>Proxy</strong> (người đại diện) bao quanh hàm đó.</li>
+<li>Bắt đầu hàm: Proxy mở một kết nối tới DB và tắt chế độ <code>auto-commit</code>.</li>
+<li>Hàm chạy xong xuôi: Proxy gọi <code>commit</code> để lưu vĩnh viễn dữ liệu.</li>
+<li>Có lỗi xảy ra (Exception): Proxy gọi <code>rollback</code> để đưa dữ liệu về trạng thái ban đầu như chưa có chuyện gì xảy ra.</li>
+</ul>
+<blockquote>
+<p><strong>Lưu ý quan trọng cho Dev Frontend:</strong> Mặc định, Spring chỉ Rollback khi gặp <strong>Unchecked Exception</strong> (như <code>RuntimeException</code>, <code>NullPointerException</code>). Nếu bạn ném ra một <strong>Checked Exception</strong> (như <code>IOException</code>, <code>SQLException</code>), nó sẽ <strong>KHÔNG</strong> rollback trừ khi bạn cấu hình thêm.</p>
+</blockquote>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4>A. Cách dùng cơ bản (Thanh toán đơn hàng)</h4>
+<p>Giả sử bạn cần trừ tiền khách hàng và trừ kho hàng cùng lúc.</p>
+<pre><code class="language-java">@Service
+public class OrderService {
+
+    @Autowired private WalletRepository walletRepository;
+    @Autowired private StockRepository stockRepository;
+
+    @Transactional(rollbackFor = Exception.class) // Rollback cho mọi loại lỗi
+    public void placeOrder(Long userId, Long productId, Double amount) {
+        // 1. Trừ tiền ví
+        walletRepository.deductMoney(userId, amount);
+
+        // 2. Giả sử đoạn này bị lỗi (ví dụ: mất điện, DB nghẽn)
+        if (true) throw new RuntimeException(&quot;Lỗi bất ngờ!&quot;); 
+
+        // 3. Trừ kho (Dòng này sẽ không bao giờ chạy)
+        stockRepository.decreaseStock(productId);
+        
+        // Nhờ @Transactional, tiền trong ví ở bước 1 sẽ được hoàn lại tự động!
+    }
+}
+</code></pre>
+<h4>B. Cấu hình Isolation &amp; Propagation (Nâng cao)</h4>
+<p>Đôi khi bạn muốn một hàm chạy trong một Transaction mới hoàn toàn, độc lập với hàm gọi nó.</p>
+<pre><code class="language-java">@Transactional(propagation = Propagation.REQUIRES_NEW)
+public void logToDatabase(String message) {
+    // Luôn lưu Log vào DB, kể cả khi giao dịch chính bị thất bại và rollback
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Lỗi &quot;Self-invocation&quot; (Tự gọi chính mình)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn có hàm <code>A()</code> (không có Transaction) gọi hàm <code>B()</code> (có <code>@Transactional</code>) trong cùng một Class.</li>
+<li><strong>Kết quả:</strong> Transaction ở hàm <code>B()</code> sẽ <strong>không hoạt động</strong>.</li>
+<li><strong>Lý do:</strong> Spring dùng Proxy để bọc Class lại. Khi gọi nội bộ (internal call), nó không đi qua Proxy nên không có phép màu nào xảy ra cả. Đây là lỗi &quot;vỡ lòng&quot; mà hầu như dev nào cũng dính.</li>
+</ul>
+<p><strong>Tình huống 2: Giao dịch với bên thứ ba (Third-party API)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn gọi API của PayPal để trừ tiền, sau đó cập nhật DB của mình. Nếu cập nhật DB lỗi, Spring sẽ rollback DB của bạn, nhưng <strong>không thể</strong> đòi lại tiền từ PayPal.</li>
+<li><strong>Giải pháp:</strong> Luôn gọi các dịch vụ bên ngoài <strong>cuối cùng</strong> hoặc sử dụng mô hình <strong>Saga Pattern/Two-phase Commit</strong> nếu hệ thống cực kỳ phức tạp. Đừng bao giờ để API gọi ngoài nằm giữa các câu lệnh cập nhật DB nhạy cảm.</li>
+</ul>
+<p><strong>Tình huống 3: Read-only Optimization</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn chỉ muốn lấy dữ liệu để hiển thị (Dashboard).</li>
+<li><strong>Giải pháp:</strong> Dùng <code>@Transactional(readOnly = true)</code>.</li>
+<li><strong>Lợi ích:</strong> Hibernate sẽ tắt tính năng &quot;Dirty checking&quot; (kiểm tra thay đổi object), giúp API của bạn chạy nhanh hơn và giảm tải cho Database (DB có thể điều hướng sang Node Read-only).</li>
+</ul>
+<hr>
+<h3>Bảng so sánh cho dễ nhớ</h3>
+<table>
+<thead>
+<tr>
+<th>Đặc điểm</th>
+<th>Không dùng Transaction</th>
+<th>Có dùng @Transactional</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Khi lỗi xảy ra</strong></td>
+<td>Dữ liệu dở dang (Inconsistent)</td>
+<td>Dữ liệu sạch sẽ (Rollback)</td>
+</tr>
+<tr>
+<td><strong>Hiệu năng</strong></td>
+<td>Nhanh hơn một chút</td>
+<td>Tốn thêm phí quản lý kết nối</td>
+</tr>
+<tr>
+<td><strong>Tư duy</strong></td>
+<td>&quot;Lỗi đâu sửa đấy&quot;</td>
+<td>&quot;Tất cả hoặc không gì cả&quot;</td>
+</tr>
+<tr>
+<td><strong>Phù hợp</strong></td>
+<td>Các tác vụ đọc, log đơn giản</td>
+<td>Thanh toán, Đăng ký, Đổi mật khẩu</td>
+</tr>
+</tbody></table>
+<hr>
+<h3>⚠️ Cạm bẫy cần tránh:</h3>
+<p>Đừng bao giờ để các tác vụ nặng (như gửi Email, upload file lên S3, xử lý ảnh) bên trong <code>@Transactional</code>. Nó sẽ giữ kết nối Database (Connection) rất lâu, khiến ứng dụng hết kết nối và bị treo (Connection Pool Exhaustion).</p>
+<hr>
+<p>Lỗi <strong>Self-invocation</strong> là một trong những &quot;hố đen&quot; khiến nhiều Developer mất hàng giờ debug vì code nhìn hoàn toàn đúng nhưng Transaction lại không hoạt động.</p>
+<p>Để hiểu rõ, bạn cần nhớ một nguyên tắc vàng: <strong>Spring không trực tiếp chạy class của bạn, nó chạy một &quot;bản sao giả&quot; (Proxy) bao quanh class đó.</strong></p>
+<hr>
+<h1>Hiểu sâu về Self-invocation &amp; Proxy Pattern</h1>
+<h3>1. Bản chất: Hiệu ứng &quot;Vượt rào&quot;</h3>
+<p>Hãy tưởng tượng Class của bạn là một <strong>Cửa hàng</strong>. <code>@Transactional</code> giống như một <strong>anh bảo vệ</strong> đứng ở cửa chính.</p>
+<ul>
+<li><strong>External Call:</strong> Một vị khách (Controller) đi từ ngoài vào cửa chính -&gt; Gặp bảo vệ -&gt; Bảo vệ mở Transaction -&gt; Khách vào mua hàng.</li>
+<li><strong>Self-invocation:</strong> Bạn đang ở trong kho (Hàm A), bạn tự đi sang quầy thu ngân (Hàm B) mà không đi ra ngoài rồi quay lại cửa chính -&gt; <strong>Bạn không đi qua anh bảo vệ</strong> -&gt; Không có Transaction nào được mở.</li>
+</ul>
+<hr>
+<h3>2. Ví dụ Code gây lỗi</h3>
+<pre><code class="language-java">@Service
+public class OrderService {
+
+    // Hàm này KHÔNG có Transaction
+    public void createOrderSimple(Order order) {
+        // ... logic kiểm tra đơn hàng
+        saveOrderWithTransaction(order); // Tự gọi hàm trong cùng class (Self-invocation)
+    }
+
+    // Hàm này CÓ Transaction
+    @Transactional
+    public void saveOrderWithTransaction(Order order) {
+        repository.save(order);
+        // Nếu có lỗi ở đây, nó sẽ KHÔNG ROLLBACK 
+        // vì hàm này được gọi trực tiếp, bypass qua Proxy của Spring.
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Cách xử lý (Solutions)</h3>
+<p>Có 3 cách phổ biến để &quot;vá&quot; lỗi này, sắp xếp theo thứ tự từ &quot;Sạch&quot; đến &quot;Tạm bợ&quot;:</p>
+<h4>Cách 1: Tách Service (Khuyên dùng - Clean Code)</h4>
+<p>Đưa hàm có Transaction sang một Service khác. Đây là cách tuân thủ Single Responsibility Principle (SRP).</p>
+<pre><code class="language-java">@Service
+@RequiredArgsConstructor
+public class OrderService {
+    private final OrderDbService orderDbService; // Inject service khác
+
+    public void createOrder(Order order) {
+        // ... logic
+        orderDbService.save(order); // Gọi sang Proxy của Service khác -&gt; OK!
+    }
+}
+
+@Service
+public class OrderDbService {
+    @Transactional
+    public void save(Order order) {
+        repository.save(order);
+    }
+}
+</code></pre>
+<h4>Cách 2: Tự Inject chính mình (Self-Injection)</h4>
+<p>Spring Boot cho phép bạn &quot;tiêm&quot; chính cái Proxy của mình vào bên trong. Cách này hơi &quot;kỳ cục&quot; về mặt thẩm mỹ nhưng cực kỳ hiệu quả.</p>
+<pre><code class="language-java">@Service
+public class OrderService {
+    @Autowired
+    @Lazy // Dùng @Lazy để tránh lỗi lặp vòng khởi tạo (Circular Dependency)
+    private OrderService self;
+
+    public void createOrder(Order order) {
+        self.saveOrderWithTransaction(order); // Gọi qua biến &#39;self&#39; (chính là Proxy) -&gt; OK!
+    }
+
+    @Transactional
+    public void saveOrderWithTransaction(Order order) {
+        repository.save(order);
+    }
+}
+</code></pre>
+<h4>Cách 3: Sử dụng TransactionTemplate (Lập trình thủ công)</h4>
+<p>Nếu bạn không muốn dùng Annotation, bạn có thể tự quản lý Transaction bằng code. Cách này giống như cách bạn dùng <code>try-catch</code> trong JavaScript.</p>
+<pre><code class="language-java">@Service
+public class OrderService {
+    @Autowired private TransactionTemplate transactionTemplate;
+
+    public void createOrder(Order order) {
+        transactionTemplate.execute(status -&gt; {
+            repository.save(order); // Chạy trong Transaction thủ công
+            return null;
+        });
+    }
+}
+</code></pre>
+<hr>
+<h3>4. Các tình huống thực tế hay gặp</h3>
+<p><strong>Tình huống 1: Cache không hoạt động (@Cacheable)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn dùng <code>@Cacheable</code> để lưu kết quả API vào Redis. Nhưng bạn lại gọi hàm đó từ một hàm khác cùng class.</li>
+<li><strong>Kết quả:</strong> Spring không bao giờ kiểm tra Redis mà luôn chạy thẳng vào Database.</li>
+<li><strong>Lý do:</strong> Giống hệt <code>@Transactional</code>, <code>@Cacheable</code> cũng dựa trên Proxy.</li>
+</ul>
+<p><strong>Tình huống 2: Chạy bất đồng bộ bị treo (@Async)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn muốn hàm gửi Email chạy ngầm (<code>@Async</code>) để không bắt Frontend chờ lâu. Bạn gọi hàm <code>@Async</code> từ một hàm khác trong cùng Service.</li>
+<li><strong>Kết quả:</strong> Email vẫn chạy đồng bộ, Frontend vẫn phải chờ &quot;dài cổ&quot;.</li>
+<li><strong>Lý do:</strong> Proxy không can thiệp được để đẩy hàm đó vào Thread Pool riêng.</li>
+</ul>
+<p><strong>Tình huống 3: Bảo mật bị bỏ qua (@PreAuthorize)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn check quyền admin bằng <code>@PreAuthorize(&quot;hasRole(&#39;ADMIN&#39;)&quot;)</code>.</li>
+<li><strong>Kết quả:</strong> User thường vẫn gọi được hàm admin nếu họ gọi thông qua một hàm &quot;public&quot; khác trong cùng class. Đây là một lỗ hổng bảo mật cực kỳ nguy hiểm.</li>
+</ul>
+<hr>
+<h3>Tóm tắt &quot;bỏ túi&quot; cho bạn</h3>
+<table>
+<thead>
+<tr>
+<th>Đặc điểm</th>
+<th>Gọi từ ngoài (External)</th>
+<th>Gọi nội bộ (Self-invocation)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Đi qua Proxy?</strong></td>
+<td>Có</td>
+<td><strong>Không</strong></td>
+</tr>
+<tr>
+<td><strong>Annotation có tác dụng?</strong></td>
+<td>Có</td>
+<td><strong>Mất tác dụng</strong></td>
+</tr>
+<tr>
+<td><strong>Giải pháp tốt nhất</strong></td>
+<td>Giữ nguyên</td>
+<td>Tách Service</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>Lời khuyên:</strong> Khi bạn thấy một Annotation của Spring (như <code>@Transactional</code>, <code>@Async</code>, <code>@Cacheable</code>, <code>@Secured</code>) bỗng nhiên &quot;biến mất&quot; không rõ lý do, hãy kiểm tra ngay xem bạn có đang gọi nội bộ hay không.</p>
+
+          </article>
+
+          <!-- Navigation Footer (Next/Prev) -->
+          <div class="mt-12 pt-8 border-t border-gray-200 flex justify-between">
+            <a href="topic03.html" class="text-indigo-600 font-medium hover:text-indigo-800">← Chủ đề 3: Persistence với Spring Data JPA & Hibernate</a><a href="topic05.html" class="text-indigo-600 font-medium hover:text-indigo-800">Chủ đề 5: Validation & Global Exception Handling →</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div
+      onclick="toggleSidebar()"
+      id="overlay"
+      class="fixed inset-0 bg-black/50 z-10 lg:hidden hidden"
+      style="display: none"
+    ></div>
+    <script>
+      // Simple overlay logic
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      // Sync overlay with sidebar state check if needed, but for "simplest" just toggle visibility in CSS or JS.
+      // Actually, let's keep it simple.
+    </script>
+  </body>
+</html>

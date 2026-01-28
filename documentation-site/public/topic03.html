@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chủ đề 3: Persistence với Spring Data JPA & Hibernate</title>
+    <!-- Tailwind CSS via CDN for simplicity and reliability -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for Sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <button
+            onclick="toggleSidebar()"
+            class="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <a
+            href="index.html"
+            class="ml-3 lg:ml-0 text-xl font-bold text-gray-900 tracking-tight"
+          >
+            <span class="text-indigo-600">Spring Boot</span> for Frontend Devs
+          </a>
+        </div>
+        <!-- Optional Top Links -->
+        <div class="hidden md:flex space-x-4">
+          <a
+            href="https://github.com/chu-duong-courses"
+            target="_blank"
+            class="text-gray-500 hover:text-gray-900 transition font-medium"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto flex items-start">
+      <!-- Sidebar Navigation -->
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="fixed inset-0 z-50 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 lg:w-64 lg:h-[calc(100vh-4rem)] lg:bg-transparent lg:border-r lg:border-gray-200 lg:sticky lg:top-16 overflow-y-auto"
+      >
+        <div class="p-4 flex justify-between items-center lg:hidden border-b border-gray-100 mb-2">
+            <span class="font-bold text-gray-900">Menu</span>
+            <button onclick="toggleSidebar()" class="p-2 -mr-2 text-gray-500 hover:text-gray-700">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="p-4 space-y-1">
+          <div class="mb-4">
+            <p
+              class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+            >
+              Chương trình học
+            </p>
+            <a href="index.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Spring Boot for Frontend Devs
+        </a>
+<a href="topic01.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 1: Request-Response Cycle & The Middleware Chain
+        </a>
+<a href="topic02.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 2: IoC Container & Dependency Injection (DI)
+        </a>
+<a href="topic03.html" class="block px-2 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 3: Persistence với Spring Data JPA & Hibernate
+        </a>
+<a href="topic04.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 4: Transaction Management - Quản lý giao dịch
+        </a>
+<a href="topic05.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 5: Validation & Global Exception Handling
+        </a>
+<a href="topic06.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 6: Spring Security & JWT (Stateless Authentication)
+        </a>
+<a href="topic07.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 7: Logging & Monitoring (Actuator)
+        </a>
+<a href="topic_black_holes.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging
+        </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0 p-4 sm:p-6 lg:padding-8">
+        <div class="max-w-4xl mx-auto">
+          <article
+            class="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-xl shadow-none"
+          >
+            <h1>Chủ đề 3: Persistence với Spring Data JPA &amp; Hibernate</h1>
+<p>Trong Frontend, dữ liệu thường là các JSON Object lồng nhau. Trong Database quan hệ (SQL), dữ liệu được chia nhỏ thành các hàng và cột. <strong>JPA (Java Persistence API)</strong> chính là &quot;người phiên dịch&quot; giúp biến các hàng đó thành Java Object và ngược lại.</p>
+<h3>1. Lý thuyết: Những khái niệm &quot;phải nằm lòng&quot;</h3>
+<ul>
+<li><strong>Entity:</strong> Là một class Java đại diện cho một bảng trong DB. Mỗi instance của class này tương ứng với một hàng (row).</li>
+<li><strong>Hibernate:</strong> Là &quot;thợ máy&quot; thực hiện việc chuyển đổi. JPA chỉ là &quot;bản thiết kế&quot; (specification).</li>
+<li><strong>Persistence Context (First-level Cache):</strong> Hãy tưởng tượng đây là một &quot;vùng đệm&quot;. Khi bạn lấy một Entity ra, nó nằm trong vùng này. Nếu bạn sửa nó, Hibernate sẽ tự động nhận biết và cập nhật xuống DB khi kết thúc giao dịch (Transaction) mà không cần bạn gọi hàm <code>save</code>.</li>
+<li><strong>Derived Queries:</strong> Spring Data JPA cho phép bạn tạo truy vấn chỉ bằng cách đặt tên hàm. Ví dụ: <code>findByEmail(String email)</code> sẽ tự động được dịch thành <code>SELECT * FROM users WHERE email = ?</code>.</li>
+</ul>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4>A. Cấu hình Database (<code>application.yml</code>)</h4>
+<p>Thay vì viết code kết nối loằng ngoằng, bạn chỉ cần khai báo:</p>
+<pre><code class="language-yaml">spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mydb
+    username: admin
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update # Tự động tạo/sửa bảng dựa trên class Java
+    show-sql: true    # Hiện câu lệnh SQL ở console để debug
+    properties:
+      hibernate:
+        format_sql: true
+</code></pre>
+<h4>B. Định nghĩa Entity &amp; Repository</h4>
+<pre><code class="language-java">@Entity
+@Table(name = &quot;products&quot;)
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String name;
+    private Double price;
+
+    // Getters/Setters
+}
+
+// Chỉ cần khai báo Interface, Spring sẽ tự viết code triển khai!
+public interface ProductRepository extends JpaRepository&lt;Product, Long&gt; {
+    List&lt;Product&gt; findByPriceGreaterThan(Double price);
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Mối quan hệ Cha-Con (One-to-Many)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Một <code>Category</code> có nhiều <code>Product</code>. Frontend muốn khi lấy Category thì thấy luôn danh sách Product.</li>
+<li><strong>Giải pháp:</strong> Dùng <code>@OneToMany</code> với <code>fetch = FetchType.LAZY</code>.</li>
+<li><strong>Lưu ý:</strong> Dev Frontend thường muốn lấy hết một lần, nhưng trong DB, nếu danh sách con quá lớn (triệu hàng), việc lấy hết sẽ làm sập server. Đây là lý do ta phải dùng <strong>Pagination</strong> (phân trang).</li>
+</ul>
+<p><strong>Tình huống 2: Lỗi kinh điển  Query (Performance)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn muốn lấy 10 bài viết, và với mỗi bài viết bạn lại lấy tên tác giả.</li>
+<li><strong>Hậu quả:</strong> Hibernate sẽ chạy 1 câu SELECT lấy 10 bài viết, sau đó chạy thêm 10 câu SELECT nữa để lấy tác giả của từng bài. Tổng cộng  câu lệnh (trong khi chỉ cần 1 câu <code>JOIN</code> là đủ).</li>
+<li><strong>Giải pháp:</strong> Sử dụng <code>@EntityGraph</code> hoặc <code>JOIN FETCH</code> trong câu truy vấn để ép Hibernate lấy dữ liệu trong 1 lần duy nhất.</li>
+</ul>
+<p><strong>Tình huống 3: Entity vs. DTO (Data Transfer Object)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Entity của bạn có trường <code>passwordHash</code> hoặc <code>internalNote</code>. Nếu bạn trả trực tiếp Entity về Frontend, bạn đang hở lỗ hổng bảo mật.</li>
+<li><strong>Giải pháp:</strong> Luôn chuyển đổi Entity sang một class trung gian gọi là <strong>DTO</strong> trước khi gửi về cho Frontend. Điều này giúp bạn kiểm soát chính xác những gì Frontend được thấy và bảo vệ cấu trúc DB bên dưới.</li>
+</ul>
+<hr>
+<h3>Bảng so sánh &quot;Tư duy dữ liệu&quot;</h3>
+<table>
+<thead>
+<tr>
+<th>Đặc điểm</th>
+<th>Frontend (JSON)</th>
+<th>Backend (JPA/SQL)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Liên kết</strong></td>
+<td>Nesting (Object trong Object)</td>
+<td>Foreign Key (ID tham chiếu)</td>
+</tr>
+<tr>
+<td><strong>Định danh</strong></td>
+<td>Tùy chọn (ID hoặc không)</td>
+<td>Bắt buộc phải có <code>@Id</code> (Primary Key)</td>
+</tr>
+<tr>
+<td><strong>Thay đổi</strong></td>
+<td>Gán giá trị mới (<code>obj.a = 1</code>)</td>
+<td>Phải nằm trong <code>@Transactional</code> để lưu</td>
+</tr>
+<tr>
+<td><strong>Số lượng</strong></td>
+<td>Thường xử lý tập dữ liệu nhỏ</td>
+<td>Phải xử lý hàng triệu hàng (Limit/Offset)</td>
+</tr>
+</tbody></table>
+<hr>
+<h3>Mẹo nhỏ cho bạn:</h3>
+<p>Đừng bao giờ tin vào <code>ddl-auto: update</code> ở môi trường Production. Nó có thể xóa cột hoặc thay đổi kiểu dữ liệu của bạn chỉ vì một lỗi nhỏ trong code. Hãy dùng các công cụ quản lý version DB như <strong>Liquibase</strong> hoặc <strong>Flyway</strong> (chúng ta có thể thảo luận ở chủ đề sau).</p>
+<hr>
+<h1>Chủ đề 3.1: No-DB Service &amp; Multi-DB Configuration</h1>
+<h3>1. Service không có Database (No-DB Service)</h3>
+<p>Trong Frontend, bạn gọi là &quot;Proxy&quot; hoặc &quot;BFF&quot; (Backend For Frontend). Ở Spring Boot, đây là những Service chỉ làm nhiệm vụ logic, tính toán, hoặc điều hướng request.</p>
+<p><strong>Lý thuyết:</strong></p>
+<ul>
+<li><strong>Loại bỏ Dependency:</strong> Nếu dự án hoàn toàn không dùng DB, đơn giản là đừng khai báo <code>spring-boot-starter-data-jpa</code> trong file <code>pom.xml</code> hoặc <code>build.gradle</code>.</li>
+<li><strong>Loại bỏ Auto-Configuration:</strong> Nếu bạn lỡ cài thư viện JPA nhưng chưa muốn cấu hình DB ngay, Spring Boot sẽ báo lỗi &quot;Failed to configure a DataSource&quot;. Bạn phải chủ động tắt nó đi.</li>
+</ul>
+<p><strong>Cấu hình &amp; Code mẫu:</strong></p>
+<pre><code class="language-java">// Tắt tự động cấu hình Database trong class Main
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class })
+public class ProxyServiceApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(ProxyServiceApplication.class, args);
+    }
+}
+</code></pre>
+<hr>
+<h3>2. Service dùng nhiều Database (Multi-DB Service)</h3>
+<p>Đây là kịch bản phức tạp hơn. Mặc định Spring Boot chỉ mong đợi <strong>một</strong> DataSource. Để dùng hai cái, bạn phải tự tay &quot;đạo diễn&quot; việc khởi tạo các Bean.</p>
+<p><strong>Lý thuyết:</strong><br>Để dùng 2 DB (ví dụ MySQL và PostgreSQL), bạn cần chia dự án thành các Package riêng biệt:</p>
+<ol>
+<li><strong>DB1 (Primary):</strong> Chứa Entity và Repository của MySQL.</li>
+<li><strong>DB2 (Secondary):</strong> Chứa Entity và Repository của PostgreSQL.<br>Spring sẽ dựa vào đường dẫn Package để biết &quot;thằng Repository này thì dùng kết nối của DB nào&quot;.</li>
+</ol>
+<p><strong>Cấu hình (<code>application.yml</code>):</strong></p>
+<pre><code class="language-yaml">spring:
+  datasource:
+    primary:
+      jdbc-url: jdbc:mysql://localhost:3306/db_chinh
+      username: root
+      password: 123
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    secondary:
+      jdbc-url: jdbc:postgresql://localhost:5432/db_phu
+      username: postgres
+      password: 123
+      driver-class-name: org.postgresql.Driver
+</code></pre>
+<p><strong>Code ví dụ cho cấu hình DB thứ hai:</strong></p>
+<pre><code class="language-java">@Configuration
+@EnableJpaRepositories(
+    basePackages = &quot;com.example.repository.secondary&quot;, // Chỉ định repository dùng DB này
+    entityManagerFactoryRef = &quot;secondaryEntityManagerFactory&quot;,
+    transactionManagerRef = &quot;secondaryTransactionManager&quot;
+)
+public class SecondaryDbConfig {
+
+    @Bean
+    @ConfigurationProperties(&quot;spring.datasource.secondary&quot;)
+    public DataSource secondaryDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean
+    public LocalContainerEntityManagerFactoryBean secondaryEntityManagerFactory(
+            EntityManagerFactoryBuilder builder) {
+        return builder
+                .dataSource(secondaryDataSource())
+                .packages(&quot;com.example.entity.secondary&quot;) // Chỉ định Entity dùng DB này
+                .build();
+    }
+    // ... Cần thêm TransactionManager tương ứng
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: API Gateway / Aggregator (No-DB)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn có 10 Microservices khác nhau. Frontend không muốn gọi 10 lần. Bạn cần 1 Service trung gian gọi cả 10 cái đó, gộp dữ liệu lại thành 1 JSON duy nhất rồi trả về.</li>
+<li><strong>Giải pháp:</strong> Dùng Spring Boot với <code>WebClient</code> (non-blocking). Service này không có DB riêng, nó chỉ dùng RAM để xử lý dữ liệu tạm thời. Nó đóng vai trò như một &quot;nhà điều phối&quot;.</li>
+</ul>
+<p><strong>Tình huống 2: Tách biệt Read/Write (Multi-DB)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Hệ thống của bạn có lượng truy vấn (Read) cực lớn. Bạn muốn các thao tác ghi (Write) vào DB chính (MySQL), còn các thao tác đọc báo cáo thì lấy từ một DB bản sao (Read-Replica) để giảm tải.</li>
+<li><strong>Giải pháp:</strong> Cấu hình 2 DataSource. Trong code, các Service làm nhiệm vụ báo cáo sẽ được &quot;tiêm&quot; (Inject) Repository thuộc về DB Read-only.</li>
+</ul>
+<p><strong>Tình huống 3: Đồng bộ dữ liệu cũ và mới (Migration Service)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Công ty đang chuyển từ SQL Server cũ sang PostgreSQL mới. Bạn cần viết một công cụ chạy ngầm để đọc từng dòng từ SQL Server, xử lý logic, rồi ghi vào PostgreSQL.</li>
+<li><strong>Giải pháp:</strong> Đây là lúc Multi-DB tỏa sáng. Bạn mở đồng thời 2 kết nối. Dùng một <code>Scheduler</code> (hẹn giờ) để quét DB1 và <code>save</code> sang DB2.</li>
+</ul>
+<hr>
+<h3>Tóm tắt cho Dev Frontend chuyển hệ</h3>
+<ul>
+<li><strong>No-DB:</strong> Giống như bạn viết một con bot Telegram hoặc một cái Proxy bằng Node.js mà không dùng MongoDB/SQL. Cực nhẹ và nhanh.</li>
+<li><strong>Multi-DB:</strong> Đừng coi Backend là một &quot;cục&quot; duy nhất nữa. Hãy coi nó là một <strong>hub kết nối</strong>. Bạn có thể cắm bao nhiêu &quot;ổ điện&quot; (Database) tùy thích, miễn là bạn khai báo rõ ràng &quot;dây nào cắm vào ổ nào&quot; thông qua cấu hình Java Config.</li>
+</ul>
+<hr>
+<h1>Chủ đề 3.2: Multi-tenancy - Điều hướng Database động - Dynamic Routing DataSource</h1>
+<h3>1. Lý thuyết: Cơ chế &quot;Phễu điều hướng&quot;</h3>
+<p>Thay vì trả về một kết nối cố định, Spring sử dụng một lớp trung gian gọi là <code>AbstractRoutingDataSource</code>.</p>
+<ol>
+<li><strong>Request tới:</strong> Một <strong>Filter</strong> hoặc <strong>Interceptor</strong> sẽ soi vào Header (ví dụ: <code>X-Tenant-ID</code>), JWT, hoặc Domain để biết Request này thuộc về khách hàng nào.</li>
+<li><strong>Lưu trữ ID:</strong> ID của khách hàng (Tenant ID) được lưu vào một biến <strong>ThreadLocal</strong> (biến này tồn tại xuyên suốt luồng xử lý của request đó).</li>
+<li><strong>Lấy Connection:</strong> Khi Repository cần gọi DB, nó hỏi <code>RoutingDataSource</code>. Thằng này sẽ liếc vào <code>ThreadLocal</code>, lấy cái ID ra và &quot;bốc&quot; đúng kết nối của DB tương ứng để đưa cho Repository.</li>
+</ol>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4>A. Nơi lưu trữ Tenant ID (ThreadLocal)</h4>
+<p>Vì Backend xử lý đa luồng, ta dùng <code>ThreadLocal</code> để đảm bảo ID của khách hàng A không bị lẫn sang khách hàng B.</p>
+<pre><code class="language-java">public class TenantContext {
+    private static final ThreadLocal&lt;String&gt; CURRENT_TENANT = new ThreadLocal&lt;&gt;();
+
+    public static void setCurrentTenant(String tenantId) {
+        CURRENT_TENANT.set(tenantId);
+    }
+
+    public static String getCurrentTenant() {
+        return CURRENT_TENANT.get();
+    }
+
+    public static void clear() {
+        CURRENT_TENANT.remove();
+    }
+}
+</code></pre>
+<h4>B. Triển khai Routing Logic</h4>
+<p>Đây là nơi Spring &quot;hỏi&quot; bạn: &quot;Giờ dùng DB nào?&quot;</p>
+<pre><code class="language-java">public class TransactionRoutingDataSource extends AbstractRoutingDataSource {
+    @Override
+    protected Object determineCurrentLookupKey() {
+        // Trả về ID của Tenant hiện tại
+        return TenantContext.getCurrentTenant();
+    }
+}
+</code></pre>
+<h4>C. Filter bóc tách Tenant ID từ Request</h4>
+<p>Giống như nhân viên lễ tân hỏi &quot;Anh từ công ty nào đến?&quot;</p>
+<pre><code class="language-java">@Component
+public class TenantFilter implements Filter {
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) {
+        HttpServletRequest req = (HttpServletRequest) request;
+        String tenantId = req.getHeader(&quot;X-Tenant-ID&quot;); // Lấy ID từ Header
+        
+        if (tenantId != null) {
+            TenantContext.setCurrentTenant(tenantId);
+        }
+        
+        try {
+            chain.doFilter(request, response);
+        } finally {
+            TenantContext.clear(); // Quan trọng: Phải xóa để tránh memory leak
+        }
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Mô hình SaaS (Software as a Service)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn bán phần mềm kế toán cho 100 công ty. Theo luật, dữ liệu của Công ty A không được nằm chung bảng với Công ty B để đảm bảo bảo mật tuyệt đối.</li>
+<li><strong>Giải pháp:</strong> Mỗi công ty có 1 Database riêng (Physical Isolation). Khi nhân viên Công ty A đăng nhập, hệ thống tự động lái mọi câu lệnh SQL về phía Server DB của công ty đó.</li>
+</ul>
+<p><strong>Tình huống 2: White-labeling (Tùy biến thương hiệu)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn làm một App đặt đồ ăn. Khách hàng <code>foody.com</code> dùng DB tại Singapore, khách hàng <code>delivery.vn</code> dùng DB tại Việt Nam.</li>
+<li><strong>Giải pháp:</strong> Dựa vào <strong>Domain name</strong> của request gửi đến để quyết định DB. Nếu domain kết thúc bằng <code>.vn</code>, RoutingDataSource sẽ bốc kết nối từ cụm Server Việt Nam để giảm latency.</li>
+</ul>
+<p><strong>Tình huống 3: Dùng chung DB nhưng khác Schema</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn muốn tiết kiệm tiền, chỉ mua 1 Instance DB lớn trên AWS (như PostgreSQL), nhưng mỗi khách hàng nằm ở 1 <strong>Schema</strong> khác nhau.</li>
+<li><strong>Giải pháp:</strong> Lúc này thay vì đổi <code>DataSource</code>, bạn sẽ gửi một câu lệnh <code>SET search_path TO tenant_id</code> ngay khi kết nối vừa được thiết lập.</li>
+</ul>
+<hr>
+<h3>Tóm tắt cho &quot;Dân Frontend&quot;</h3>
+<table>
+<thead>
+<tr>
+<th>Đặc điểm</th>
+<th>Cách làm thủ công (Dễ sai)</th>
+<th>Cách làm của Spring (Multi-tenancy)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Logic chọn DB</strong></td>
+<td>Viết <code>if/else</code> trong từng hàm Service</td>
+<td>Viết 1 lần duy nhất ở tầng Configuration</td>
+</tr>
+<tr>
+<td><strong>Truyền tham số</strong></td>
+<td>Phải truyền <code>tenantId</code> vào mọi hàm</td>
+<td>Tự động lấy từ &quot;Ngữ cảnh&quot; (Context)</td>
+</tr>
+<tr>
+<td><strong>Bảo mật</strong></td>
+<td>Dễ quên <code>WHERE tenant_id = ...</code></td>
+<td>Cách ly hoàn toàn ở tầng kết nối, không thể đọc nhầm</td>
+</tr>
+</tbody></table>
+<hr>
+<p><strong>Cảnh báo nhẹ:</strong> Việc quản lý nhiều DB rất tốn tài nguyên (Connection Pool). Nếu bạn có 1000 khách hàng mà mỗi khách hàng mở 10 kết nối thì server sẽ &quot;ngất&quot; ngay. Người ta thường dùng kết hợp với <strong>Dynamic DataSource Loading</strong> (chỉ nạp DB khi có request và giải phóng khi không dùng).</p>
+<hr>
+<h1>Chủ đề 3.1: Cấu hình Chi tiết Multi-DataSource trong Spring Boot 3</h1>
+<p>Để dùng được từ 2 Database trở lên, bạn cần thực hiện 3 bước: Khai báo cấu hình, viết lớp Java Config riêng cho từng DB và chia package cho Entity/Repository.</p>
+<h3>1. Cấu hình Properties (<code>application.yml</code>)</h3>
+<p>Chúng ta sẽ định nghĩa hai nguồn dữ liệu: một cho <strong>Order</strong> (MySQL) và một cho <strong>Inventory</strong> (PostgreSQL).</p>
+<pre><code class="language-yaml">spring:
+  datasource:
+    # Database thứ nhất (Primary)
+    orders:
+      jdbc-url: jdbc:mysql://localhost:3306/db_orders
+      username: root
+      password: password
+      driver-class-name: com.mysql.cj.jdbc.Driver
+    # Database thứ hai
+    inventory:
+      jdbc-url: jdbc:postgresql://localhost:5432/db_inventory
+      username: postgres
+      password: password
+      driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+</code></pre>
+<hr>
+<h3>2. Java Configuration (Phần quan trọng nhất)</h3>
+<p>Bạn cần tạo các lớp Config riêng biệt để chỉ định: &quot;Repository ở package nào thì đi với Database nào&quot;.</p>
+<h4>A. Cấu hình Database 1 (Orders - Primary)</h4>
+<pre><code class="language-java">@Configuration
+@EnableTransactionManagement
+@EnableJpaRepositories(
+    basePackages = &quot;com.example.repository.orders&quot;, // Chỉ quét repository trong package này
+    entityManagerFactoryRef = &quot;ordersEntityManagerFactory&quot;,
+    transactionManagerRef = &quot;ordersTransactionManager&quot;
+)
+public class OrdersDbConfig {
+
+    @Primary
+    @Bean(name = &quot;ordersDataSource&quot;)
+    @ConfigurationProperties(&quot;spring.datasource.orders&quot;)
+    public DataSource dataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Primary
+    @Bean(name = &quot;ordersEntityManagerFactory&quot;)
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+            EntityManagerFactoryBuilder builder, @Qualifier(&quot;ordersDataSource&quot;) DataSource dataSource) {
+        return builder
+                .dataSource(dataSource)
+                .packages(&quot;com.example.entity.orders&quot;) // Chỉ quét Entity trong package này
+                .persistenceUnit(&quot;orders&quot;)
+                .build();
+    }
+
+    @Primary
+    @Bean(name = &quot;ordersTransactionManager&quot;)
+    public PlatformTransactionManager transactionManager(
+            @Qualifier(&quot;ordersEntityManagerFactory&quot;) EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
+    }
+}
+</code></pre>
+<h4>B. Cấu hình Database 2 (Inventory)</h4>
+<p>Cấu hình tương tự nhưng <strong>không có</strong> <code>@Primary</code> và trỏ vào package khác.</p>
+<pre><code class="language-java">@Configuration
+@EnableJpaRepositories(
+    basePackages = &quot;com.example.repository.inventory&quot;,
+    entityManagerFactoryRef = &quot;inventoryEntityManagerFactory&quot;,
+    transactionManagerRef = &quot;inventoryTransactionManager&quot;
+)
+public class InventoryDbConfig {
+
+    @Bean(name = &quot;inventoryDataSource&quot;)
+    @ConfigurationProperties(&quot;spring.datasource.inventory&quot;)
+    public DataSource dataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+    @Bean(name = &quot;inventoryEntityManagerFactory&quot;)
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+            EntityManagerFactoryBuilder builder, @Qualifier(&quot;inventoryDataSource&quot;) DataSource dataSource) {
+        return builder
+                .dataSource(dataSource)
+                .packages(&quot;com.example.entity.inventory&quot;)
+                .persistenceUnit(&quot;inventory&quot;)
+                .build();
+    }
+
+    @Bean(name = &quot;inventoryTransactionManager&quot;)
+    public PlatformTransactionManager transactionManager(
+            @Qualifier(&quot;inventoryEntityManagerFactory&quot;) EntityManagerFactory entityManagerFactory) {
+        return new JpaTransactionManager(entityManagerFactory);
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Tổ chức thư mục (Project Structure)</h3>
+<p>Đây là chìa khóa để Spring không bị lẫn lộn giữa các DB:</p>
+<pre><code class="language-text">src/main/java/com/example/
+ ├── config/
+ │    ├── OrdersDbConfig.java
+ │    └── InventoryDbConfig.java
+ ├── entity/
+ │    ├── orders/       &lt;-- Entity cho DB Orders
+ │    └── inventory/    &lt;-- Entity cho DB Inventory
+ └── repository/
+      ├── orders/       &lt;-- Repository cho DB Orders
+      └── inventory/    &lt;-- Repository cho DB Inventory
+</code></pre>
+<hr>
+<h3>4. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Tách biệt dữ liệu nhạy cảm</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn làm ứng dụng Fintech. Thông tin cá nhân (KYC) phải lưu ở một DB có mã hóa cực mạnh, còn lịch sử giao dịch lưu ở DB khác để tối ưu tốc độ đọc.</li>
+<li><strong>Giải pháp:</strong> Dùng Multi-DataSource. Khi lưu User, bạn gọi <code>KycRepository</code>. Khi lưu giao dịch, bạn gọi <code>TransactionRepository</code>. Spring sẽ tự động mở đúng kết nối tương ứng.</li>
+</ul>
+<p><strong>Tình huống 2: Tích hợp hệ thống cũ (Legacy System)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn viết một Service mới bằng Spring Boot nhưng phải đọc dữ liệu User từ một DB Oracle &quot;cổ đại&quot; của công ty, đồng thời lưu dữ liệu mới vào PostgreSQL.</li>
+<li><strong>Giải pháp:</strong> Cấu hình DB Oracle là <code>Secondary</code> (chỉ đọc) và PostgreSQL là <code>Primary</code>. Bạn có thể dễ dàng JOIN dữ liệu ở tầng Java Service sau khi lấy từ 2 Repository khác nhau.</li>
+</ul>
+<p><strong>Tình huống 3: CQRS đơn giản (Command Query Responsibility Segregation)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> DB chính bị chậm do quá nhiều người vào xem báo cáo.</li>
+<li><strong>Giải pháp:</strong> Bạn tạo một DB bản sao (Read-only Replica). Trong Spring Boot, bạn cấu hình 2 DataSource trỏ vào 2 DB này. Các hàm <code>get...</code> sẽ dùng <code>ReadOnlyRepository</code>, các hàm <code>save/update</code> dùng <code>WriteRepository</code>.</li>
+</ul>
+<hr>
+<p><strong>Ghi chú cho Dev Frontend:</strong><br>Việc cấu hình này giống như bạn đang thiết lập nhiều <strong>Base URL</strong> khác nhau trong Axios cho từng loại dữ liệu vậy. Điểm khác biệt là ở Backend, việc &quot;chọn URL nào&quot; được thực hiện dựa trên package của code thay vì chuỗi string trong code.</p>
+<hr>
+<p>Tiếp nối chủ đề Multi-tenancy, chúng ta sẽ đi sâu vào <strong>AbstractRoutingDataSource</strong>. Đây là giải pháp &quot;tối thượng&quot; khi bạn không muốn (hoặc không thể) cấu hình cứng từng Database một.</p>
+<p>Nếu ở Frontend bạn dùng <strong>Environment Variables</strong> để đổi API URL, thì ở Backend, chúng ta dùng <strong>RoutingDataSource</strong> để đổi &quot;đầu dây&quot; kết nối Database ngay khi code đang chạy.</p>
+<hr>
+<h1>Chủ đề 3.2: Điều hướng Database động với AbstractRoutingDataSource</h1>
+<h3>1. Lý thuyết: Cơ chế &quot;Tổng đài viên&quot;</h3>
+<p>Hãy tưởng tượng <code>AbstractRoutingDataSource</code> như một tổng đài điện thoại. Khi một câu lệnh SQL (Request) gọi đến, tổng đài viên sẽ hỏi: &quot;Anh là ai?&quot;. Dựa trên câu trả lời, họ sẽ cắm dây vào đúng ổ cắm Database của người đó.</p>
+<p><strong>Quy trình 3 bước:</strong></p>
+<ol>
+<li><strong>Xác định (Identification):</strong> Lấy <code>tenantId</code> từ Request (Header, Token, hoặc Domain).</li>
+<li><strong>Lưu trữ (Storage):</strong> Cất <code>tenantId</code> vào <code>ThreadLocal</code> để mọi tầng code (Service, Repository) đều biết đang phục vụ ai.</li>
+<li><strong>Điều hướng (Routing):</strong> <code>AbstractRoutingDataSource</code> nhìn vào <code>ThreadLocal</code> và trả về kết nối DB tương ứng.</li>
+</ol>
+<hr>
+<h3>2. Ví dụ Code &amp; Cấu hình</h3>
+<h4>A. Bộ lưu trữ ngữ cảnh (TenantContext)</h4>
+<p>Sử dụng <code>ThreadLocal</code> để đảm bảo thông tin khách hàng không bị &quot;lẫn&quot; giữa các Request chạy song song.</p>
+<pre><code class="language-java">public class TenantContext {
+    private static final ThreadLocal&lt;String&gt; currentTenant = new ThreadLocal&lt;&gt;();
+
+    public static void setTenantId(String tenantId) {
+        currentTenant.set(tenantId);
+    }
+
+    public static String getTenantId() {
+        return currentTenant.get();
+    }
+
+    public static void clear() {
+        currentTenant.remove();
+    }
+}
+</code></pre>
+<h4>B. Lớp điều hướng (RoutingDataSource)</h4>
+<p>Lớp này ghi đè logic chọn &quot;Key&quot; để tìm Database.</p>
+<pre><code class="language-java">import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
+
+public class TenantRoutingDataSource extends AbstractRoutingDataSource {
+    @Override
+    protected Object determineCurrentLookupKey() {
+        // Spring sẽ gọi hàm này mỗi khi cần kết nối DB
+        return TenantContext.getTenantId();
+    }
+}
+</code></pre>
+<h4>C. Cấu hình Bean (Configuration)</h4>
+<p>Bạn cần một Map để chứa danh sách các Database.</p>
+<pre><code class="language-java">@Configuration
+public class DataSourceConfig {
+
+    @Bean
+    public DataSource dataSource() {
+        TenantRoutingDataSource routingDataSource = new TenantRoutingDataSource();
+
+        // 1. Tạo danh sách các DB thực tế
+        Map&lt;Object, Object&gt; targetDataSources = new HashMap&lt;&gt;();
+        targetDataSources.put(&quot;TENANT_A&quot;, createDataSource(&quot;jdbc:mysql://localhost:3306/db_a&quot;));
+        targetDataSources.put(&quot;TENANT_B&quot;, createDataSource(&quot;jdbc:mysql://localhost:3306/db_b&quot;));
+
+        routingDataSource.setTargetDataSources(targetDataSources);
+        
+        // 2. DB mặc định nếu không tìm thấy tenantId
+        routingDataSource.setDefaultTargetDataSource(createDataSource(&quot;jdbc:mysql://localhost:3306/db_default&quot;));
+
+        return routingDataSource;
+    }
+
+    private DataSource createDataSource(String url) {
+        return DataSourceBuilder.create()
+                .url(url)
+                .username(&quot;root&quot;)
+                .password(&quot;password&quot;)
+                .build();
+    }
+}
+</code></pre>
+<h4>D. Lấy Tenant ID từ Request (Interceptor)</h4>
+<p>Đây là nơi bạn &quot;bắt&quot; thông tin từ Frontend.</p>
+<pre><code class="language-java">@Component
+public class TenantInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+        String tenantId = request.getHeader(&quot;X-Tenant-ID&quot;);
+        TenantContext.setTenantId(tenantId);
+        return true;
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        TenantContext.clear(); // Bắt buộc phải xóa để tránh rò rỉ dữ liệu (Security Risk)
+    }
+}
+</code></pre>
+<hr>
+<h3>3. Tình huống thực tế (Real-world Scenarios)</h3>
+<p><strong>Tình huống 1: Hệ thống SaaS bán hàng cho các Shop</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Mỗi Shop (Tenant) có hàng triệu đơn hàng. Nếu lưu chung một DB sẽ cực kỳ chậm và khó backup riêng lẻ cho từng khách.</li>
+<li><strong>Giải pháp:</strong> Khi chủ Shop A đăng nhập, Frontend gửi Header <code>X-Tenant-ID: shop_a</code>. Backend tự động lái toàn bộ query vào DB của Shop A. Khi Shop B đăng nhập, dữ liệu lại được lái sang DB của Shop B.</li>
+</ul>
+<p><strong>Tình huống 2: Tách biệt môi trường Demo và Real</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Bạn muốn khách hàng dùng thử (Demo) trên dữ liệu thật nhưng không muốn họ làm hỏng dữ liệu đang chạy (Production).</li>
+<li><strong>Giải pháp:</strong> Dựa vào User Role. Nếu Role là <code>GUEST</code>, RoutingDataSource sẽ trỏ vào <code>db_sandbox</code>. Nếu Role là <code>ADMIN</code>, nó sẽ trỏ vào <code>db_production</code>.</li>
+</ul>
+<p><strong>Tình huống 3: Hệ thống đa quốc gia (Data Residency)</strong></p>
+<ul>
+<li><strong>Vấn đề:</strong> Luật pháp yêu cầu dữ liệu người dùng EU phải lưu tại máy chủ EU, dữ liệu Mỹ lưu tại Mỹ.</li>
+<li><strong>Giải pháp:</strong> Dựa vào IP hoặc địa chỉ email của User khi đăng nhập. RoutingDataSource sẽ điều hướng kết nối tới cụm Database vật lý đặt tại vùng lãnh thổ tương ứng.</li>
+</ul>
+<hr>
+<h3>Lưu ý &quot;sương máu&quot; cho Dev Frontend chuyển hệ:</h3>
+<ol>
+<li><strong>Connection Pool:</strong> Mỗi Database trong Map sẽ chiếm một lượng kết nối nhất định. Đừng mở quá nhiều DB cùng lúc kẻo treo server.</li>
+<li><strong>Transaction:</strong> Việc chuyển đổi DB phải xảy ra <strong>trước</strong> khi một <code>@Transactional</code> bắt đầu. Nếu đã vào trong Transaction rồi mà bạn đổi <code>TenantContext</code>, nó sẽ không có tác dụng.</li>
+<li><strong>Liquibase/Flyway:</strong> Việc cập nhật cấu trúc bảng (Migration) cho 100 DB cùng lúc là một thử thách lớn. Bạn sẽ cần viết script để lặp qua danh sách DB và chạy migration cho từng cái.</li>
+</ol>
+<hr>
+
+          </article>
+
+          <!-- Navigation Footer (Next/Prev) -->
+          <div class="mt-12 pt-8 border-t border-gray-200 flex justify-between">
+            <a href="topic02.html" class="text-indigo-600 font-medium hover:text-indigo-800">← Chủ đề 2: IoC Container & Dependency Injection (DI)</a><a href="topic04.html" class="text-indigo-600 font-medium hover:text-indigo-800">Chủ đề 4: Transaction Management - Quản lý giao dịch →</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div
+      onclick="toggleSidebar()"
+      id="overlay"
+      class="fixed inset-0 bg-black/50 z-10 lg:hidden hidden"
+      style="display: none"
+    ></div>
+    <script>
+      // Simple overlay logic
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      // Sync overlay with sidebar state check if needed, but for "simplest" just toggle visibility in CSS or JS.
+      // Actually, let's keep it simple.
+    </script>
+  </body>
+</html>
