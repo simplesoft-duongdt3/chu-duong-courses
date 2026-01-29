@@ -140,6 +140,9 @@
 <a href="topic10.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
             Chủ đề 10: Audit Log - Camera giám sát Database
         </a>
+<a href="topic11.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 11: External API Call & Backend For Frontend (BFF)
+        </a>
 <a href="topic_black_holes.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
             🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging
         </a>
@@ -211,11 +214,25 @@
 <li><strong>JPA Relationships:</strong></li>
 <li><strong>Migration:</strong></li>
 </ul>
-<h3>9.Concurrency &amp; Multi-threading</h3>
+<h3>9. Concurrency &amp; Multi-threading</h3>
 <p>Spring Boot bước vào thế giới <strong>Multi-threading</strong> (đa luồng). Một biến số có thể bị hàng nghìn &quot;người&quot; (thread) cùng lúc nhào vào thay đổi.</p>
 <ul>
 <li><strong>Concurrency &amp; Multi-threading:</strong></li>
 <li><strong>Virtual Threads:</strong> (Project Loom)</li>
+</ul>
+<h3>10. Audit Log - Camera giám sát Database</h3>
+<p>Nếu ở Frontend, bạn có &quot;Undo/Redo&quot; hoặc &quot;History&quot; trong bộ nhớ tạm, thì ở Backend, <strong>Audit Log</strong> giống như một chiếc camera an ninh 24/7. Nó ghi lại mọi biến động của dữ liệu: &quot;Ai đã tạo?&quot;, &quot;Khi nào sửa?&quot;, và &quot;Trước khi sửa nó trông thế nào?&quot;.</p>
+<p>Trong Spring Boot 3, chúng ta chia Audit Log làm 2 cấp độ:</p>
+<ol>
+<li><strong>Basic Auditing:</strong> Chỉ ghi lại dấu mốc (Ngày tạo, ngày sửa, người tạo, người sửa).</li>
+<li><strong>Full Auditing (Versioning):</strong> Ghi lại toàn bộ lịch sử thay đổi của từng trường dữ liệu (Dùng Hibernate Envers).</li>
+</ol>
+<h3>11. Tổng hợp: External API Call &amp; Backend For Frontend (BFF)</h3>
+<p>Trong kỷ nguyên Microservices, Backend không chỉ là nơi lưu trữ dữ liệu mà còn đóng vai trò là một <strong>Consumer</strong> (khách hàng) đi gọi các Service khác. Việc quản lý các kết nối này đòi hỏi sự chặt chẽ về hiệu năng và bảo mật.</p>
+<ul>
+<li><strong>Backend For Frontend (BFF):</strong> BFF là lớp trung gian nằm giữa Client (Web/Mobile) và các Microservices lõi.</li>
+<li><strong>RestClient:</strong>  &quot;Vũ khí&quot; gọi API trong Spring Boot 3</li>
+<li><strong>Circuit Breaker:</strong> Đóng vai trò là &quot;lớp giáp&quot; cuối cùng. Nếu Service bên ngoài &quot;chết thật&quot;, app của bạn vẫn &quot;sống khỏe&quot; nhờ hàm Fallback.</li>
 </ul>
 <hr>
 <h3>Bảng so sánh nhanh để bạn dễ hình dung:</h3>

@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chủ đề 11: External API Call & Backend For Frontend (BFF)</title>
+    <!-- Tailwind CSS via CDN for simplicity and reliability -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                },
+            },
+        }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Custom Scrollbar for Sidebar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+    <script>
+      function toggleSidebar() {
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
+      }
+    </script>
+  </head>
+  <body class="bg-slate-50 text-slate-900 antialiased flex flex-col min-h-screen">
+    <!-- Header -->
+    <header class="bg-white border-b border-gray-200 sticky top-0 z-30">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between"
+      >
+        <div class="flex items-center">
+          <button
+            onclick="toggleSidebar()"
+            class="lg:hidden p-2 rounded-md text-gray-600 hover:bg-gray-100"
+          >
+            <svg
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              />
+            </svg>
+          </button>
+          <a
+            href="index.html"
+            class="ml-3 lg:ml-0 text-xl font-bold text-gray-900 tracking-tight"
+          >
+            <span class="text-indigo-600">Spring Boot</span> for Frontend Devs
+          </a>
+        </div>
+        <!-- Optional Top Links -->
+        <div class="hidden md:flex space-x-4">
+          <a
+            href="https://github.com/simplesoft-duongdt3/chu-duong-courses"
+            target="_blank"
+            class="text-gray-500 hover:text-gray-900 transition font-medium"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <div class="flex-1 max-w-7xl w-full mx-auto flex items-start">
+      <!-- Sidebar Navigation -->
+      <!-- Sidebar Navigation -->
+      <aside
+        id="sidebar"
+        class="fixed inset-0 z-50 bg-white transform -translate-x-full transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-0 lg:w-64 lg:h-[calc(100vh-4rem)] lg:bg-transparent lg:border-r lg:border-gray-200 lg:sticky lg:top-16 overflow-y-auto"
+      >
+        <div class="p-4 flex justify-between items-center lg:hidden border-b border-gray-100 mb-2">
+            <span class="font-bold text-gray-900">Menu</span>
+            <button onclick="toggleSidebar()" class="p-2 -mr-2 text-gray-500 hover:text-gray-700">
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+        <nav class="p-4 space-y-1">
+          <div class="mb-4">
+            <p
+              class="px-2 text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+            >
+              Chương trình học
+            </p>
+            <a href="index.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Spring Boot for Frontend Devs
+        </a>
+<a href="topic01.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 1: Request-Response Cycle & The Middleware Chain
+        </a>
+<a href="topic02.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 2: IoC Container & Dependency Injection (DI)
+        </a>
+<a href="topic03.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 3: Persistence với Spring Data JPA & Hibernate
+        </a>
+<a href="topic04.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 4: Transaction Management - Quản lý giao dịch
+        </a>
+<a href="topic05.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 5: Validation & Global Exception Handling
+        </a>
+<a href="topic06.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 6: Spring Security & JWT (Stateless Authentication)
+        </a>
+<a href="topic07.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 7: Logging & Monitoring (Actuator)
+        </a>
+<a href="topic08.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 8: 📘 Cẩm Nang Toàn Tập: JPA Relationships & Migration
+        </a>
+<a href="topic09.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 9: Concurrency & Multi-threading
+        </a>
+<a href="topic10.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 10: Audit Log - Camera giám sát Database
+        </a>
+<a href="topic11.html" class="block px-2 py-2 text-sm font-medium text-indigo-600 bg-indigo-50 rounded-md hover:bg-gray-100 group flex items-center">
+            Chủ đề 11: External API Call & Backend For Frontend (BFF)
+        </a>
+<a href="topic_black_holes.html" class="block px-2 py-2 text-sm font-medium text-gray-700 rounded-md hover:bg-gray-100 group flex items-center">
+            🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging
+        </a>
+          </div>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 min-w-0 p-4 sm:p-6 lg:padding-8">
+        <div class="max-w-4xl mx-auto">
+          <article
+            class="prose prose-slate prose-lg max-w-none prose-headings:font-bold prose-a:text-indigo-600 hover:prose-a:text-indigo-500 prose-img:rounded-xl shadow-none"
+          >
+            <h1>Chủ đề 11: External API Call &amp; Backend For Frontend (BFF)</h1>
+<p>Trong kỷ nguyên Microservices, Backend không chỉ là nơi lưu trữ dữ liệu mà còn đóng vai trò là một <strong>Consumer</strong> (khách hàng) đi gọi các Service khác. Việc quản lý các kết nối này đòi hỏi sự chặt chẽ về hiệu năng và bảo mật.</p>
+<h2>1. Kiến trúc BFF (Backend for Frontend)</h2>
+<p>BFF là lớp trung gian nằm giữa Client (Web/Mobile) và các Microservices lõi.</p>
+<ul>
+<li><strong>Mục đích:</strong></li>
+<li><strong>Aggregation:</strong> Gộp kết quả từ nhiều API thành một JSON duy nhất.</li>
+<li><strong>Transformation:</strong> Chuyển đổi định dạng dữ liệu (ví dụ: Mobile cần ít field hơn Web).</li>
+<li><strong>Security:</strong> Che giấu API Key, Secret Key của hệ thống nội bộ.</li>
+<li><strong>Latency:</strong> Giảm số lượng request từ Client lên Server qua mạng mobile.</li>
+</ul>
+<hr>
+<h2>2. RestClient: &quot;Vũ khí&quot; gọi API trong Spring Boot 3</h2>
+<p>Từ bản 3.2, Spring giới thiệu <code>RestClient</code> – một bộ công cụ gọi API đồng bộ (Synchronous) nhưng mang phong cách hiện đại (Fluent API).</p>
+<h3>So sánh các công cụ</h3>
+<table>
+<thead>
+<tr>
+<th>Công cụ</th>
+<th>Trạng thái</th>
+<th>Đặc điểm</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>RestTemplate</strong></td>
+<td>Maintenance Mode</td>
+<td>Cũ, cú pháp cồng kềnh, khó cấu hình hiện đại.</td>
+</tr>
+<tr>
+<td><strong>WebClient</strong></td>
+<td>Active</td>
+<td>Mạnh mẽ, hỗ trợ Reactive (Non-blocking). Phức tạp khi học.</td>
+</tr>
+<tr>
+<td><strong>RestClient</strong></td>
+<td><strong>Recommended</strong></td>
+<td>Hiện đại, dễ dùng, thay thế hoàn hảo cho RestTemplate.</td>
+</tr>
+</tbody></table>
+<hr>
+<h2>3. Chiến lược tái sử dụng Client (Reuse Like OkHttp)</h2>
+<p>Để tối ưu tài nguyên, chúng ta không khởi tạo Client mới cho mỗi request mà chia làm 3 cấp độ tái sử dụng:</p>
+<h3>Cấp độ 1: Cỗ máy thực thi (ClientHttpRequestFactory)</h3>
+<p>Tương đương với <code>OkHttpClient</code> instance, quản lý Connection Pool vật lý.</p>
+<pre><code class="language-java">@Bean
+public ClientHttpRequestFactory commonRequestFactory() {
+    HttpComponentsClientHttpRequestFactory factory = new HttpComponentsClientHttpRequestFactory();
+    factory.setConnectTimeout(Duration.ofSeconds(5));
+    return factory;
+}
+</code></pre>
+<h3>Cấp độ 2: Cấu hình chung (RestClient.Builder)</h3>
+<p>Tương đương với <code>OkHttpClient.Builder</code>, dùng để cài đặt Header, Interceptor dùng chung cho toàn bộ dự án.</p>
+<pre><code class="language-java">@Bean
+public RestClient.Builder commonRestClientBuilder(ClientHttpRequestFactory factory) {
+    return RestClient.builder()
+            .requestFactory(factory)
+            .defaultHeader(&quot;Content-Type&quot;, &quot;application/json&quot;)
+            .requestInterceptor(new LoggingInterceptor()); // Tự động Log mọi request
+}
+</code></pre>
+<h3>Cấp độ 3: Chuyên biệt hóa tại Service</h3>
+<p>Mỗi Service lấy Builder chung để tạo Client riêng với <code>baseUrl</code> tương ứng.</p>
+<pre><code class="language-java">public UserService(RestClient.Builder builder) {
+    this.restClient = builder.baseUrl(&quot;https://api.user.com&quot;).build();
+}
+</code></pre>
+<hr>
+<h2>4. Cấu hình &quot;Sống còn&quot; trên Production</h2>
+<p>Đừng bao giờ sử dụng cấu hình mặc định khi đi Deploy.</p>
+<h3>Connection Pooling &amp; Timeouts</h3>
+<p>Dùng <strong>Apache HttpClient 5</strong> để quản lý hồ chứa kết nối:</p>
+<ul>
+<li><strong>Max Total:</strong> 200 (Tổng kết nối ra ngoài).</li>
+<li><strong>Max Per Route:</strong> 50 (Kết nối tối đa cho mỗi Domain, tránh việc 1 API sập làm nghẽn toàn bộ hệ thống).</li>
+<li><strong>Connect Timeout:</strong> 2-5s.</li>
+<li><strong>Response Timeout (Read Timeout):</strong> 5-10s.</li>
+</ul>
+<h3>Interceptors (Bộ lọc)</h3>
+<p>Dùng để tự động gắn Token bảo mật (JWT) vào Header:</p>
+<pre><code class="language-java">public class AuthInterceptor implements ClientHttpRequestInterceptor {
+    @Override
+    public ClientHttpResponse intercept(HttpRequest req, byte[] body, ClientHttpRequestExecution exec) {
+        String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
+        req.getHeaders().setBearerAuth(token);
+        return exec.execute(req, body);
+    }
+}
+</code></pre>
+<hr>
+<h2>5. Kỹ thuật gọi song song (Parallel Aggregation)</h2>
+<p>Trong mô hình BFF, hãy dùng <code>CompletableFuture</code> để gọi đồng thời nhiều API, giảm thời gian phản hồi (Latency).</p>
+<pre><code class="language-java">public CompletableFuture&lt;DataDTO&gt; fetchData() {
+    var future1 = CompletableFuture.supplyAsync(() -&gt; clientA.get(), executor);
+    var future2 = CompletableFuture.supplyAsync(() -&gt; clientB.get(), executor);
+    
+    return CompletableFuture.allOf(future1, future2)
+            .thenApply(v -&gt; new DataDTO(future1.join(), future2.join()));
+}
+</code></pre>
+<hr>
+<h2>6. Checklist khi thực hiện External Call</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Luôn cấu hình <strong>Timeout</strong> (Connect &amp; Read).</li>
+<li><input disabled="" type="checkbox"> Luôn sử dụng <strong>Connection Pool</strong>.</li>
+<li><input disabled="" type="checkbox"> Sử dụng <strong>RestClient.Builder</strong> để tái sử dụng cấu hình.</li>
+<li><input disabled="" type="checkbox"> Có cơ chế <strong>Error Handling</strong> tập trung (<code>onStatus</code>).</li>
+<li><input disabled="" type="checkbox"> (Nâng cao) Tích hợp <strong>Circuit Breaker</strong> để &quot;ngắt cầu dao&quot; khi API đối tác sập.</li>
+</ul>
+<hr>
+<h2>Hiện thực hóa Checklist External Call</h2>
+<h3>1 &amp; 2. Cấu hình Timeout và Connection Pool</h3>
+<p>Chúng ta gộp hai mục này vào tầng <code>ClientHttpRequestFactory</code>. Đây là &quot;trái tim&quot; quản lý các kết nối vật lý.</p>
+<pre><code class="language-java">@Configuration
+public class HttpClientConfig {
+
+    @Bean
+    public ClientHttpRequestFactory customRequestFactory() {
+        // 1. Cấu hình Connection Pool (Sử dụng Apache HttpClient 5)
+        PoolingHttpClientConnectionManager connectionManager = new PoolingHttpClientConnectionManager();
+        connectionManager.setMaxTotal(200);           // Tổng số kết nối tối đa trong Pool
+        connectionManager.setDefaultMaxPerRoute(50);  // Giới hạn kết nối cho mỗi Domain/Route
+
+        // 2. Cấu hình Timeout (Connect &amp; Read)
+        RequestConfig requestConfig = RequestConfig.custom()
+                .setConnectTimeout(Timeout.ofSeconds(5))    // Thời gian chờ thiết lập kết nối
+                .setResponseTimeout(Timeout.ofSeconds(10))  // Thời gian chờ nhận phản hồi (Read Timeout)
+                .build();
+
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setConnectionManager(connectionManager)
+                .setDefaultRequestConfig(requestConfig)
+                .build();
+
+        return new HttpComponentsClientHttpRequestFactory(httpClient);
+    }
+}
+</code></pre>
+<hr>
+<h3>3 &amp; 4. Tái sử dụng Builder và Error Handling tập trung</h3>
+<p>Tại đây, chúng ta tạo một &quot;khuôn mẫu&quot; (Template) chung cho mọi Request gửi đi.</p>
+<pre><code class="language-java">@Configuration
+public class RestClientTemplateConfig {
+
+    @Bean
+    public RestClient.Builder sharedRestClientBuilder(ClientHttpRequestFactory factory) {
+        return RestClient.builder()
+                .requestFactory(factory)
+                .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                // 4. Error Handling tập trung: Bắt lỗi 4xx và 5xx cho TẤT CẢ Client dùng Builder này
+                .defaultStatusHandler(HttpStatusCode::isError, (request, response) -&gt; {
+                    // Log lỗi chi tiết tại đây
+                    log.error(&quot;External Call Error: {} - Status: {}&quot;, 
+                              request.getURI(), response.getStatusCode());
+                    
+                    // Ném Custom Exception để GlobalExceptionHandler xử lý trả về cho Frontend
+                    throw new AppException(ErrorCode.EXTERNAL_SERVICE_ERROR);
+                });
+    }
+}
+</code></pre>
+<hr>
+<h3>5. Tích hợp Circuit Breaker (Ngắt cầu dao)</h3>
+<p>Sử dụng <strong>Resilience4j</strong>. Khi API đối tác gặp sự cố liên tục, Circuit Breaker sẽ &quot;mở mạch&quot; để chặn các request vô ích, giúp hệ thống của bạn không bị treo theo đối tác.</p>
+<h4><strong>Bước A: Thêm Dependency</strong></h4>
+<pre><code class="language-xml">&lt;dependency&gt;
+    &lt;groupId&gt;io.github.resilience4j&lt;/groupId&gt;
+    &lt;artifactId&gt;resilience4j-spring-boot3&lt;/artifactId&gt;
+&lt;/dependency&gt;
+</code></pre>
+<h4>**Bước B: Cấu hình trong <code>application.yml**</code></h4>
+<pre><code class="language-yaml">resilience4j:
+  circuitbreaker:
+    instances:
+      externalService:
+        failureRateThreshold: 50        # Ngắt mạch nếu &gt; 50% request lỗi
+        minimumNumberOfCalls: 10        # Chỉ tính toán sau khi đã gọi ít nhất 10 lần
+        waitDurationInOpenState: 30s    # Chờ 30 giây trước khi thử kết nối lại
+</code></pre>
+<h4><strong>Bước C: Sử dụng trong Service</strong></h4>
+<pre><code class="language-java">@Service
+@RequiredArgsConstructor
+public class PaymentService {
+    private final RestClient.Builder builder;
+
+    // 5. Annotation @CircuitBreaker giúp bảo vệ phương thức này
+    @CircuitBreaker(name = &quot;externalService&quot;, fallbackMethod = &quot;handlePaymentFallback&quot;)
+    public String callPaymentGateway(PaymentDTO payment) {
+        return builder.baseUrl(&quot;https://checkout.partner.com&quot;)
+                .build()
+                .post()
+                .body(payment)
+                .retrieve()
+                .body(String.class);
+    }
+
+    // Hàm dự phòng (Fallback) khi mạch bị ngắt hoặc API đối tác lỗi
+    public String handlePaymentFallback(PaymentDTO payment, Exception ex) {
+        log.warn(&quot;Circuit Breaker activated! Trả về thông báo bảo trì cho khách hàng.&quot;);
+        return &quot;Cổng thanh toán đang bảo trì, vui lòng thử lại sau 30 giây.&quot;;
+    }
+}
+</code></pre>
+<hr>
+<h3>Tóm tắt luồng vận hành</h3>
+<ol>
+<li><strong>Request Factory:</strong> Đảm bảo không bao giờ hết kết nối (Pool) và không chờ đợi vô tận (Timeout).</li>
+<li><strong>Builder:</strong> Đảm bảo mọi API call đều có cùng tiêu chuẩn (Header, Auth) và luôn được xử lý lỗi thống nhất (<code>onStatus</code>).</li>
+<li><strong>Circuit Breaker:</strong> Đóng vai trò là &quot;lớp giáp&quot; cuối cùng. Nếu Service bên ngoài &quot;chết thật&quot;, app của bạn vẫn &quot;sống khỏe&quot; nhờ hàm Fallback.</li>
+</ol>
+
+          </article>
+
+          <!-- Navigation Footer (Next/Prev) -->
+          <div class="mt-12 pt-8 border-t border-gray-200 flex justify-between">
+            <a href="topic10.html" class="text-indigo-600 font-medium hover:text-indigo-800">← Chủ đề 10: Audit Log - Camera giám sát Database</a><a href="topic_black_holes.html" class="text-indigo-600 font-medium hover:text-indigo-800">🛡️ Spring Boot 3 Survival Guide: 12 "Black Holes" & Deep Debugging →</a>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Overlay for mobile sidebar -->
+    <div
+      onclick="toggleSidebar()"
+      id="overlay"
+      class="fixed inset-0 bg-black/50 z-10 lg:hidden hidden"
+      style="display: none"
+    ></div>
+    <script>
+      // Simple overlay logic
+      const sidebar = document.getElementById("sidebar");
+      const overlay = document.getElementById("overlay");
+
+      // Sync overlay with sidebar state check if needed, but for "simplest" just toggle visibility in CSS or JS.
+      // Actually, let's keep it simple.
+    </script>
+  </body>
+</html>

@@ -68,12 +68,29 @@ Tổng hợp toàn bộ kiến thức từ thiết kế Database, code Java (Ent
 * **Migration:**
 
 
-### 9.Concurrency & Multi-threading
+### 9. Concurrency & Multi-threading
 
 Spring Boot bước vào thế giới **Multi-threading** (đa luồng). Một biến số có thể bị hàng nghìn "người" (thread) cùng lúc nhào vào thay đổi.
 
 * **Concurrency & Multi-threading:**
 * **Virtual Threads:** (Project Loom)
+
+### 10. Audit Log - Camera giám sát Database
+
+Nếu ở Frontend, bạn có "Undo/Redo" hoặc "History" trong bộ nhớ tạm, thì ở Backend, **Audit Log** giống như một chiếc camera an ninh 24/7. Nó ghi lại mọi biến động của dữ liệu: "Ai đã tạo?", "Khi nào sửa?", và "Trước khi sửa nó trông thế nào?".
+
+Trong Spring Boot 3, chúng ta chia Audit Log làm 2 cấp độ:
+
+1. **Basic Auditing:** Chỉ ghi lại dấu mốc (Ngày tạo, ngày sửa, người tạo, người sửa).
+2. **Full Auditing (Versioning):** Ghi lại toàn bộ lịch sử thay đổi của từng trường dữ liệu (Dùng Hibernate Envers).
+
+### 11. Tổng hợp: External API Call & Backend For Frontend (BFF)
+
+Trong kỷ nguyên Microservices, Backend không chỉ là nơi lưu trữ dữ liệu mà còn đóng vai trò là một **Consumer** (khách hàng) đi gọi các Service khác. Việc quản lý các kết nối này đòi hỏi sự chặt chẽ về hiệu năng và bảo mật.
+
+* **Backend For Frontend (BFF):** BFF là lớp trung gian nằm giữa Client (Web/Mobile) và các Microservices lõi.
+* **RestClient:**  "Vũ khí" gọi API trong Spring Boot 3
+* **Circuit Breaker:** Đóng vai trò là "lớp giáp" cuối cùng. Nếu Service bên ngoài "chết thật", app của bạn vẫn "sống khỏe" nhờ hàm Fallback.
 
 ---
 
